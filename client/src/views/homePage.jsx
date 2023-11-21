@@ -1,4 +1,4 @@
-const LoginPage = () => {
+const HomePage = () => {
   return (
     <div className="w-full h-screen flex flex-col justify-between  p-5 relative bg-cyan-400 poppins">
       <div className="w-full flex justify-center  text-center">
@@ -23,4 +23,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default HomePage;
