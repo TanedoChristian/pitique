@@ -38,9 +38,9 @@ class RealtorModel {
   // CDU
   async createRealtor(realtor) {
     const hashedPassword = await bcrypt.hash(realtor.password, 10);
-
+    const status = "active";
     await this.pool.query(
-      "INSERT INTO realtor (fname, mname,lname,email,pass,birthdate) VALUES (?, ?, ? ,? ,? ,?)",
+      "INSERT INTO realtor (fname, mname,lname,email,pass,birthdate, status) VALUES (?, ?, ? ,? ,? ,?, ?)",
       [
         realtor.firstName,
         realtor.middleName,
@@ -48,6 +48,7 @@ class RealtorModel {
         realtor.email,
         hashedPassword,
         realtor.birthdate,
+        status,
       ]
     );
   }
