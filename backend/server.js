@@ -16,7 +16,7 @@ const realtorRouter = require("./router/realtorRoute");
 
 app.use(bodyParser.json());
 
-app.use("/realtor", realtorRouter);
+app.use("/realtors", realtorRouter);
 
 const port = process.env.PORT || 8000;
 

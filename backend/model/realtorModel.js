@@ -6,7 +6,7 @@ class RealtorModel {
     this.pool = createPromisePool();
   }
 
-  //   GET USER
+  //   GET REALTOR
   async getRealtorByEmail(email) {
     const [rows] = await this.pool.query(
       "SELECT * FROM realtor WHERE email = ?",
@@ -40,7 +40,7 @@ class RealtorModel {
     const hashedPassword = await bcrypt.hash(realtor.password, 10);
 
     await this.pool.query(
-      "INSERT INTO users (fname, mname,lname,email,pass,birthdate) VALUES (?, ?, ? ,? ,? ,?)",
+      "INSERT INTO realtor (fname, mname,lname,email,pass,birthdate) VALUES (?, ?, ? ,? ,? ,?)",
       [
         realtor.firstName,
         realtor.middleName,
