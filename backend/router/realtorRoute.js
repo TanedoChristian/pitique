@@ -54,6 +54,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// POST /realtors - logging in a realtor
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -75,7 +76,7 @@ router.post("/login", async (req, res) => {
 });
 
 //DELETE
-// DELETE /realtors/:id - Delete a user by ID
+// DELETE /realtors/:id - Delete a realtor by ID
 router.delete("/:id", async (req, res) => {
   const realtorsId = req.params.id;
 
