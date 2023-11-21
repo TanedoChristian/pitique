@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="w-full h-screen flex flex-col justify-between  p-5 relative bg-cyan-400 poppins">
+      <div className="w-full flex justify-center  text-center">
+        <div>
+          <h1 className="text-5xl font-bold tracking-wide mt-10 text-white poppins">
+            Pitique
+          </h1>
+          <p className="text-white font-white">Aerial Photography and Video</p>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
 
-export default App
+      <div className="w-full absoulute flex flex-col gap-3">
+        <button className="bg-white p-2.5  rounded-md text-xl font-bold shadow-md">
+          LOGIN
+        </button>
+
+        <button className=" border-2 text-white border-white p-2.5  rounded-md text-xl font-bold">
+          SIGN UP
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default App;

@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "npm start --prefix backend",
     "client": "npm run dev --prefix client",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "install-server": "npm install --prefix backend",
+    "install-client": "npm install --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run install-server && npm run install-client"
   },
   "repository": {
     "type": "git",
