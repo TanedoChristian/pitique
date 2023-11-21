@@ -1,1 +1,7 @@
+##node_modules
+#client
 client/node_modules
+#root
+node_modules
+#backend
+backend/node_modules

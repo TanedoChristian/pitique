@@ -1,0 +1,25 @@
+{
+  "name": "pitique",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npm start --prefix backend",
+    "client": "npm run dev --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanedoChristian/pitique.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TanedoChristian/pitique/issues"
+  },
+  "homepage": "https://github.com/TanedoChristian/pitique#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
