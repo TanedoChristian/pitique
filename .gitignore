@@ -1,2 +1,12 @@
+<<<<<<< HEAD
 client/node_modules
 server/node_modules
+=======
+##node_modules
+#client
+client/node_modules
+#root
+node_modules
+#backend
+backend/node_modules
+>>>>>>> 6a265cf2b3508bf4d6ea8c52d13b2b8db9480ea9
