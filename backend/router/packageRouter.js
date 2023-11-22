@@ -23,6 +23,24 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// GET /packages/pitiquer/:id - Get a specific package by ID
+router.get("/pitiquer/:id", async (req, res) => {
+  const pitiquerId = req.params.id;
+
+  try {
+    const packages = await packageModel.getPackageByPitiquerId(pitiquerId);
+
+    if (packages.length === 0) {
+      res.status(404).send("pitiquer packages not found");
+    } else {
+      res.json(packages);
+    }
+  } catch (error) {
+    console.error(`Error getting packages with ID ${pitiquerId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // POST /packages - Create a new package
 router.post("/", async (req, res) => {
   const newPackage = req.body;
