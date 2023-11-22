@@ -14,11 +14,13 @@ const path = require("path");
 // }
 const realtorRouter = require("./router/realtorRoute");
 const pitiquerRouter = require("./router/pitiquerRoute");
+const packageRouter = require("./router/packageRouter");
 
 app.use(bodyParser.json());
 
 app.use("/realtors", realtorRouter);
 app.use("/pitiquers", pitiquerRouter);
+app.use("/packages", packageRouter);
 
 const port = process.env.PORT || 8000;
 
