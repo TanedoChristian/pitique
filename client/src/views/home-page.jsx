@@ -1,4 +1,8 @@
-const LoginPage = () => {
+const HomePage = () => {
+  const handleNavigate = (path) => {
+    window.location.href = `/${path}`;
+  };
+
   return (
     <div className="w-full h-screen flex flex-col justify-between  p-5 relative bg-cyan-400 poppins">
       <div className="w-full flex justify-center  text-center">
@@ -11,11 +15,17 @@ const LoginPage = () => {
       </div>
 
       <div className="w-full absoulute flex flex-col gap-3">
-        <button className="bg-white p-2.5  rounded-md text-xl font-bold shadow-md">
+        <button
+          className="bg-white p-2.5  rounded-md text-xl font-bold shadow-md"
+          onClick={() => handleNavigate("login")}
+        >
           LOGIN
         </button>
 
-        <button className=" border-2 text-white border-white p-2.5  rounded-md text-xl font-bold">
+        <button
+          className=" border-2 text-white border-white p-2.5  rounded-md text-xl font-bold"
+          onClick={() => handleNavigate("register")}
+        >
           SIGN UP
         </button>
       </div>
@@ -23,4 +33,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default HomePage;
