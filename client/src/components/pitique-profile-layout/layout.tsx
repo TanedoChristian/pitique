@@ -1,11 +1,12 @@
 import PitiqueProfileDetails from "./pitique-profile-details";
 import React, { useState } from "react";
-import PitiqueProfilePortfolio from "./pitique-profile-portfolio";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPen } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../common/header";
 import PitiqueProfilePackage from "./pitique-profile-package";
+import PitiqueProfilePortfolio from "./pitique-profile-portfolio";
 
 const PitiqueProfileLayout = () => {
   const [showPortfolio, setShowPortfolio] = useState(false);

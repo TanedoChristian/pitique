@@ -11,6 +11,7 @@ import PitiqueBookingLayout from "./components/pitique-booking-layout/layout";
 import PitiqueBooking from "./views/pitique-booking";
 import PitiqueBookingId from "./views/pitique-booking-id";
 import PitiqueProfile from "./views/pitique-profile";
+import PitiqueServiceReport from "./views/pitique-service-report";
 
 const App = () => {
   return (
@@ -36,6 +37,10 @@ const App = () => {
         ></Route>
 
         <Route path="/profile/pitique/:id" element={<PitiqueProfile />}></Route>
+        <Route
+          path="/report/pitique"
+          element={<PitiqueServiceReport />}
+        ></Route>
       </Routes>
     </Router>
   );
