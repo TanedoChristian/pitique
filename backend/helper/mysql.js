@@ -1,0 +1,14 @@
+// models/user.js
+const mysql = require("mysql2");
+
+export const createPromisePool = () => {
+  return mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "pitique",
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+  });
+};
