@@ -7,54 +7,54 @@ const pitiquerModel = new PitiquerModel();
 
 // GET /pitiquers/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
-  const realtorId = req.params.id;
+  const pitiquerId = req.params.id;
 
   try {
-    const realtor = await pitiquerModel.getRealtorById(realtorId);
+    const pitiquer = await pitiquerModel.getPitiquerById(pitiquerId);
 
-    if (!realtor) {
-      res.status(404).send("realtor not found");
+    if (!pitiquer) {
+      res.status(404).send("pitiquer not found");
     } else {
-      res.json(realtor);
+      res.json(pitiquer);
     }
   } catch (error) {
-    console.error(`Error getting realtor with ID ${realtorId}:`, error);
+    console.error(`Error getting pitiquer with ID ${pitiquerId}:`, error);
     res.status(500).send("Internal Server Error");
   }
 });
 
 // GET /pitiquers/:email - Get a specific realtor by email
 router.get("/email/:email", async (req, res) => {
-  const realtorEmail = req.params.email;
+  const pitiquerEmail = req.params.email;
 
   try {
-    const realtor = await pitiquerModel.getRealtorByEmail(realtorEmail);
+    const pitiquer = await pitiquerModel.getPitiquerByEmail(pitiquerEmail);
 
-    if (!realtor) {
-      res.status(404).send("realtor not found");
+    if (!pitiquer) {
+      res.status(404).send("pitiquer not found");
     } else {
-      res.json(realtor);
+      res.json(pitiquer);
     }
   } catch (error) {
-    console.error(`Error getting realtor with email ${realtorEmail}:`, error);
+    console.error(`Error getting pitiquer with email ${pitiquerEmail}:`, error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-// POST /pitiquers - Create a new realtor
+// POST /pitiquers - Create a new pitiquer
 router.post("/", async (req, res) => {
-  const newRealtor = req.body;
+  const newPitiquer = req.body;
 
   try {
-    await pitiquerModel.createRealtor(newRealtor);
-    res.status(201).json({ message: "Realtor created successfully" });
+    await pitiquerModel.createPitiquer(newPitiquer);
+    res.status(201).json({ message: "Pitiquer created successfully" });
   } catch (error) {
-    console.error("Error creating realtor:", error);
+    console.error("Error creating Pitiquer:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-// POST /pitiquers - logging in a realtor
+// POST /pitiquers - logging in a pitiquer
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -70,41 +70,41 @@ router.post("/login", async (req, res) => {
       res.status(401).json({ message: "Invalid email or password" });
     }
   } catch (error) {
-    console.error("Error during logging in realtor:", error);
+    console.error("Error during logging in pitiquqer:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-// PUT /pitiquers/:id - Update a realtor by ID
+// PUT /pitiquers/:id - Update a pitiquer by ID
 router.put("/:id", async (req, res) => {
-  const realtorId = req.params.id;
-  const updateRealtor = req.body;
+  const pitiquerId = req.params.id;
+  const updatePitiquer = req.body;
 
   try {
-    const existingRealtor = await pitiquerModel.getRealtorById(realtorId);
+    const existingPitiquer = await pitiquerModel.getPitiquerById(pitiquerId);
 
-    if (!existingRealtor) {
-      res.status(404).send("Realtor not found");
+    if (!existingPitiquer) {
+      res.status(404).send("Pitiquer not found");
       return;
     }
 
-    await pitiquerModel.updateRealtor(realtorId, updateRealtor);
-    res.json({ message: "Realtor updated successfully" });
+    await pitiquerModel.updatePitiquer(pitiquerId, updatePitiquer);
+    res.json({ message: "Pitiquer updated successfully" });
   } catch (error) {
-    console.error(`Error updating Realtor with ID ${realtorId}:`, error);
+    console.error(`Error updating Pitiquer with ID ${pitiquerId}:`, error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-// DELETE /pitiquers/:id - Delete a realtor by ID
+// DELETE /pitiquers/:id - Delete a pitiquer by ID
 router.delete("/:id", async (req, res) => {
-  const realtorsId = req.params.id;
+  const pitiquerId = req.params.id;
 
   try {
-    await pitiquerModel.deleteRealtorById(realtorsId);
-    res.send(`Realtor with ID ${realtorsId} deleted successfully`);
+    await pitiquerModel.deletePitiquerById(pitiquerId);
+    res.send(`Pitiquer with ID ${pitiquerId} deleted successfully`);
   } catch (error) {
-    console.error(`Error deleting realtor with ID ${realtorsId}:`, error);
+    console.error(`Error deleting Pitiquer with ID ${pitiquerId}:`, error);
     res.status(500).send("Internal Server Error");
   }
 });
