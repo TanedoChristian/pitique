@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPen } from "@fortawesome/free-solid-svg-icons";
 
-const PitiqueProfileDetails = ({ setShowPortfolio }) => {
+const PitiqueProfileDetails = ({ setShowPortfolio, setShowPackage }) => {
   return (
     <div className="poppins">
       <div className="w-full flex justify-center ">
@@ -28,7 +28,12 @@ const PitiqueProfileDetails = ({ setShowPortfolio }) => {
           View Portfolio
         </button>
 
-        <button className="py-2 px-6 bg-cyan-400 text-white">
+        <button
+          className="py-2 px-6 bg-cyan-400 text-white"
+          onClick={() => {
+            setShowPackage(true);
+          }}
+        >
           View Package
         </button>
       </div>

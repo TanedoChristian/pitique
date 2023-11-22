@@ -10,9 +10,11 @@ import PitiqueProfilePackage from "./pitique-profile-package";
 const PitiqueProfileLayout = () => {
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showPackage, setShowPackage] = useState(false);
+
   const handleBack = () => {
     if (showPortfolio) {
       setShowPortfolio(false);
+      setShowPackage(false);
     } else {
       window.location.href = "/dashboard/pitique";
     }
@@ -35,11 +37,15 @@ const PitiqueProfileLayout = () => {
 
       {showPortfolio ? (
         <div className="p-4 flex justify-center">
-          {/* <PitiqueProfilePortfolio /> */}
-          <PitiqueProfilePackage />
+          <PitiqueProfilePortfolio />
         </div>
+      ) : showPackage ? (
+        <PitiqueProfilePackage />
       ) : (
-        <PitiqueProfileDetails setShowPortfolio={setShowPortfolio} />
+        <PitiqueProfileDetails
+          setShowPortfolio={setShowPortfolio}
+          setShowPackage={setShowPackage}
+        />
       )}
     </div>
   );
