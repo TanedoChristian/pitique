@@ -7,12 +7,20 @@ class PortfolioModel {
 
   //   GET Portfolio
 
-  async getPackageById(portfolioId) {
+  async getPortfolioById(portfolioId) {
     const [rows] = await this.pool.query(
       "SELECT * FROM portfolio WHERE id = ?",
       [portfolioId]
     );
     return rows[0];
+  }
+
+  async getPortfolioByPitiquerId(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM portfolio WHERE ptqr_id = ?",
+      [pitiquerId]
+    );
+    return rows;
   }
 
   // CDU

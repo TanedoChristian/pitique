@@ -57,7 +57,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE /packages/:id - Delete a package by ID
+// PUT /packages/:id - Remove a package by ID
 router.put("/:id", async (req, res) => {
   const packagesId = req.params.id;
   const { pitiquerId, visibility } = req.body;
