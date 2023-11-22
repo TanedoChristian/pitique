@@ -15,12 +15,14 @@ const path = require("path");
 const realtorRouter = require("./router/realtorRoute");
 const pitiquerRouter = require("./router/pitiquerRoute");
 const packageRouter = require("./router/packageRouter");
+const portfolioRouter = require("./router/portfolioRouter");
 
 app.use(bodyParser.json());
 
 app.use("/realtors", realtorRouter);
 app.use("/pitiquers", pitiquerRouter);
 app.use("/packages", packageRouter);
+app.use("/portfolios", portfolioRouter);
 
 const port = process.env.PORT || 8000;
 
