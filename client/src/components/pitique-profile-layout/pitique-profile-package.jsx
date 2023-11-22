@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PitiqueProfilePackage = () => {
   return (
-    <div className="w-full justify-center flex flex-col gap-3">
+    <div className="w-full justify-center flex flex-col gap-3 p-3">
       <div className="bg-gray-200 shadow-md p-3">
         <div className="flex gap-3">
           <img

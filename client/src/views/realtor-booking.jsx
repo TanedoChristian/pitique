@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Header from "../components/common/header";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import Header from "../components/common/header";
+
 import ProcessDetails from "../components/common/process-details";
 import BookingLocationForm from "../components/realtor-booking-layout/realtor-booking-location-form";
 import { useState } from "react";

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
 import RealtorLayout from "../components/realtor-homepage-layout/layout";
-import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const RealtorDashboard = () => {
   const realtors = [
