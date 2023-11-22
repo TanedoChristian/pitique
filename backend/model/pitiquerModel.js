@@ -6,58 +6,66 @@ class PitiquerModel {
     this.pool = createPromisePool();
   }
 
-  //   GET REALTOR
-  async getRealtorByEmail(email) {
+  //   GET Pitiquer
+  async getPitiquerByEmail(email) {
     const [rows] = await this.pool.query(
-      "SELECT * FROM realtor WHERE email = ?",
+      "SELECT * FROM pitiquer WHERE email = ?",
       [email]
     );
     return rows[0];
   }
 
-  async getRealtorById(realtorId) {
-    const [rows] = await this.pool.query("SELECT * FROM realtor WHERE id = ?", [
-      realtorId,
-    ]);
+  async getPitiquerById(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM pitiquer WHERE id = ?",
+      [pitiquerId]
+    );
     return rows[0];
   }
 
   // LOGIN
   async authenticate(email, password) {
-    const realtor = await this.getRealtorByEmail(email);
+    const pitiquer = await this.getPitiquerByEmail(email);
 
-    if (!realtor) {
+    if (!pitiquer) {
       return null;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, realtor.pass);
+    const isPasswordValid = await bcrypt.compare(password, pitiquer.pass);
 
-    return isPasswordValid ? realtor : null;
+    return isPasswordValid ? pitiquer : null;
   }
 
   // CDU
-  async createRealtor(realtor) {
-    const hashedPassword = await bcrypt.hash(realtor.password, 10);
+  async createPitiquer(pitiquer) {
+    const hashedPassword = await bcrypt.hash(pitiquer.password, 10);
     // Default Value
     const status = "active";
 
     await this.pool.query(
-      "INSERT INTO realtor (fname, mname,lname,email,pass,birthdate, status) VALUES (?, ?, ? ,? ,? ,?, ?)",
+      "INSERT INTO pitiquer (fname,mname,lname,email,pass,phone,city,province,prof_img,bio,isphotog,isvideog,isamnty,status) VALUES (?, ?, ? ,? ,? ,?, ?,?, ?, ? ,? ,? ,?, ?)",
       [
-        realtor.firstName,
-        realtor.middleName,
-        realtor.lastName,
-        realtor.email,
+        pitiquer.firstName,
+        pitiquer.middleName,
+        pitiquer.lastName,
+        pitiquer.email,
         hashedPassword,
-        realtor.birthdate,
+        pitiquer.phone,
+        pitiquer.city,
+        pitiquer.province,
+        pitiquer.prof_img,
+        pitiquer.bio,
+        pitiquer.isphotog,
+        pitiquer.isvideog,
+        pitiquer.isamnty,
         status,
       ]
     );
   }
 
-  async updateRealtor(realtorId, updatedInfo) {
+  async updatePitiquer(pitiquerId, updatedInfo) {
     await this.pool.query(
-      "UPDATE realtor SET fname = ?,mname = ?,lname = ?,email = ?,pass = ?,phone = ?,birthdate = ?,prof_img = ?,id_type = ?,id_img = ? WHERE id = ?",
+      "UPDATE pitiquer SET fname = ?,mname = ?,lname = ?,email = ?,pass = ?,phone = ?,city = ?,province = ?, prof_img = ?,bio = ?, isphotog = ?, isvideog = ?, isamnty = ? WHERE id = ?",
       [
         updatedInfo.firstName,
         updatedInfo.middleName,
@@ -65,19 +73,22 @@ class PitiquerModel {
         updatedInfo.email,
         updatedInfo.password,
         updatedInfo.phone,
-        updatedInfo.birthdate,
+        updatedInfo.city,
+        updatedInfo.province,
         updatedInfo.prof_img,
-        updatedInfo.id_type,
-        updatedInfo.id_img,
-        realtorId,
+        updatedInfo.bio,
+        updatedInfo.isphotog,
+        updatedInfo.isvideog,
+        updatedInfo.isamnty,
+        pitiquerId,
       ]
     );
   }
 
   //TODO: Not yet finish
   //Note: Dont use ID this is not secure. Change this.
-  async deleteRealtorById(realtorId) {
-    await this.pool.query("DELETE FROM realtor WHERE id = ?", [realtorId]);
+  async deletePitiquerById(pitiquerId) {
+    await this.pool.query("DELETE FROM pitiquer WHERE id = ?", [pitiquerId]);
   }
 }
 
