@@ -75,7 +75,27 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//DELETE
+// PUT /realtors/:id - Update a realtor by ID
+router.put("/:id", async (req, res) => {
+  const realtorId = req.params.id;
+  const updateRealtor = req.body;
+
+  try {
+    const existingRealtor = await realtorModel.getRealtorById(realtorId);
+
+    if (!existingRealtor) {
+      res.status(404).send("Realtor not found");
+      return;
+    }
+
+    await realtorModel.updateRealtor(realtorId, updateRealtor);
+    res.json({ message: "Realtor updated successfully" });
+  } catch (error) {
+    console.error(`Error updating Realtor with ID ${realtorId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // DELETE /realtors/:id - Delete a realtor by ID
 router.delete("/:id", async (req, res) => {
   const realtorsId = req.params.id;
