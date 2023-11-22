@@ -1,6 +1,9 @@
-const PersonalDetailsForm = () => {
+const PersonalDetailsForm = ({ setShowAccountForm }) => {
   return (
-    <form className="flex flex-col gap-3 p-5 justify-between h-full">
+    <form
+      className="flex flex-col gap-3 p-5 justify-between h-full"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="flex flex-col gap-3">
         <input
           type="text"
@@ -28,7 +31,12 @@ const PersonalDetailsForm = () => {
         />
       </div>
       <div>
-        <button className="mt-5 p-3 w-full border-2 text-lg border-cyan-400 font-bold rounded-sm shadow-md">
+        <button
+          className="mt-5 p-3 w-full border-2 text-lg border-cyan-400 font-bold rounded-sm shadow-md"
+          onClick={() => {
+            setShowAccountForm(true);
+          }}
+        >
           Continue
         </button>
       </div>
