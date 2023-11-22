@@ -8,8 +8,6 @@ const RealtorTransactionCompeleted = () => {
       <p className="text-cyan-500">May 2023</p>
 
       <RealtorTransactionCard />
-      <RealtorTransactionCard />
-      <RealtorTransactionCard />
     </div>
   );
 };
