@@ -2,7 +2,7 @@ const BookingLocationForm = ({ setCount }) => {
   return (
     <form
       className="flex flex-col gap-3 p-5 justify-between h-full"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={(e) => e.preventDefault}
     >
       <div className="flex flex-col gap-3">
         <input

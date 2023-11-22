@@ -14,7 +14,7 @@ const RealtorBooking = () => {
   const [count, setCount] = useState(1);
 
   return (
-    <div className="poppins">
+    <div className="poppins h-screen  relative">
       <Header
         className={`flex items-center w-full text-center relative ${
           count > 5 ? "hidden" : ""
