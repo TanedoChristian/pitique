@@ -23,7 +23,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("pitiquer/:id", async (req, res) => {
+// GET /portfolios/pitiquer/:id - Get a specific portfolio by ID
+router.get("/pitiquer/:id", async (req, res) => {
   const pitiquerId = req.params.id;
 
   try {
@@ -32,7 +33,7 @@ router.get("pitiquer/:id", async (req, res) => {
     );
 
     if (portfolios.length === 0) {
-      res.status(404).send("portfolio not found");
+      res.status(404).send("pitiquer portfolio not found");
     } else {
       res.json(portfolios);
     }

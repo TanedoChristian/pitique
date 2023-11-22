@@ -14,6 +14,14 @@ class PackageModel {
     return rows[0];
   }
 
+  async getPackageByPitiquerId(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM package WHERE ptqr_id = ?",
+      [pitiquerId]
+    );
+    return rows;
+  }
+
   // CDU
   async createPackage(packages) {
     // Default Value
