@@ -13,10 +13,12 @@ const path = require("path");
 //   });
 // }
 const realtorRouter = require("./router/realtorRoute");
+const pitiquerRouter = require("./router/pitiquerRoute");
 
 app.use(bodyParser.json());
 
 app.use("/realtors", realtorRouter);
+app.use("/pitiquers", pitiquerRouter);
 
 const port = process.env.PORT || 8000;
 
