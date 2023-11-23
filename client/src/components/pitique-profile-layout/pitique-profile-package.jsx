@@ -7,6 +7,7 @@ const PitiqueProfilePackage = () => {
   const [showModal, setShowModal] = useState(false);
   const [packageInfo, setPackageInfo] = useState({});
   const [packages, setPackages] = useState([{}]);
+  const [flag, setFlag] = useState(false);
 
   // TODO: change this to dynamic
   const pitiquerId = 1;
@@ -17,7 +18,7 @@ const PitiqueProfilePackage = () => {
     };
 
     fetch();
-  }, []);
+  }, [flag]);
 
   const onClickPackageInfo = (info, type) => {
     setPackageInfo((prevState) => {
@@ -40,7 +41,10 @@ const PitiqueProfilePackage = () => {
   const handleSubmit = async () => {
     const { data } = await api.post("/packages", packageInfo);
 
-    console.log(data);
+    if (data) {
+      setFlag(!flag);
+      setShowModal(false);
+    }
   };
 
   return (
