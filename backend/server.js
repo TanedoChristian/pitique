@@ -16,6 +16,7 @@ const realtorRouter = require("./router/realtorRoute");
 const pitiquerRouter = require("./router/pitiquerRoute");
 const packageRouter = require("./router/packageRouter");
 const portfolioRouter = require("./router/portfolioRouter");
+const bookingRouter = require("./router/bookingRouter");
 
 app.use(bodyParser.json());
 
@@ -23,6 +24,7 @@ app.use("/realtors", realtorRouter);
 app.use("/pitiquers", pitiquerRouter);
 app.use("/packages", packageRouter);
 app.use("/portfolios", portfolioRouter);
+app.use("/bookings", bookingRouter);
 
 const port = process.env.PORT || 8000;
 
