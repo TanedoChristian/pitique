@@ -10,9 +10,12 @@ import BookingScheduleForm from "../components/realtor-booking-layout/realtor-bo
 import BookingContactForm from "../components/realtor-booking-layout/realtor-booking-contact-form";
 import BookingReviewForm from "../components/realtor-booking-layout/realtor-booking-review-form";
 import BookingSuccess from "../components/realtor-booking-layout/realtor-booking-success";
+import { BookingContext } from "../context/bookingContext";
 
 const RealtorBooking = () => {
   const [count, setCount] = useState(1);
+
+  const [bookingInfo, setBookingInfo] = useState({});
 
   return (
     <div className="poppins h-screen  relative">
@@ -31,26 +34,26 @@ const RealtorBooking = () => {
           <h1 className="flex-grow text-xl text-white font-bold ">Booking</h1>
         </div>
       </Header>
-
-      <div className={`w-full  ${count > 5 ? "" : "p-3"}`}>
-        <ProcessDetails count={count} />
-
-        {count == 1 ? (
-          <BookingLocationForm setCount={setCount} />
-        ) : count == 2 ? (
-          <BookingServiceForm setCount={setCount} />
-        ) : count == 3 ? (
-          <BookingScheduleForm setCount={setCount} />
-        ) : count == 4 ? (
-          <BookingContactForm setCount={setCount} />
-        ) : count == 5 ? (
-          <BookingReviewForm setCount={setCount} />
-        ) : count == 6 ? (
-          <BookingSuccess />
-        ) : (
-          ""
-        )}
-      </div>
+      <BookingContext.Provider value={[bookingInfo, setBookingInfo]}>
+        <div className={`w-full  ${count > 5 ? "" : "p-3"}`}>
+          <ProcessDetails count={count} />
+          {count == 1 ? (
+            <BookingLocationForm setCount={setCount} />
+          ) : count == 2 ? (
+            <BookingServiceForm setCount={setCount} />
+          ) : count == 3 ? (
+            <BookingScheduleForm setCount={setCount} />
+          ) : count == 4 ? (
+            <BookingContactForm setCount={setCount} />
+          ) : count == 5 ? (
+            <BookingReviewForm setCount={setCount} />
+          ) : count == 6 ? (
+            <BookingSuccess />
+          ) : (
+            ""
+          )}
+        </div>
+      </BookingContext.Provider>
     </div>
   );
 };
