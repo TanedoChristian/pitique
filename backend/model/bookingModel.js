@@ -39,6 +39,26 @@ class BookingModel {
     return rows;
   }
 
+  async getBookingHistoryByPitiquer(pitiquerId) {
+    //Default Value
+    const status = "pending";
+    const [rows] = await this.pool.query(
+      "SELECT * FROM booking WHERE ptqr_id = ? and NOT status = ?",
+      [pitiquerId, status]
+    );
+    return rows;
+  }
+
+  async getBookingHistoryByRealtor(realtorId) {
+    //Default Value
+    const status = "pending";
+    const [rows] = await this.pool.query(
+      "SELECT * FROM booking WHERE ptqr_id = ? and NOT status = ?",
+      [realtorId, status]
+    );
+    return rows;
+  }
+
   // CDU
   async requestBooking(bookingInfo) {
     // Default Value

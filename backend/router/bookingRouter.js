@@ -65,6 +65,48 @@ router.get("/pitiquer/:id", async (req, res) => {
   }
 });
 
+// GET /bookings/history/pitiquer/:id - Get the history bookings by pitiquer id
+router.get("/history/pitiquer/:id", async (req, res) => {
+  const pitiquerId = req.params.id;
+
+  try {
+    const bookings = await bookingModel.getBookingHistoryByPitiquer(pitiquerId);
+
+    if (bookings.length === 0) {
+      res.status(404).send("history bookings not found");
+    } else {
+      res.json(bookings);
+    }
+  } catch (error) {
+    console.error(
+      `Error getting history bookings with pitiquer id ${pitiquerId}:`,
+      error
+    );
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// GET /bookings/history/realtor/:id - Get the history bookings by realtor id
+router.get("/history/realtor/:id", async (req, res) => {
+  const realtorId = req.params.id;
+
+  try {
+    const bookings = await bookingModel.getBookingHistoryByRealtor(realtorId);
+
+    if (bookings.length === 0) {
+      res.status(404).send("history bookings not found");
+    } else {
+      res.json(bookings);
+    }
+  } catch (error) {
+    console.error(
+      `Error getting history bookings with realtor id ${realtorId}:`,
+      error
+    );
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // GET /bookings/request/:id - Get the booking requests by pitiquer id
 router.get("/request/:id", async (req, res) => {
   const pitiquerId = req.params.id;
