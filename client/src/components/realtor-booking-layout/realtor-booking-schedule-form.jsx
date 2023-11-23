@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import { BookingContext } from "../../context/bookingContext";
 
 const BookingScheduleForm = ({ setCount }) => {
   const [value, setValue] = useState(dayjs());
@@ -15,6 +16,14 @@ const BookingScheduleForm = ({ setCount }) => {
     day: "numeric",
   });
 
+  const [bookingInfo, setBookingInfo] = useContext(BookingContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setCount((prev) => prev + 1);
+  };
+
   return (
     <div className="w-full p-3">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -22,7 +31,13 @@ const BookingScheduleForm = ({ setCount }) => {
           <DemoItem label="">
             <DateCalendar
               value={value}
-              onChange={(newValue) => setValue(newValue)}
+              onChange={(newValue) => {
+                setValue(newValue);
+                setBookingInfo((prev) => ({
+                  ...prev,
+                  date: newValue ? newValue.$d : null,
+                }));
+              }}
             />
           </DemoItem>
         </DemoContainer>
@@ -33,7 +48,7 @@ const BookingScheduleForm = ({ setCount }) => {
 
         <form
           className="flex flex-col gap-3 p-3 justify-between h-full"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSubmit}
         >
           <div className="bg-gray-200 shadow-md">
             <input className="hidden" id="radio_1" type="radio" name="radio" />
@@ -66,9 +81,7 @@ const BookingScheduleForm = ({ setCount }) => {
           <div>
             <button
               className=" text-xl mt-5 p-3 w-full border-2 border-cyan-500 text-cyan-500  font-bold rounded-sm shadow-md"
-              onClick={() => {
-                setCount((prev) => prev + 1);
-              }}
+              onClick={handleSubmit}
             >
               NEXT
             </button>
