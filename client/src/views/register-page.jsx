@@ -13,7 +13,6 @@ const RegisterPage = () => {
     <HeaderContext.Provider value={showAccountForm}>
       <div className="w-full h-screen flex flex-col poppins">
         <RegisterHeader setShowAccountForm={setShowAccountForm} />
-
         {showAccountForm ? (
           <AccountDetailsForm setUser={setUser} user={user} />
         ) : (
