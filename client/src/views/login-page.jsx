@@ -19,7 +19,7 @@ const LoginPage = () => {
       const { data } = await api.post("/realtors/login", user);
 
       if (data) {
-        localStorage.setItem("user", data);
+        localStorage.setItem("user", JSON.stringify(data.user));
         window.location.href = "/dashboard";
       } else {
         alert("Cannot authorized");
