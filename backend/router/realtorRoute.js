@@ -46,8 +46,12 @@ router.post("/", async (req, res) => {
   const newRealtor = req.body;
 
   try {
-    await realtorModel.createRealtor(newRealtor);
-    res.status(201).json({ message: "Realtor created successfully" });
+    const exist = await realtorModel.getRealtorByEmail(newRealtor.email);
+    if (exist) res.status(403).json({ message: "Account already exist" });
+    else {
+      await realtorModel.createRealtor(newRealtor);
+      res.status(201).json({ message: "Realtor created successfully" });
+    }
   } catch (error) {
     console.error("Error creating realtor:", error);
     res.status(500).send("Internal Server Error");

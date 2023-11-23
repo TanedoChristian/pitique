@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
-
+import api from "../../helper/api";
 const AccountDetailsForm = ({ setUser, user }) => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isChecked, setChecked] = useState(false);
@@ -26,8 +26,15 @@ const AccountDetailsForm = ({ setUser, user }) => {
     return Object.values(user).every((value) => !value);
   };
 
-  const handleLogin = () => {
-    console.log(user);
+  const handleRegister = async () => {
+    const { data } = await api.post("/realtors", user);
+
+    if (data) {
+      window.location.href = "/login";
+    } else {
+      //TODO: change this to swal2
+      alert("Something went wrong");
+    }
   };
 
   return (
@@ -77,7 +84,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
         </div>
         <button
           className="mt-5 p-3 w-full bg-cyan-400 text-white font-bold rounded-sm shadow-md"
-          onClick={handleLogin}
+          onClick={handleRegister}
           disabled={!isChecked || areAllFieldsEmpty() || !passwordMatch}
         >
           Login
