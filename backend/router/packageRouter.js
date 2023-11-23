@@ -72,7 +72,6 @@ router.post("/", async (req, res) => {
       newPackage.ptqr_id,
       newPackage.pkg_desc
     );
-    console.log(newPackage);
 
     if (!packages) {
       await packageModel.createPackage(newPackage);
