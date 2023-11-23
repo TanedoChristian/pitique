@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-
+const cors = require("cors");
 const path = require("path");
+
+app.use(cors());
 
 // When in PROD
 // if (process.env.NODE_ENV === "production") {
