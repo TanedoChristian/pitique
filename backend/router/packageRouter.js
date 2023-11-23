@@ -41,13 +41,46 @@ router.get("/pitiquer/:id", async (req, res) => {
   }
 });
 
+// GET /packages/pitiquer/:id - Get a specific package by ID and name
+router.get("/pitiquer/:id/package/:name", async (req, res) => {
+  const pitiquerId = req.params.id;
+  const packageName = req.params.name;
+
+  try {
+    const packages = await packageModel.getPackageByPitiquerIdAndPackageName(
+      pitiquerId,
+      packageName
+    );
+
+    if (!packages) {
+      res.status(404).send("pitiquer packages not found");
+    } else {
+      res.json(packages);
+    }
+  } catch (error) {
+    console.error(`Error getting packages with ID ${pitiquerId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // POST /packages - Create a new package
 router.post("/", async (req, res) => {
   const newPackage = req.body;
 
   try {
-    await packageModel.createPackage(newPackage);
-    res.status(201).json({ message: "Package created successfully" });
+    const packages = await packageModel.getPackageByPitiquerIdAndPackageName(
+      newPackage.ptqr_id,
+      newPackage.pkg_desc
+    );
+    console.log(newPackage);
+
+    if (!packages) {
+      await packageModel.createPackage(newPackage);
+      res.status(201).json({ message: "Package created successfully" });
+    } else {
+      await packageModel.updatePackagePrice(newPackage.packageId, newPackage);
+      res.status(200).json({ message: "Ok" });
+    }
   } catch (error) {
     console.error("Error creating Package:", error);
     res.status(500).send("Internal Server Error");

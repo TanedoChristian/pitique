@@ -19,17 +19,18 @@ const PitiqueProfilePackage = () => {
     fetch();
   }, []);
 
-  const onClickPackageInfo = (info) => {
+  const onClickPackageInfo = (info, type) => {
     setPackageInfo((prevState) => {
       return {
         ...prevState,
+        packageId: info.id ?? -1, // -1 = its not from the table
         pkg_desc: info.pkg_desc,
         min_price: info.price,
-        hasphoto: info.type === "photo",
-        hasvid: info.type === "video",
-        hasamnty: info.type === "amenity",
-        isavailable: info.availability,
-        isvisible: info.availability,
+        hasphoto: type === "photo",
+        hasvid: type === "video",
+        hasamnty: type === "amenity",
+        isavailable: info.availability ?? false,
+        isvisible: info.availability ?? false,
         // TODO: change this if the pitiquer is ready
         ptqr_id: 1,
       };
@@ -116,6 +117,7 @@ const PitiqueProfilePackage = () => {
             info={_item === undefined ? item : _item}
             key={index}
             setPackage={onClickPackageInfo}
+            packageType={item.type}
           />
         );
       })}

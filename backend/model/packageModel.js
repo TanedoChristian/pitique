@@ -22,6 +22,14 @@ class PackageModel {
     return rows;
   }
 
+  async getPackageByPitiquerIdAndPackageName(pitiquerId, packageName) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM package WHERE ptqr_id = ? AND pkg_desc = ?",
+      [pitiquerId, packageName]
+    );
+    return rows[0];
+  }
+
   // CDU
   async createPackage(packages) {
     await this.pool.query(
@@ -39,16 +47,29 @@ class PackageModel {
     );
   }
 
+  async updatePackagePrice(packageId, updatedInfo) {
+    await this.pool.query(
+      "UPDATE package SET min_price = ?, isavailable = ?, isvisible = ? WHERE id = ?",
+      [
+        updatedInfo.min_price,
+        updatedInfo.isavailable,
+        updatedInfo.isvisible,
+        packageId,
+      ]
+    );
+  }
+
   async updatePackage(packageId, updatedInfo) {
     await this.pool.query(
-      "UPDATE package SET hasphoto = ?, hasvid = ?, hasamnty = ?, min_price = ?, pkg_desc = ?, isavailable = ? WHERE id = ?",
+      "UPDATE package SET hasphoto = ?, hasvid = ?, hasamnty = ?, min_price = ?, pkg_desc = ?, isavailable = ?, isvisible = ? WHERE id = ?",
       [
-        updatedInfo.hasPhoto,
-        updatedInfo.hasVid,
-        updatedInfo.hasAmnty,
-        updatedInfo.minPrice,
-        updatedInfo.pkgDesc,
-        updatedInfo.isAvailable,
+        updatedInfo.hasphoto,
+        updatedInfo.hasvid,
+        updatedInfo.hasamnty,
+        updatedInfo.min_price,
+        updatedInfo.pkg_desc,
+        updatedInfo.isavailable,
+        updatedInfo.isvisible,
         packageId,
       ]
     );

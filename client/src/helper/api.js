@@ -4,7 +4,7 @@ const createApi = () => {
   const api = axios.create({
     // TODO: change this to env variable
     baseURL: "http://localhost:8000",
-    timeout: 5000,
+    // timeout: 5000,
   });
 
   return {
