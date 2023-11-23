@@ -2,8 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
 import RealtorLayout from "../components/realtor-homepage-layout/layout";
+import { useEffect } from "react";
 
 const RealtorDashboard = () => {
+  const user = localStorage.getItem("user");
+
   const realtors = [
     {
       firstname: "Tyler",
@@ -31,6 +34,10 @@ const RealtorDashboard = () => {
       price: "10,000",
     },
   ];
+
+  useEffect(() => {
+    if (user === undefined || !user) window.location.href = "/login";
+  }, [user]);
 
   return (
     <div className="w-full">

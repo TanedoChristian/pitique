@@ -65,7 +65,7 @@ class BookingModel {
     const status = "pending";
 
     await this.pool.query(
-      "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled) VALUES (?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?)",
+      "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled,street, unit_no, city, province, postal, property_size) VALUES (?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
       [
         bookingInfo.packageId,
         bookingInfo.realtorId,
@@ -81,6 +81,12 @@ class BookingModel {
         bookingInfo.declined,
         bookingInfo.completed,
         bookingInfo.cancelled,
+        bookingInfo.street,
+        bookingInfo.unit_no,
+        bookingInfo.city,
+        bookingInfo.province,
+        bookingInfo.postal,
+        bookingInfo.property_size,
       ]
     );
   }
@@ -124,7 +130,7 @@ class BookingModel {
   //Update Booking
   async updateBooking(pitiquerId, bookingId, updatedInfo) {
     await this.pool.query(
-      "UPDATE booking SET status = ?,price = ?,share = ?,fee = ?,total = ?,date = ?,rmrks = ?,approved = ?,declined = ?,completed = ?, cancelled = ? WHERE id = ? and ptqr_id = ?",
+      "UPDATE booking SET status = ?,price = ?,share = ?,fee = ?,total = ?,date = ?,rmrks = ?,approved = ?,declined = ?,completed = ?, cancelled = ?, street = ?, unit_no = ?, city = ?, province = ?, postal = ?, property_size = ? WHERE id = ? and ptqr_id = ?",
       [
         updatedInfo.status,
         updatedInfo.price,
@@ -137,6 +143,12 @@ class BookingModel {
         updatedInfo.declined,
         updatedInfo.complete,
         updatedInfo.cancelled,
+        updatedInfo.street,
+        updatedInfo.unit_no,
+        updatedInfo.city,
+        updatedInfo.province,
+        updatedInfo.postal,
+        updatedInfo.property_size,
         bookingId,
         pitiquerId,
       ]
