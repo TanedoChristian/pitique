@@ -1,17 +1,29 @@
 import PitiqueProfilePackageItem from "./pitique-profile-package-item";
 import { packageItems } from "../../helper/package-item";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../helper/api";
 
 const PitiqueProfilePackage = () => {
   const [showModal, setShowModal] = useState(false);
   const [packageInfo, setPackageInfo] = useState({});
+  const [packages, setPackages] = useState([{}]);
+
+  // TODO: change this to dynamic
+  const pitiquerId = 1;
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await api.get(`/packages/pitiquer/${pitiquerId}`);
+      setPackages(data);
+    };
+
+    fetch();
+  }, []);
 
   const onClickPackageInfo = (info) => {
     setPackageInfo((prevState) => {
       return {
         ...prevState,
-        pkg_desc: info.title,
+        pkg_desc: info.pkg_desc,
         min_price: info.price,
         hasphoto: info.type === "photo",
         hasvid: info.type === "video",
@@ -95,14 +107,18 @@ const PitiqueProfilePackage = () => {
       ) : (
         ""
       )}
-      {packageItems.map((item) => (
-        <PitiqueProfilePackageItem
-          setShowModal={setShowModal}
-          info={item}
-          key={item.id}
-          setPackage={onClickPackageInfo}
-        />
-      ))}
+      {packageItems.map((item, index) => {
+        const _item = packages.find((i) => i.pkg_desc === item.pkg_desc);
+
+        return (
+          <PitiqueProfilePackageItem
+            setShowModal={setShowModal}
+            info={_item === undefined ? item : _item}
+            key={index}
+            setPackage={onClickPackageInfo}
+          />
+        );
+      })}
 
       <div>
         <button className=" text-xl mt-5 p-3 w-full border-2 border-cyan-500 text-cyan-500  font-bold rounded-sm shadow-md">

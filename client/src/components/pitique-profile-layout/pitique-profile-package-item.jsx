@@ -14,7 +14,7 @@ const PitiqueProfilePackageItem = ({ setShowModal, info, setPackage }) => {
             />
             <div>
               <div className="flex gap-5 items-center">
-                <h1 className="font-bold">{info.title}</h1>
+                <h1 className="font-bold">{info.pkg_desc}</h1>
                 <button
                   onClick={() => {
                     setShowModal(true);
@@ -28,7 +28,7 @@ const PitiqueProfilePackageItem = ({ setShowModal, info, setPackage }) => {
                 </button>
               </div>
 
-              <p>Php 9,000.00</p>
+              <p>Php {info.min_price ?? 0}</p>
             </div>
           </div>
         </div>
