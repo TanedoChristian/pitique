@@ -12,7 +12,7 @@ const PersonalDetailsForm = ({ setShowAccountForm }) => {
         />
 
         <input
-          type="password"
+          type="text"
           placeholder="Middle name"
           className="p-3 bg-gray-200 w-full rounded-sm "
         />
@@ -20,6 +20,12 @@ const PersonalDetailsForm = ({ setShowAccountForm }) => {
         <input
           type="password"
           placeholder="Last name"
+          className="p-3 bg-gray-200 w-full rounded-sm "
+        />
+
+        <input
+          type="text"
+          placeholder="Phone"
           className="p-3 bg-gray-200 w-full rounded-sm "
         />
 
