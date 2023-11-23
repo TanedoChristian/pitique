@@ -2,7 +2,12 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 
-const PitiqueProfilePackageItem = ({ setShowModal, info, setPackage }) => {
+const PitiqueProfilePackageItem = ({
+  setShowModal,
+  info,
+  setPackage,
+  packageType,
+}) => {
   return (
     <div>
       <div className="w-full justify-center flex flex-col gap-3 p-3">
@@ -14,11 +19,11 @@ const PitiqueProfilePackageItem = ({ setShowModal, info, setPackage }) => {
             />
             <div>
               <div className="flex gap-5 items-center">
-                <h1 className="font-bold">{info.title}</h1>
+                <h1 className="font-bold">{info.pkg_desc}</h1>
                 <button
                   onClick={() => {
                     setShowModal(true);
-                    setPackage(info);
+                    setPackage(info, packageType);
                   }}
                 >
                   <FontAwesomeIcon
@@ -28,7 +33,7 @@ const PitiqueProfilePackageItem = ({ setShowModal, info, setPackage }) => {
                 </button>
               </div>
 
-              <p>Php 9,000.00</p>
+              <p>Php {info.min_price ?? 0}</p>
             </div>
           </div>
         </div>

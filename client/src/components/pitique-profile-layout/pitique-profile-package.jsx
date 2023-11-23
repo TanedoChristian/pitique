@@ -1,23 +1,37 @@
 import PitiqueProfilePackageItem from "./pitique-profile-package-item";
 import { packageItems } from "../../helper/package-item";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../helper/api";
 
 const PitiqueProfilePackage = () => {
   const [showModal, setShowModal] = useState(false);
   const [packageInfo, setPackageInfo] = useState({});
+  const [packages, setPackages] = useState([{}]);
+  const [flag, setFlag] = useState(false);
 
-  const onClickPackageInfo = (info) => {
+  // TODO: change this to dynamic
+  const pitiquerId = 1;
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await api.get(`/packages/pitiquer/${pitiquerId}`);
+      setPackages(data);
+    };
+
+    fetch();
+  }, [flag]);
+
+  const onClickPackageInfo = (info, type) => {
     setPackageInfo((prevState) => {
       return {
         ...prevState,
-        pkg_desc: info.title,
+        packageId: info.id ?? -1, // -1 = its not from the table
+        pkg_desc: info.pkg_desc,
         min_price: info.price,
-        hasphoto: info.type === "photo",
-        hasvid: info.type === "video",
-        hasamnty: info.type === "amenity",
-        isavailable: info.availability,
-        isvisible: info.availability,
+        hasphoto: type === "photo",
+        hasvid: type === "video",
+        hasamnty: type === "amenity",
+        isavailable: info.availability ?? false,
+        isvisible: info.availability ?? false,
         // TODO: change this if the pitiquer is ready
         ptqr_id: 1,
       };
@@ -27,7 +41,10 @@ const PitiqueProfilePackage = () => {
   const handleSubmit = async () => {
     const { data } = await api.post("/packages", packageInfo);
 
-    console.log(data);
+    if (data) {
+      setFlag(!flag);
+      setShowModal(false);
+    }
   };
 
   return (
@@ -95,14 +112,19 @@ const PitiqueProfilePackage = () => {
       ) : (
         ""
       )}
-      {packageItems.map((item) => (
-        <PitiqueProfilePackageItem
-          setShowModal={setShowModal}
-          info={item}
-          key={item.id}
-          setPackage={onClickPackageInfo}
-        />
-      ))}
+      {packageItems.map((item, index) => {
+        const _item = packages.find((i) => i.pkg_desc === item.pkg_desc);
+
+        return (
+          <PitiqueProfilePackageItem
+            setShowModal={setShowModal}
+            info={_item === undefined ? item : _item}
+            key={index}
+            setPackage={onClickPackageInfo}
+            packageType={item.type}
+          />
+        );
+      })}
 
       <div>
         <button className=" text-xl mt-5 p-3 w-full border-2 border-cyan-500 text-cyan-500  font-bold rounded-sm shadow-md">
