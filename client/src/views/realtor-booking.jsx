@@ -15,7 +15,17 @@ import { BookingContext } from "../context/bookingContext";
 const RealtorBooking = () => {
   const [count, setCount] = useState(1);
 
-  const [bookingInfo, setBookingInfo] = useState({});
+  const [bookingInfo, setBookingInfo] = useState({
+    street: "",
+    unit: "",
+    city: "",
+    province: "",
+    postalCode: "",
+    propertySize: "",
+    remarks: "",
+    price: "",
+    date: "",
+  });
 
   return (
     <div className="poppins h-screen  relative">

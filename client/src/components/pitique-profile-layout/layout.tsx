@@ -11,6 +11,7 @@ import PitiqueProfilePortfolio from "./pitique-profile-portfolio";
 const PitiqueProfileLayout = () => {
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showPackage, setShowPackage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleBack = () => {
     if (showPortfolio) {
@@ -21,7 +22,52 @@ const PitiqueProfileLayout = () => {
     }
   };
   return (
-    <div>
+    <div className="poppins">
+      {showModal ? (
+        <div className="w-full fixed h-screen flex justify-center items-center backdrop-blur-sm">
+          <div className="w-[70%]  border border-gray-300 flex flex-col gap-6 bg-white rounded-md p-5">
+            <div className="flex justify-center items-center">
+              <h1 className="text-sm font-bold">Aerial Photography</h1>
+            </div>
+            <input
+              type="text"
+              name="price"
+              placeholder="Price (Php)"
+              id=""
+              className="p-1 bg-gray-100 "
+            />
+
+            <div className="flex items-center gap-3">
+              <label className="text-xs font-bold">Offer Service</label>
+              <input
+                type="checkbox"
+                name="price"
+                placeholder="Price (Php)"
+                id=""
+                className="p-1 bg-gray-100 "
+              />
+            </div>
+
+            <div className="flex justify-center gap-3 ">
+              <button
+                className="p-1 px-4 bg-gray-200 text-gray-500 rounded-md"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                Cancel
+              </button>
+
+              <button className="p-1 px-4 bg-cyan-400 text-white rounded-md">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       <Header className="flex items-center w-full gap-16 relative">
         <button className="p-5 absolute" onClick={handleBack}>
           <FontAwesomeIcon
@@ -41,7 +87,7 @@ const PitiqueProfileLayout = () => {
           <PitiqueProfilePortfolio />
         </div>
       ) : showPackage ? (
-        <PitiqueProfilePackage />
+        <PitiqueProfilePackage setShowModal={setShowModal} />
       ) : (
         <PitiqueProfileDetails
           setShowPortfolio={setShowPortfolio}

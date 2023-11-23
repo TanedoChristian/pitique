@@ -14,10 +14,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { data } = await api.post("/realtors/login", user);
-
-    console.log(data);
   };
 
   return (
