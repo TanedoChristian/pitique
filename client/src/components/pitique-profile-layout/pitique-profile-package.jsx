@@ -26,12 +26,12 @@ const PitiqueProfilePackage = () => {
         ...prevState,
         packageId: info.id ?? -1, // -1 = its not from the table
         pkg_desc: info.pkg_desc,
-        min_price: info.price,
+        min_price: info.min_price,
         hasphoto: type === "photo",
         hasvid: type === "video",
         hasamnty: type === "amenity",
-        isavailable: info.availability ?? false,
-        isvisible: info.availability ?? false,
+        isavailable: info.isavailable ?? false,
+        isvisible: info.isvisible ?? false,
         // TODO: change this if the pitiquer is ready
         ptqr_id: 1,
       };
@@ -69,6 +69,7 @@ const PitiqueProfilePackage = () => {
                   min_price: e.target.value,
                 }))
               }
+              value={packageInfo.min_price ?? 0}
             />
 
             <div className="flex items-center gap-3">
@@ -86,6 +87,7 @@ const PitiqueProfilePackage = () => {
                     isvisible: e.target.checked,
                   }))
                 }
+                checked={packageInfo.isavailable}
               />
             </div>
 

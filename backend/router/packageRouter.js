@@ -72,12 +72,12 @@ router.post("/", async (req, res) => {
       newPackage.ptqr_id,
       newPackage.pkg_desc
     );
-    console.log(newPackage);
 
     if (!packages) {
       await packageModel.createPackage(newPackage);
       res.status(201).json({ message: "Package created successfully" });
     } else {
+      console.log(newPackage);
       await packageModel.updatePackagePrice(newPackage.packageId, newPackage);
       res.status(200).json({ message: "Ok" });
     }
