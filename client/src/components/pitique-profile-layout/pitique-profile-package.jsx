@@ -1,43 +1,115 @@
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PitiqueProfilePackageItem from "./pitique-profile-package-item";
+import { packageItems } from "../../helper/package-item";
+import { useState } from "react";
+import api from "../../helper/api";
 
-const PitiqueProfilePackage = ({ setShowModal }) => {
+const PitiqueProfilePackage = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [packageInfo, setPackageInfo] = useState({});
+
+  const onClickPackageInfo = (info) => {
+    setPackageInfo((prevState) => {
+      return {
+        ...prevState,
+        pkg_desc: info.title,
+        min_price: info.price,
+        hasphoto: info.type === "photo",
+        hasvid: info.type === "video",
+        hasamnty: info.type === "amenity",
+        isavailable: info.availability,
+        isvisible: info.availability,
+        // TODO: change this if the pitiquer is ready
+        ptqr_id: 1,
+      };
+    });
+  };
+
+  const handleSubmit = async () => {
+    const { data } = await api.post("/packages", packageInfo);
+
+    console.log(data);
+  };
+
   return (
-    <div>
-      <div className="w-full justify-center flex flex-col gap-3 p-3">
-        <div className="bg-gray-200 shadow-md p-3">
-          <div className="flex gap-3">
-            <img
-              className="w-[150px] h-[70px] rounded-xl"
-              src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    <>
+      {showModal ? (
+        <div className="w-full fixed h-screen flex justify-center items-center backdrop-blur-sm">
+          <div className="w-[70%]  border border-gray-300 flex flex-col gap-6 bg-white rounded-md p-5">
+            <div className="flex justify-center items-center">
+              <h1 className="text-sm font-bold">
+                {packageInfo.pkg_desc && packageInfo.pkg_desc}
+              </h1>
+            </div>
+            <input
+              type="number"
+              name="price"
+              placeholder="Price (Php)"
+              id=""
+              className="p-1 bg-gray-100 "
+              onChange={(e) =>
+                setPackageInfo((prevState) => ({
+                  ...prevState,
+                  min_price: e.target.value,
+                }))
+              }
             />
-            <div>
-              <div className="flex gap-5 items-center">
-                <h1 className="font-bold">Arial Photography</h1>
-                <button
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faPen}
-                    className="text-sm text-cyan-500"
-                  />
-                </button>
-              </div>
 
-              <p>Php 9,000.00</p>
+            <div className="flex items-center gap-3">
+              <label className="text-xs font-bold">Offer Service</label>
+              <input
+                type="checkbox"
+                name="price"
+                placeholder="Price (Php)"
+                id=""
+                className="p-1 bg-gray-100 "
+                onChange={(e) =>
+                  setPackageInfo((prevState) => ({
+                    ...prevState,
+                    isavailable: e.target.checked,
+                    isvisible: e.target.checked,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="flex justify-center gap-3 ">
+              <button
+                className="p-1 px-4 bg-gray-200 text-gray-500 rounded-md"
+                onClick={() => {
+                  setShowModal(false);
+                  setPackageInfo({});
+                }}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="p-1 px-4 bg-cyan-400 text-white rounded-md"
+                onClick={handleSubmit}
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>
+      ) : (
+        ""
+      )}
+      {packageItems.map((item) => (
+        <PitiqueProfilePackageItem
+          setShowModal={setShowModal}
+          info={item}
+          key={item.id}
+          setPackage={onClickPackageInfo}
+        />
+      ))}
 
-        <div>
-          <button className=" text-xl mt-5 p-3 w-full border-2 border-cyan-500 text-cyan-500  font-bold rounded-sm shadow-md">
-            NEXT
-          </button>
-        </div>
+      <div>
+        <button className=" text-xl mt-5 p-3 w-full border-2 border-cyan-500 text-cyan-500  font-bold rounded-sm shadow-md">
+          NEXT
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 
