@@ -42,7 +42,7 @@ class RealtorModel {
     const status = "active";
 
     await this.pool.query(
-      "INSERT INTO realtor (fname, mname,lname,email,pass,birthdate, status) VALUES (?, ?, ? ,? ,? ,?, ?)",
+      "INSERT INTO realtor (fname, mname,lname,email,pass,birthdate, status,phone) VALUES (?, ?, ? ,? ,? ,?, ?,?)",
       [
         realtor.firstname,
         realtor.middlename,
@@ -51,6 +51,7 @@ class RealtorModel {
         hashedPassword,
         realtor.birthday,
         status,
+        realtor.phone,
       ]
     );
   }
