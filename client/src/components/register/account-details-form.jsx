@@ -26,7 +26,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
     return Object.values(user).every((value) => !value);
   };
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     const { data } = await api.post("/realtors", user);
 
     if (data) {
@@ -84,7 +84,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
         </div>
         <button
           className="mt-5 p-3 w-full bg-cyan-400 text-white font-bold rounded-sm shadow-md"
-          onClick={handleLogin}
+          onClick={handleRegister}
           disabled={!isChecked || areAllFieldsEmpty() || !passwordMatch}
         >
           Login
