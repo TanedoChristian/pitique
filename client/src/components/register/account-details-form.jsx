@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
-
+import api from "../../helper/api";
 const AccountDetailsForm = ({ setUser, user }) => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isChecked, setChecked] = useState(false);
@@ -26,8 +26,15 @@ const AccountDetailsForm = ({ setUser, user }) => {
     return Object.values(user).every((value) => !value);
   };
 
-  const handleLogin = () => {
-    console.log(user);
+  const handleLogin = async () => {
+    const { data } = await api.post("/realtors", user);
+
+    if (data) {
+      window.location.href = "/login";
+    } else {
+      //TODO: change this to swal2
+      alert("Something went wrong");
+    }
   };
 
   return (

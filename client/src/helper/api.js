@@ -2,7 +2,8 @@ import axios from "axios";
 
 const createApi = () => {
   const api = axios.create({
-    baseURL: import.meta.env.API_URL,
+    // TODO: change this to env variable
+    baseURL: "http://localhost:8000",
     timeout: 5000,
   });
 
