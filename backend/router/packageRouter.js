@@ -77,7 +77,6 @@ router.post("/", async (req, res) => {
       await packageModel.createPackage(newPackage);
       res.status(201).json({ message: "Package created successfully" });
     } else {
-      console.log(newPackage);
       await packageModel.updatePackagePrice(newPackage.packageId, newPackage);
       res.status(200).json({ message: "Ok" });
     }
