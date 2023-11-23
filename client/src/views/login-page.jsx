@@ -15,9 +15,19 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data } = await api.post("/realtors/login", user);
+    try {
+      const { data } = await api.post("/realtors/login", user);
 
-    console.log(data);
+      if (data) {
+        localStorage.setItem("user", data);
+        window.location.href = "/dashboard";
+      } else {
+        alert("Cannot authorized");
+      }
+    } catch (e) {
+      if (e.response.status === 401) alert("unauthorized");
+      else alert("something went wrong!");
+    }
   };
 
   return (
