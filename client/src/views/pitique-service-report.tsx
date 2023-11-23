@@ -35,9 +35,9 @@ const PitiqueServiceReport = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-1 w-full justify-center  bg-gray-100 rounded-xl mt-5">
+        <div className="flex flex-col gap-1 w-full justify-center  bg-gray-100 rounded-xl mt-2">
           <div className="flex gap-3 items-center p-3 justify-center">
-            <h1 className="text-3xl text-cyan-500">Php 54,000</h1>
+            <h1 className="text-3xl font-bold text-cyan-500">Php 54,000</h1>
             <p className="font-bold">Profit </p>
           </div>
           <div className="p-3 flex justify-between items-center border-t border-gray-300 text-gray-600">
@@ -54,16 +54,54 @@ const PitiqueServiceReport = () => {
         <div className="flex   w-full justify-between   rounded-xl mt-2">
           <div className="flex p-5 w-[45%] items-center gap-2 bg-gray-100 rounded-md">
             <h1 className="text-xl text-cyan-500 font-bold"> 3</h1>
-            <p>Completed</p>
+            <p className="text-sm font-bold">Completed</p>
           </div>
 
           <div className="flex p-5 w-[45%] items-center gap-2 bg-gray-100 rounded-md">
             <h1 className="text-xl font-bold text-cyan-500"> 3</h1>
-            <p>Completed</p>
+            <p className="text-sm font-bold">Completed</p>
           </div>
         </div>
       </div>
-      <div className="p-3">
+      <div className="px-3 flex flex-col gap-3">
+        <div className="rounded-md flex flex-col  bg-gray-100 poppins shadow-md p-2 text-sm">
+          <div className="flex w-full  justify-between px-3">
+            <p className="text-xs font-bold">Php 18,000.00</p>
+            <p className="font-bold text-green-400">Completed</p>
+          </div>
+          <div className="flex justify-between px-3 items-center  p-1 border-b border-gray-300">
+            <div className="flex gap-2 items-center">
+              <img
+                className="w-8 h-8 rounded-full "
+                src="https://cdn-icons-png.flaticon.com/512/5605/5605056.png"
+              />
+              <h1 className="text-xs font-bold">James Reid</h1>
+            </div>
+
+            <div className="flex flex-col gap-2 justify-end items-end">
+              <p className="text-xs"> Morning, May 3, 2023</p>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center px-3 ">
+            <div className="flex gap-3 items-center p-2">
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                className="text-red-500 w-4 h-4"
+              />
+              <h1 className="text-xs ">Cebu City</h1>
+            </div>
+            <h1 className="text-xs">
+              Starts at <span className="font-bold">Php 18,000</span>
+            </h1>
+          </div>
+
+          <div className="px-1 border-t border-gray-300 p-2 mt-2">
+            <p className="text-xs">
+              Client asked for: <b>Aerial Photography, Aerial Videography </b>
+            </p>
+          </div>
+        </div>
         <div className="rounded-md flex flex-col  bg-gray-100 poppins shadow-md p-2 text-sm">
           <div className="flex w-full  justify-between px-3">
             <p className="text-xs font-bold">Php 18,000.00</p>
