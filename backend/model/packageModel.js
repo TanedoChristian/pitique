@@ -24,20 +24,17 @@ class PackageModel {
 
   // CDU
   async createPackage(packages) {
-    // Default Value
-    const visibility = true;
-
     await this.pool.query(
       "INSERT INTO package (ptqr_id,hasphoto,hasvid,hasamnty,min_price,pkg_desc,isavailable,isvisible) VALUES (?, ?, ? ,? ,? ,?, ?, ?)",
       [
-        packages.pitiquerId,
-        packages.hasPhoto,
-        packages.hasVid,
-        packages.hasAmnty,
-        packages.minPrice,
-        packages.pckgDesc,
-        packages.isAvailable,
-        visibility,
+        packages.ptqr_id,
+        packages.hasphoto,
+        packages.hasvid,
+        packages.hasamnty,
+        packages.min_price,
+        packages.pkg_desc,
+        packages.isavailable,
+        packages.isvisible,
       ]
     );
   }
