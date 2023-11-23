@@ -44,12 +44,12 @@ class RealtorModel {
     await this.pool.query(
       "INSERT INTO realtor (fname, mname,lname,email,pass,birthdate, status) VALUES (?, ?, ? ,? ,? ,?, ?)",
       [
-        realtor.firstName,
-        realtor.middleName,
-        realtor.lastName,
+        realtor.firstname,
+        realtor.middlename,
+        realtor.lastname,
         realtor.email,
         hashedPassword,
-        realtor.birthdate,
+        realtor.birthday,
         status,
       ]
     );
