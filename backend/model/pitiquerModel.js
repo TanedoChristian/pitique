@@ -15,6 +15,18 @@ class PitiquerModel {
     return rows[0];
   }
 
+  //TODO: please put here limit for tabulation
+  //   GET Pitiquer
+
+  async getPitiquers() {
+    const [rows] = await this.pool.query(
+      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price FROM pitiquer p INNER JOIN package pa" +
+        " ON p.id = pa.ptqr_id" +
+        " GROUP BY p.id"
+    );
+    return rows;
+  }
+
   async getPitiquerById(pitiquerId) {
     const [rows] = await this.pool.query(
       "SELECT * FROM pitiquer WHERE id = ?",

@@ -11,9 +11,12 @@ import BookingContactForm from "../components/realtor-booking-layout/realtor-boo
 import BookingReviewForm from "../components/realtor-booking-layout/realtor-booking-review-form";
 import BookingSuccess from "../components/realtor-booking-layout/realtor-booking-success";
 import { BookingContext } from "../context/bookingContext";
+import { useLocation } from "react-router-dom";
 
 const RealtorBooking = () => {
   const [count, setCount] = useState(1);
+  const { state } = useLocation();
+  const packageId = state.id;
 
   const [bookingInfo, setBookingInfo] = useState({
     street: "",
@@ -25,8 +28,9 @@ const RealtorBooking = () => {
     remarks: "",
     price: "",
     date: "",
+    pkg_id: packageId,
   });
-
+  console.log(bookingInfo);
   return (
     <div className="poppins h-screen  relative">
       <Header

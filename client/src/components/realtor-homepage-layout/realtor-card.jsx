@@ -1,9 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "react-router-dom";
 const RealtorCard = ({ realtor }) => {
   return (
-    <div className=" h-[250px] w-[95%] rounded-md flex flex-col poppins p-3 bg-gray-100 shadow-md m-2">
+    <Link
+      to={{ pathname: "/booking", state: realtor.id }}
+      state={{ id: realtor.id }}
+      className=" h-[250px] w-[95%] rounded-md flex flex-col poppins p-3 bg-gray-100 shadow-md m-2"
+    >
       <img
         className="h-[70%]  w-full rounded-md"
         src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -15,7 +19,7 @@ const RealtorCard = ({ realtor }) => {
             src="https://cdn-icons-png.flaticon.com/512/5605/5605056.png"
           />
           <h1 className="text-sm font-bold">
-            {`${realtor?.firstname} ${realtor?.lastname}`}
+            {`${realtor?.fname} ${realtor?.lname}`}
           </h1>
         </div>
         <div className="flex gap-2 items-center">
@@ -38,13 +42,16 @@ const RealtorCard = ({ realtor }) => {
             icon={faLocationDot}
             className="text-red-500 w-5 h-5"
           />
-          <h1 className="text-sm ">{`${realtor?.address}`}</h1>
+          <h1 className="text-sm ">{`${realtor?.city}, ${realtor?.province}`}</h1>
         </div>
         <h1 className="text-sm">
-          Starts at <span className="font-bold">{`Php ${realtor.price}`}</span>
+          Starts at{" "}
+          <span className="font-bold">{`Php ${realtor.min_price.toFixed(
+            2
+          )}`}</span>
         </h1>
       </div>
-    </div>
+    </Link>
   );
 };
 

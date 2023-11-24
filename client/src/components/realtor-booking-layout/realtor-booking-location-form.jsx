@@ -35,7 +35,7 @@ const BookingLocationForm = ({ setCount }) => {
         <input
           type="text"
           placeholder="Unit no."
-          name="unit"
+          name="unit_no"
           onChange={handleChange}
           className="p-3 bg-gray-200 w-full rounded-sm"
         />
@@ -59,7 +59,7 @@ const BookingLocationForm = ({ setCount }) => {
         <input
           type="text"
           placeholder="Postal Code"
-          name="postalCode"
+          name="postal"
           onChange={handleChange}
           className="p-3 bg-gray-200 w-full rounded-sm "
         />
@@ -67,7 +67,7 @@ const BookingLocationForm = ({ setCount }) => {
         <input
           type="text"
           placeholder="Property Size"
-          name="propertySize"
+          name="property_size"
           onChange={handleChange}
           className="p-3 bg-gray-200 w-full rounded-sm "
         />
@@ -76,7 +76,7 @@ const BookingLocationForm = ({ setCount }) => {
           cols={15}
           className="bg-gray-200 p-3"
           placeholder="Add Notes"
-          name="remarks"
+          name="rmrks"
           onChange={handleChange}
         ></textarea>
       </div>

@@ -5,6 +5,22 @@ const PitiquerModel = require("../model/pitiquerModel");
 
 const pitiquerModel = new PitiquerModel();
 
+// GET /pitiquers/:id - Get all realtor
+router.get("/", async (req, res) => {
+  try {
+    const pitiquer = await pitiquerModel.getPitiquers();
+
+    if (!pitiquer) {
+      res.status(404).send("pitiquer not found");
+    } else {
+      res.json(pitiquer);
+    }
+  } catch (error) {
+    console.error(`Error getting pitiquers`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // GET /pitiquers/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
   const pitiquerId = req.params.id;
