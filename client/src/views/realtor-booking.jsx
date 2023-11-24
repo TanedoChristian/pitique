@@ -16,7 +16,7 @@ import { useLocation } from "react-router-dom";
 const RealtorBooking = () => {
   const [count, setCount] = useState(1);
   const { state } = useLocation();
-  const packageId = state.id;
+  const pitiquerId = state.id;
 
   const [bookingInfo, setBookingInfo] = useState({
     street: "",
@@ -28,9 +28,20 @@ const RealtorBooking = () => {
     remarks: "",
     price: "",
     date: "",
-    pkg_id: packageId,
+    pkg_id: "",
+    pkg_name: "",
   });
+
+  const handleChangePackage = (id, name) => {
+    setBookingInfo((prev) => ({
+      ...prev,
+      pkg_id: id,
+      pkg_name: name,
+    }));
+  };
+
   console.log(bookingInfo);
+
   return (
     <div className="poppins h-screen  relative">
       <Header
@@ -54,7 +65,11 @@ const RealtorBooking = () => {
           {count == 1 ? (
             <BookingLocationForm setCount={setCount} />
           ) : count == 2 ? (
-            <BookingServiceForm setCount={setCount} />
+            <BookingServiceForm
+              setCount={setCount}
+              pitiquerId={pitiquerId}
+              handleChangePackage={handleChangePackage}
+            />
           ) : count == 3 ? (
             <BookingScheduleForm setCount={setCount} />
           ) : count == 4 ? (

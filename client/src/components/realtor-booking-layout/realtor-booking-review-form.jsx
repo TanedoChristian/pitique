@@ -53,15 +53,8 @@ const BookingReviewForm = ({ setCount }) => {
 
       <div className="p-3 mt-5">
         <div className="w-full  flex justify-between">
-          <h1>
-            {bookingInfo?.price == 9000
-              ? "Aerial Photography"
-              : "Aerial Videography"}
-          </h1>
-          <p>
-            Php
-            {bookingInfo?.price == 9000 ? " 9,000.00" : " 10,000.00"}
-          </p>
+          <h1>{bookingInfo?.pkg_name}</h1>
+          <p>Php {bookingInfo?.price}</p>
         </div>
         <div className="w-full  flex justify-between  mt-3">
           <h1>Subtotal</h1>
@@ -70,7 +63,7 @@ const BookingReviewForm = ({ setCount }) => {
 
         <div className="w-full  flex justify-between mt-2 p-3 border-t border-gray-300">
           <h1>Total </h1>
-          <p className="font-bold">Php 8,000.00</p>
+          <p className="font-bold">{bookingInfo?.price}</p>
         </div>
       </div>
       <button

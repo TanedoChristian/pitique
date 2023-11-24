@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// GET /packages/pitiquer/:id - Get a specific package by ID
+// GET /packages/pitiquer/:id - Get a specific package by pitiquer ID
 router.get("/pitiquer/:id", async (req, res) => {
   const pitiquerId = req.params.id;
 

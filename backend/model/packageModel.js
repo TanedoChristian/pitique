@@ -16,7 +16,7 @@ class PackageModel {
 
   async getPackageByPitiquerId(pitiquerId) {
     const [rows] = await this.pool.query(
-      "SELECT * FROM package WHERE ptqr_id = ?",
+      "SELECT * FROM package WHERE ptqr_id = ? AND isavailable = 1",
       [pitiquerId]
     );
     return rows;
