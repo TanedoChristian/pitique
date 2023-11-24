@@ -1,12 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { BookingContext } from "../../context/bookingContext";
+import api from "../../helper/api";
 
 const BookingReviewForm = ({ setCount }) => {
   const [bookingInfo, setBookingInfo] = useContext(BookingContext);
 
-  const handleSubmit = () => {
-    console.log(bookingInfo);
+  const handleSubmit = async () => {
+    setBookingInfo((prev) => ({
+      ...prev,
+      total: bookingInfo.price,
+      fee: bookingInfo.price,
+      share: 0,
+    }));
+
+    const { data } = await api.post("/bookings/request", bookingInfo);
+
+    console.log(data);
   };
 
   return (

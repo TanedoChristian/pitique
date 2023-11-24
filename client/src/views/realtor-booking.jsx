@@ -17,19 +17,22 @@ const RealtorBooking = () => {
   const [count, setCount] = useState(1);
   const { state } = useLocation();
   const pitiquerId = state.id;
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const [bookingInfo, setBookingInfo] = useState({
     street: "",
-    unit: "",
+    unit_no: "",
     city: "",
     province: "",
-    postalCode: "",
-    propertySize: "",
-    remarks: "",
+    postal: "",
+    property_size: "",
+    rmrks: "",
     price: "",
     date: "",
     pkg_id: "",
     pkg_name: "",
+    rltr_id: user.id,
+    ptqr_id: pitiquerId,
   });
 
   const handleChangePackage = (id, name) => {
@@ -39,8 +42,6 @@ const RealtorBooking = () => {
       pkg_name: name,
     }));
   };
-
-  console.log(bookingInfo);
 
   return (
     <div className="poppins h-screen  relative">
