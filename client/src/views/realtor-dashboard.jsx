@@ -2,10 +2,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
 import RealtorLayout from "../components/realtor-homepage-layout/layout";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import api from "../helper/api";
 const RealtorDashboard = () => {
   const user = localStorage.getItem("user");
+  const [pitiquer, setPitiquer] = useState([]);
+
+  useEffect(() => {
+    if (user === undefined || !user) window.location.href = "/login";
+  }, [user]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await api.get("/pitiquers");
+      if (data) {
+        setPitiquer(data);
+      }
+    };
+
+    fetch();
+  }, []);
 
   const realtors = [
     {
@@ -35,10 +51,6 @@ const RealtorDashboard = () => {
     },
   ];
 
-  useEffect(() => {
-    if (user === undefined || !user) window.location.href = "/login";
-  }, [user]);
-
   return (
     <div className="w-full">
       <Header className="flex items-center p-5 gap-5">
@@ -53,7 +65,7 @@ const RealtorDashboard = () => {
         <FontAwesomeIcon icon={faSearch} />
       </Header>
 
-      <RealtorLayout realtors={realtors} />
+      <RealtorLayout realtors={pitiquer} />
     </div>
   );
 };

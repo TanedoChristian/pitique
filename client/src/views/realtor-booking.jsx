@@ -11,21 +11,37 @@ import BookingContactForm from "../components/realtor-booking-layout/realtor-boo
 import BookingReviewForm from "../components/realtor-booking-layout/realtor-booking-review-form";
 import BookingSuccess from "../components/realtor-booking-layout/realtor-booking-success";
 import { BookingContext } from "../context/bookingContext";
+import { useLocation } from "react-router-dom";
 
 const RealtorBooking = () => {
   const [count, setCount] = useState(1);
+  const { state } = useLocation();
+  const pitiquerId = state.id;
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const [bookingInfo, setBookingInfo] = useState({
     street: "",
-    unit: "",
+    unit_no: "",
     city: "",
     province: "",
-    postalCode: "",
-    propertySize: "",
-    remarks: "",
+    postal: "",
+    property_size: "",
+    rmrks: "",
     price: "",
     date: "",
+    pkg_id: "",
+    pkg_name: "",
+    rltr_id: user.id,
+    ptqr_id: pitiquerId,
   });
+
+  const handleChangePackage = (id, name) => {
+    setBookingInfo((prev) => ({
+      ...prev,
+      pkg_id: id,
+      pkg_name: name,
+    }));
+  };
 
   return (
     <div className="poppins h-screen  relative">
@@ -50,7 +66,11 @@ const RealtorBooking = () => {
           {count == 1 ? (
             <BookingLocationForm setCount={setCount} />
           ) : count == 2 ? (
-            <BookingServiceForm setCount={setCount} />
+            <BookingServiceForm
+              setCount={setCount}
+              pitiquerId={pitiquerId}
+              handleChangePackage={handleChangePackage}
+            />
           ) : count == 3 ? (
             <BookingScheduleForm setCount={setCount} />
           ) : count == 4 ? (

@@ -7,9 +7,11 @@ class BookingModel {
 
   //   GET booking
   async getBookingById(bookingId) {
-    const [rows] = await this.pool.query("SELECT * FROM booking WHERE id = ?", [
-      bookingId,
-    ]);
+    const [rows] = await this.pool.query(
+      "SELECT b.city, b.date, b.fee, b.id, b.pkg_id, b.postal, b.price, b.province, b.ptqr_id, b.rltr_id, b.status, b.street, b.total, b.unit_no, r.fname, r.lname, r.email, r.phone, p.pkg_desc " +
+        "FROM booking b INNER JOIN package p ON b.pkg_id = p.id INNER JOIN realtor r ON b.rltr_id = r.id WHERE b.id = ? GROUP BY b.id",
+      [bookingId]
+    );
     return rows[0];
   }
 
@@ -67,16 +69,16 @@ class BookingModel {
     await this.pool.query(
       "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled,street, unit_no, city, province, postal, property_size) VALUES (?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
       [
-        bookingInfo.packageId,
-        bookingInfo.realtorId,
-        bookingInfo.pitiquerId,
+        bookingInfo.pkg_id,
+        bookingInfo.rltr_id,
+        bookingInfo.ptqr_id,
         status,
         bookingInfo.price,
         bookingInfo.share,
         bookingInfo.fee,
         bookingInfo.total,
         bookingInfo.date,
-        bookingInfo.remarks,
+        bookingInfo.rmrks,
         bookingInfo.approved,
         bookingInfo.declined,
         bookingInfo.completed,
@@ -97,10 +99,10 @@ class BookingModel {
     const status = "accepted";
 
     // Convert to MySql DateTime
-    const approvedDate = new Date().toLocaleString();
+    const approvedDate = new Date().toISOString().split("T")[0];
 
     await this.pool.query(
-      "UPDATE FROM booking SET status = ?, approved=? WHERE id = ?",
+      "UPDATE booking SET status = ?, approved=? WHERE id = ?",
       [status, approvedDate, bookingId]
     );
   }
@@ -111,17 +113,17 @@ class BookingModel {
     const status = "declined";
 
     // Convert to MySql DateTime
-    const declinedRequest = new Date().toLocaleString();
+    const declinedRequest = new Date().toISOString().split("T")[0];
 
     await this.pool.query(
-      "UPDATE FROM booking SET status = ?, declined=? WHERE id = ?",
+      "UPDATE booking SET status = ?, declined=? WHERE id = ?",
       [status, declinedRequest, bookingId]
     );
   }
 
   //   Reschedule date
   async rescheduleBooking(bookingId, date) {
-    await this.pool.query("UPDATE FROM booking SET date = ? WHERE id = ?", [
+    await this.pool.query("UPDATE booking SET date = ? WHERE id = ?", [
       date,
       bookingId,
     ]);
