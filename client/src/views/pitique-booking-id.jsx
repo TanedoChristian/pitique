@@ -23,6 +23,12 @@ const PitiqueBookingId = () => {
     fetch();
   }, []);
 
+  const handleDecline = async () => {
+    const { data } = await api.put(`/bookings/decline/${id}`);
+
+    console.log(data);
+  };
+
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
@@ -116,19 +122,24 @@ const PitiqueBookingId = () => {
             <p className="font-bold">Php {booking.total}</p>
           </div>
         </div>
-        <div className="w-full">
-          <button className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md">
-            DECLINE BOOKING
-          </button>
-          <button
-            className=" text-xl mt-2 p-3 w-full border-2  text-white bg-cyan-500  font-bold rounded-md shadow-md"
-            onClick={() => {
-              setCount((prev) => prev + 1);
-            }}
-          >
-            CONFIRM BOOKING
-          </button>
-        </div>
+        {booking.status === "pending" && (
+          <div className="w-full">
+            <button
+              onClick={handleDecline}
+              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
+            >
+              DECLINE BOOKING
+            </button>
+            <button
+              className=" text-xl mt-2 p-3 w-full border-2  text-white bg-cyan-500  font-bold rounded-md shadow-md"
+              onClick={() => {
+                setCount((prev) => prev + 1);
+              }}
+            >
+              CONFIRM BOOKING
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

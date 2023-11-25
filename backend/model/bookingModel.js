@@ -99,10 +99,10 @@ class BookingModel {
     const status = "accepted";
 
     // Convert to MySql DateTime
-    const approvedDate = new Date().toLocaleString();
+    const approvedDate = new Date().toISOString().split("T")[0];
 
     await this.pool.query(
-      "UPDATE FROM booking SET status = ?, approved=? WHERE id = ?",
+      "UPDATE booking SET status = ?, approved=? WHERE id = ?",
       [status, approvedDate, bookingId]
     );
   }
@@ -113,17 +113,17 @@ class BookingModel {
     const status = "declined";
 
     // Convert to MySql DateTime
-    const declinedRequest = new Date().toLocaleString();
+    const declinedRequest = new Date().toISOString().split("T")[0];
 
     await this.pool.query(
-      "UPDATE FROM booking SET status = ?, declined=? WHERE id = ?",
+      "UPDATE booking SET status = ?, declined=? WHERE id = ?",
       [status, declinedRequest, bookingId]
     );
   }
 
   //   Reschedule date
   async rescheduleBooking(bookingId, date) {
-    await this.pool.query("UPDATE FROM booking SET date = ? WHERE id = ?", [
+    await this.pool.query("UPDATE booking SET date = ? WHERE id = ?", [
       date,
       bookingId,
     ]);

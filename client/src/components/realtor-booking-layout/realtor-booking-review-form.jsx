@@ -16,6 +16,7 @@ const BookingReviewForm = ({ setCount }) => {
 
     const { data } = await api.post("/bookings/request", bookingInfo);
 
+    // TODO
     console.log(data);
   };
 
