@@ -7,9 +7,11 @@ class BookingModel {
 
   //   GET booking
   async getBookingById(bookingId) {
-    const [rows] = await this.pool.query("SELECT * FROM booking WHERE id = ?", [
-      bookingId,
-    ]);
+    const [rows] = await this.pool.query(
+      "SELECT b.city, b.date, b.fee, b.id, b.pkg_id, b.postal, b.price, b.province, b.ptqr_id, b.rltr_id, b.status, b.street, b.total, b.unit_no, r.fname, r.lname, r.email, r.phone, p.pkg_desc " +
+        "FROM booking b INNER JOIN package p ON b.pkg_id = p.id INNER JOIN realtor r ON b.rltr_id = r.id WHERE b.id = ? GROUP BY b.id",
+      [bookingId]
+    );
     return rows[0];
   }
 
