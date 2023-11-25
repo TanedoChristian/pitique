@@ -1,11 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
+import SideNav from "../components/common/sidenav";
 const PitiqueDashboard = () => {
+  const [showSideNav, setShowNav] = useState(false);
+
   return (
     <div className="poppins">
       <Header className="flex items-center p-5 gap-5">
-        <FontAwesomeIcon icon={faBars} />
+        {showSideNav ? <SideNav setShowNav={setShowNav} /> : ""}
+        <button
+          onClick={() => {
+            setShowNav(true);
+          }}
+        >
+          <FontAwesomeIcon icon={faBars} />
+        </button>
         <input
           type="text"
           name=""
