@@ -9,6 +9,7 @@ const PitiqueBookingId = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState({});
 
+  // TODO: check if the current user is equals to the pitiquer in booking id
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -26,6 +27,14 @@ const PitiqueBookingId = () => {
   const handleDecline = async () => {
     const { data } = await api.put(`/bookings/decline/${id}`);
 
+    // TODO
+    console.log(data);
+  };
+
+  const handleConfirm = async () => {
+    const { data } = await api.put(`/bookings/accept/${id}`);
+
+    // TODO
     console.log(data);
   };
 
@@ -132,9 +141,7 @@ const PitiqueBookingId = () => {
             </button>
             <button
               className=" text-xl mt-2 p-3 w-full border-2  text-white bg-cyan-500  font-bold rounded-md shadow-md"
-              onClick={() => {
-                setCount((prev) => prev + 1);
-              }}
+              onClick={handleConfirm}
             >
               CONFIRM BOOKING
             </button>
