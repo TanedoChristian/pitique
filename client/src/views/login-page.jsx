@@ -14,10 +14,6 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-=======
-
->>>>>>> tanedo
     try {
       const { data } = await api.post("/realtors/login", user);
 

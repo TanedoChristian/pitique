@@ -3,12 +3,14 @@ import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
 import RealtorLayout from "../components/realtor-homepage-layout/layout";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
 import api from "../helper/api";
+import SideNav from "../components/common/sidenav";
+import PitiqueRatingLayout from "../components/pitique-rating-layout/layout";
 const RealtorDashboard = () => {
   const user = localStorage.getItem("user");
   const [pitiquer, setPitiquer] = useState([]);
 
+  const [showSideNav, setShowNav] = useState(false);
   useEffect(() => {
     if (user === undefined || !user) window.location.href = "/login";
   }, [user]);
@@ -24,13 +26,6 @@ const RealtorDashboard = () => {
     fetch();
   }, []);
 
-=======
-import SideNav from "../components/common/sidenav";
-
-const RealtorDashboard = () => {
-  const user = localStorage.getItem("user");
-  const [showSideNav, setShowNav] = useState(false);
->>>>>>> tanedo
   const realtors = [
     {
       firstname: "Tyler",
@@ -61,6 +56,7 @@ const RealtorDashboard = () => {
 
   return (
     <div className="w-full">
+      <PitiqueRatingLayout />
       {showSideNav ? <SideNav setShowNav={setShowNav} /> : ""}
 
       <Header className="flex items-center p-5 gap-5">
