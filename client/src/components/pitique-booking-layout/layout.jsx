@@ -2,12 +2,22 @@ import Header from "../common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import PitiqueBookingCard from "./pitique-booking-card";
+import { useState } from "react";
+import SideNav from "../common/sidenav";
 
 const PitiqueBookingLayout = () => {
+  const [showSideNav, setShowNav] = useState(false);
   return (
     <div>
+      {showSideNav ? <SideNav setShowNav={setShowNav} /> : ""}
       <Header className="flex items-center p-5 gap-5">
-        <FontAwesomeIcon icon={faBars} />
+        <button
+          onClick={() => {
+            setShowNav(true);
+          }}
+        >
+          <FontAwesomeIcon icon={faBars} />
+        </button>
         <input
           type="text"
           name=""

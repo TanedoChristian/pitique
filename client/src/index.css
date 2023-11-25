@@ -17,3 +17,7 @@ input:checked + label {
 .poppins {
   font-family: "Poppins", sans-serif;
 }
+
+li {
+  list-style-type: none;
+}

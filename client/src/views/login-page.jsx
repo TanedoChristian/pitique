@@ -14,9 +14,6 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-    const { data } = await api.post("/realtors/login", user);
-=======
 
     try {
       const { data } = await api.post("/realtors/login", user);
@@ -31,7 +28,6 @@ const LoginPage = () => {
       if (e.response.status === 401) alert("unauthorized");
       else alert("something went wrong!");
     }
->>>>>>> a296909ff006c859d351fb0e88f5f46ec4c31857
   };
 
   return (
