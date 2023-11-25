@@ -2,7 +2,6 @@ import Header from "../common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import PitiqueBookingCard from "./pitique-booking-card";
-import { useState } from "react";
 import SideNav from "../common/sidenav";
 import { useEffect, useState } from "react";
 import api from "../../helper/api";
@@ -49,7 +48,9 @@ const PitiqueBookingLayout = () => {
 
       <div className="w-full p-3">
         {bookings.length !== 0 &&
-          bookings.map((booking) => <PitiqueBookingCard booking={booking} />)}
+          bookings.map((booking) => (
+            <PitiqueBookingCard booking={booking} key={booking.id} />
+          ))}
       </div>
     </div>
   );
