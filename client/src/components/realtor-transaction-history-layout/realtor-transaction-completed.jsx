@@ -1,14 +1,17 @@
 import RealtorCard from "../realtor-homepage-layout/realtor-card";
 import RealtorTransactionCard from "./realtor-history-card";
 
-const RealtorTransactionCompeleted = () => {
+const RealtorTransactionCompeleted = ({ data }) => {
   return (
-    <div className="mt-3">
-      <h1 className="text-xl text-cyan-500 font-bold">Completed</h1>
-      <p className="text-cyan-500">May 2023</p>
+    data.length !== 0 && (
+      <div className="mt-3">
+        <h1 className="text-xl text-cyan-500 font-bold">Completed</h1>
 
-      <RealtorTransactionCard />
-    </div>
+        {data.map((booking) => (
+          <RealtorTransactionCard booking={booking} key={booking.id} />
+        ))}
+      </div>
+    )
   );
 };
 

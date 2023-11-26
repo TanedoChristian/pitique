@@ -2,8 +2,31 @@ import Header from "../common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import RealtorTransactionPending from "./realtor-transaction-pending";
+import { useEffect, useState } from "react";
+import api from "../../helper/api";
+import RealtorTransactionCompeleted from "./realtor-transaction-completed";
 
 const RealtorHistoryLayout = () => {
+  const [bookings, setBookings] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user === undefined) {
+    window.location.href = "/login";
+  }
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(`/bookings/realtor/${user.id}`);
+
+        setBookings(data);
+      } catch (error) {
+        console.error("Error fetching bookings" + error);
+      }
+    };
+
+    fetch();
+  }, []);
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
@@ -21,7 +44,12 @@ const RealtorHistoryLayout = () => {
       </Header>
 
       <div className="p-3">
-        <RealtorTransactionPending />
+        <RealtorTransactionPending
+          data={bookings.filter((booking) => booking.status === "pending")}
+        />
+        <RealtorTransactionCompeleted
+          data={bookings.filter((booking) => booking.status === "completed")}
+        />
       </div>
     </div>
   );
