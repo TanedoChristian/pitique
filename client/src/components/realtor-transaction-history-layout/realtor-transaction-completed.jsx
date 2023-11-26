@@ -5,6 +5,7 @@ import RealtorTransactionCard from "./realtor-history-card";
 
 const RealtorTransactionCompeleted = ({ data }) => {
   const [show, setShow] = useState(false);
+  const [pitiquer, setPitiquer] = useState(false);
 
   return (
     data.length !== 0 && (
@@ -16,10 +17,17 @@ const RealtorTransactionCompeleted = ({ data }) => {
             booking={booking}
             key={booking.id}
             setShow={setShow}
+            setPitiquer={setPitiquer}
           />
         ))}
 
-        {show && <RealtorRatingLayout setShow={setShow} />}
+        {show && (
+          <RealtorRatingLayout
+            setShow={setShow}
+            pitiquer={pitiquer}
+            setPitiquer={setPitiquer}
+          />
+        )}
       </div>
     )
   );

@@ -1,6 +1,6 @@
 import api from "../../helper/api";
 
-const RealtorTransactionCard = ({ booking, setShow }) => {
+const RealtorTransactionCard = ({ booking, setShow, setPitiquer }) => {
   const handleRate = async () => {
     try {
       const { data } = await api.get(
@@ -12,6 +12,7 @@ const RealtorTransactionCard = ({ booking, setShow }) => {
       // TRUE since no rating is found in database
       // This is intended
       setShow(true);
+      setPitiquer(booking);
     }
   };
 
