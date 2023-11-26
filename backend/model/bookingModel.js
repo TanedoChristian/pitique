@@ -17,7 +17,7 @@ class BookingModel {
 
   async getBookingByRealtor(realtorId) {
     const [rows] = await this.pool.query(
-      "SELECT  b.date,  b.id, b.pkg_id,  b.ptqr_id, b.rltr_id, b.status, b.total,  pr.fname, pr.lname,  p.pkg_desc " +
+      "SELECT  b.date,  b.id, b.pkg_id,  b.ptqr_id, b.rltr_id, b.status, b.total,  pr.fname, pr.lname,pr.city,pr.province,  p.pkg_desc " +
         "FROM booking b INNER JOIN package p ON b.pkg_id = p.id INNER JOIN pitiquer pr ON b.ptqr_id = pr.id WHERE b.rltr_id = ? GROUP BY b.id",
       [realtorId]
     );
