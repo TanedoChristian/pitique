@@ -1,9 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const PitiqueBookingCard = ({ booking }) => {
   return (
-    <div className="rounded-md flex flex-col  bg-gray-100 poppins shadow-md p-2 text-sm">
+    <Link
+      to={`/booking/pitique/${booking.id}`}
+      className="rounded-md flex flex-col  bg-gray-100 poppins shadow-md p-2 text-sm"
+    >
       <div className="flex w-full  justify-end px-3">
         <p className="font-bold text-green-400">{booking.status}</p>
       </div>
@@ -52,7 +56,7 @@ const PitiqueBookingCard = ({ booking }) => {
           Client asked for: <b>{booking.pkg_desc} </b>
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

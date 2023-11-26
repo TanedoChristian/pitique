@@ -161,6 +161,26 @@ router.put("/accept/:id", async (req, res) => {
   }
 });
 
+// PUT /bookings/complete/:id - complete a booking by ID
+router.put("/complete/:id", async (req, res) => {
+  const bookingId = req.params.id;
+
+  try {
+    const existingBooking = await bookingModel.getBookingById(bookingId);
+
+    if (!existingBooking) {
+      res.status(404).send("booking not found");
+      return;
+    }
+
+    await bookingModel.completeBookingRequest(bookingId);
+    res.json({ message: "Booking completed successfully" });
+  } catch (error) {
+    console.error(`Error completing Booking with ID ${bookingId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // PUT /bookings/decline/:id - decline a booking by ID
 router.put("/decline/:id", async (req, res) => {
   const bookingId = req.params.id;
@@ -177,6 +197,26 @@ router.put("/decline/:id", async (req, res) => {
     res.json({ message: "Booking declined successfully" });
   } catch (error) {
     console.error(`Error declining Booking with ID ${bookingId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// PUT /bookings/cancel/:id - cancelled a booking by ID
+router.put("/cancel/:id", async (req, res) => {
+  const bookingId = req.params.id;
+
+  try {
+    const existingBooking = await bookingModel.getBookingById(bookingId);
+
+    if (!existingBooking) {
+      res.status(404).send("booking not found");
+      return;
+    }
+
+    await bookingModel.cancelledBookingRequest(bookingId);
+    res.json({ message: "Booking cancelled successfully" });
+  } catch (error) {
+    console.error(`Error cancelling Booking with ID ${bookingId}:`, error);
     res.status(500).send("Internal Server Error");
   }
 });

@@ -108,6 +108,20 @@ class BookingModel {
     );
   }
 
+  //   Complete status
+  async completeBookingRequest(bookingId) {
+    // Default Value
+    const status = "completed";
+
+    // Convert to MySql DateTime
+    const completedDate = new Date().toISOString().split("T")[0];
+
+    await this.pool.query(
+      "UPDATE booking SET status = ?, completed=? WHERE id = ?",
+      [status, completedDate, bookingId]
+    );
+  }
+
   //   Decline status
   async declineBookingRequest(bookingId) {
     // Default Value
@@ -119,6 +133,20 @@ class BookingModel {
     await this.pool.query(
       "UPDATE booking SET status = ?, declined=? WHERE id = ?",
       [status, declinedRequest, bookingId]
+    );
+  }
+
+  //   Decline status
+  async cancelledBookingRequest(bookingId) {
+    // Default Value
+    const status = "cancelled";
+
+    // Convert to MySql DateTime
+    const cancelledDate = new Date().toISOString().split("T")[0];
+
+    await this.pool.query(
+      "UPDATE booking SET status = ?, cancelled=? WHERE id = ?",
+      [status, cancelledDate, bookingId]
     );
   }
 
