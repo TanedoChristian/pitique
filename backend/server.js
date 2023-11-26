@@ -14,8 +14,8 @@ app.use(cors());
 //     res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
 //   });
 // }
-const realtorRouter = require("./router/realtorRoute");
-const pitiquerRouter = require("./router/pitiquerRoute");
+const realtorRouter = require("./router/realtorRouter");
+const pitiquerRouter = require("./router/pitiquerRouter");
 const packageRouter = require("./router/packageRouter");
 const portfolioRouter = require("./router/portfolioRouter");
 const bookingRouter = require("./router/bookingRouter");
