@@ -1,4 +1,20 @@
-const RealtorTransactionCard = ({ booking }) => {
+import api from "../../helper/api";
+
+const RealtorTransactionCard = ({ booking, setShow }) => {
+  const handleRate = async () => {
+    try {
+      const { data } = await api.get(
+        `/realtor-feedbacks/${booking.rltr_id}/booking/${booking.id}`
+      );
+
+      console.log(data);
+    } catch (error) {
+      // TRUE since no rating is found in database
+      // This is intended
+      setShow(true);
+    }
+  };
+
   return (
     <>
       <div className="w-full bg-gray-200 p-3 flex justify-between items-center rounded-md mt-2">
@@ -26,7 +42,10 @@ const RealtorTransactionCard = ({ booking }) => {
         </div>
         <div className="">
           <div className="flex justify-end flex-col gap-1">
-            <button className="text-white bg-yellow-500 py-1 px-1.5 text-sm">
+            <button
+              onClick={handleRate}
+              className="text-white bg-yellow-500 py-1 px-1.5 text-sm"
+            >
               Rate
             </button>
           </div>

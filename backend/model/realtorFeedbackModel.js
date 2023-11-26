@@ -9,7 +9,7 @@ class RealtorFeedbackModel {
   //   GET REALTOR
   async getRealtorFeedbackById(rltr_id, book_id) {
     const [rows] = await this.pool.query(
-      "SELECT * FROM realtor_feedback WHERE rltr_id = ? AND book_id?",
+      "SELECT * FROM realtor_feedback WHERE rltr_id = ? AND book_id = ?",
       [rltr_id, book_id]
     );
     return rows[0];
