@@ -1,7 +1,41 @@
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import api from "../../helper/api";
 
 const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
+  const [feedback, setFeedback] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFeedback((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const _feedback = {
+        rltr_id: pitiquer.rltr_id,
+        book_id: pitiquer.id,
+        //TODO: make this dynamic
+        rtng: 2,
+        fdbk: feedback.fdbk,
+      };
+
+      const { data } = await api.post("/realtor-feedbacks", _feedback);
+
+      if (data) {
+        alert("Rating Created!");
+        setShow(false);
+      }
+    } catch (error) {
+      alert("Please input the required fields");
+      console.error(error);
+    }
+  };
+
   return (
     <div className="w-full h-screen flex justify-center items-center backdrop-blur-[1px] fixed top-0 bg-gray-300 bg-opacity-90 left-0">
       <div className="w-[350px] border border-gray-300 rounded-md flex flex-col gap-2 items-center">
@@ -77,11 +111,16 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
           <textarea
             rows={10}
             className="bg-gray-200 w-[95%] rounded-md px-2 py-1"
+            name="fdbk"
+            onChange={handleChange}
           ></textarea>
         </div>
 
         <div className="p-3 w-full flex justify-center">
-          <button className="text-white uppercase font-semibold bg-cyan-500 p-3 w-[90%] rounded-md">
+          <button
+            onClick={handleSubmit}
+            className="text-white uppercase font-semibold bg-cyan-500 p-3 w-[90%] rounded-md"
+          >
             Submit Feedback
           </button>
         </div>

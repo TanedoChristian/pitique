@@ -7,7 +7,7 @@ const RealtorTransactionCard = ({ booking, setShow, setPitiquer }) => {
         `/realtor-feedbacks/${booking.rltr_id}/booking/${booking.id}`
       );
 
-      console.log(data);
+      if (data) alert("already rate this pitiquer/booking");
     } catch (error) {
       // TRUE since no rating is found in database
       // This is intended

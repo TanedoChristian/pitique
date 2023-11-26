@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
 
     if (exist) res.status(403).json({ message: "Feedback already exist" });
     else {
-      await realtorFeedback.createRealtorFeedback(newRealtor);
+      await realtorFeedback.createRealtorFeedback(newRealtorFeedback);
       res
         .status(201)
         .json({ message: "Realtor Feedback created successfully" });
