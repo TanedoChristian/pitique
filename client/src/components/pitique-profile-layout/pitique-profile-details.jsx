@@ -88,16 +88,17 @@ const PitiqueProfileDetails = ({
             accept="image/*"
             onChange={handleFileChange}
           />
-
-          <span
-            className="w-8 h-8 rounded-full bg-cyan-400 flex items-center justify-center cursor-pointer"
-            onClick={() => fileInputRef.current.click()}
-          >
-            <FontAwesomeIcon
-              icon={faPen}
-              className="text-white font-bold text-lg "
-            />
-          </span>
+          {user && user.id == pitiquerId && (
+            <span
+              className="w-8 h-8 rounded-full bg-cyan-400 flex items-center justify-center cursor-pointer"
+              onClick={() => fileInputRef.current.click()}
+            >
+              <FontAwesomeIcon
+                icon={faPen}
+                className="text-white font-bold text-lg "
+              />
+            </span>
+          )}
         </div>
       </div>
       <div className="p-5 w-full flex flex-col gap-3 ">
