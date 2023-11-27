@@ -21,6 +21,23 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET /pitiquers/name/:name - Get all realtor
+router.get("/name/:name", async (req, res) => {
+  const name = req.params.name;
+  try {
+    const pitiquers = await pitiquerModel.getPitiquerByName(name);
+
+    if (!pitiquers) {
+      res.status(404).send("pitiquer not found");
+    } else {
+      res.json(pitiquers);
+    }
+  } catch (error) {
+    console.error(`Error getting pitiquers`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // GET /pitiquers/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
   const pitiquerId = req.params.id;

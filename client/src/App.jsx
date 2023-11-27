@@ -13,6 +13,7 @@ import PitiqueBookingId from "./views/pitique-booking-id";
 import PitiqueProfile from "./views/pitique-profile";
 import PitiqueServiceReport from "./views/pitique-service-report";
 import RealtorBookingId from "./views/realtor-booking-id";
+import PitiquerSearchPage from "./views/pitiquer-search-page";
 
 const App = () => {
   return (
@@ -26,6 +27,10 @@ const App = () => {
         <Route path="/booking" element={<RealtorBooking />}></Route>
         <Route path="/booking/:id" element={<RealtorBookingId />}></Route>
         <Route path="/transaction" element={<RealtorTransaction />}></Route>
+        <Route
+          path="/search/pitiquer/:name"
+          element={<PitiquerSearchPage />}
+        ></Route>
         {/* Test route only */}
         <Route path="/dashboard/pitique" element={<PitiqueDashboard />}></Route>
         <Route path="/booking/pitique" element={<PitiqueBooking />}></Route>

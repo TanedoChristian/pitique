@@ -5,10 +5,13 @@ import RealtorLayout from "../components/realtor-homepage-layout/layout";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
 import SideNav from "../components/common/sidenav";
-import PitiqueRatingLayout from "../components/pitique-rating-layout/layout";
+import { useNavigate } from "react-router-dom";
+
 const RealtorDashboard = () => {
   const user = localStorage.getItem("user");
+  const [search, setSearch] = useState("");
   const [pitiquer, setPitiquer] = useState([]);
+  const navigate = useNavigate();
 
   const [showSideNav, setShowNav] = useState(false);
   useEffect(() => {
@@ -26,37 +29,14 @@ const RealtorDashboard = () => {
     fetch();
   }, []);
 
-  const realtors = [
-    {
-      firstname: "Tyler",
-      lastname: "Creator",
-      address: "Cebu City, Cebu",
-      price: "10,000",
-    },
-    {
-      firstname: "Tyler",
-      lastname: "Creator",
-      address: "Cebu City, Cebu",
-      price: "10,000",
-    },
-    {
-      firstname: "Tyler",
-      lastname: "Creator",
-      address: "Cebu City, Cebu",
-      price: "10,000",
-    },
+  const handleSearch = () => {
+    if (search === "") return;
 
-    {
-      firstname: "Tyler",
-      lastname: "Creator",
-      address: "Cebu City, Cebu",
-      price: "10,000",
-    },
-  ];
+    navigate(`/search/pitiquer/${search}`);
+  };
 
   return (
     <div className="w-full">
-      {/* <PitiqueRatingLayout /> */}
       {showSideNav ? <SideNav setShowNav={setShowNav} /> : ""}
 
       <Header className="flex items-center p-5 gap-5">
@@ -70,15 +50,20 @@ const RealtorDashboard = () => {
 
         <input
           type="text"
-          name=""
-          id=""
           className="w-[80%] bg-cyan-500 border-b border-white placeholder-white outline-none"
           placeholder="Search Pitiquer's"
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+              console.log("asdasd");
+            }
+          }}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <FontAwesomeIcon icon={faSearch} />
       </Header>
 
-      <RealtorLayout realtors={pitiquer} />
+      <RealtorLayout pitiquers={pitiquer} />
     </div>
   );
 };
