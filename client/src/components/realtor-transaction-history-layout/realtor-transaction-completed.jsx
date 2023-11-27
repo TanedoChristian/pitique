@@ -1,12 +1,6 @@
-import { useState } from "react";
-import RealtorCard from "../realtor-homepage-layout/realtor-card";
-import RealtorRatingLayout from "../realtor-rating-layout/layout";
 import RealtorTransactionCard from "./realtor-history-card";
 
 const RealtorTransactionCompeleted = ({ data }) => {
-  const [show, setShow] = useState(false);
-  const [pitiquer, setPitiquer] = useState(false);
-
   return (
     data.length !== 0 && (
       <div className="mt-3">
@@ -20,14 +14,6 @@ const RealtorTransactionCompeleted = ({ data }) => {
             setPitiquer={setPitiquer}
           />
         ))}
-
-        {show && (
-          <RealtorRatingLayout
-            setShow={setShow}
-            pitiquer={pitiquer}
-            setPitiquer={setPitiquer}
-          />
-        )}
       </div>
     )
   );

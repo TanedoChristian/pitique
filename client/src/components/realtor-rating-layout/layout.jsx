@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import api from "../../helper/api";
 
-const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
+const RealtorRatingLayout = ({ setShow, booking, refresh }) => {
   const [feedback, setFeedback] = useState({});
 
   const handleChange = (e) => {
@@ -17,9 +17,10 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
   const handleSubmit = async () => {
     try {
       const _feedback = {
-        rltr_id: pitiquer.rltr_id,
-        book_id: pitiquer.id,
-        rtng: feedback.rtng,
+        rltr_id: booking.rltr_id,
+        book_id: booking.id,
+        // Since index starts at 0
+        rtng: feedback.rtng + 1,
         fdbk: feedback.fdbk,
       };
 
@@ -28,6 +29,7 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
       if (data) {
         alert("Rating Created!");
         setShow(false);
+        refresh.setFlag(!refresh.flag);
       }
     } catch (error) {
       alert("Please input the required fields");
@@ -47,12 +49,12 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
           </div>
         </div>
         <h1 className="font-bold">
-          {pitiquer.fname} {pitiquer.lname}
+          {booking.prfname} {booking.prlname}
         </h1>
         <p className="flex gap-2 items-center">
           <FontAwesomeIcon icon={faLocationDot} className="text-red-600" />
           <span>
-            {pitiquer.city}, {pitiquer.province}
+            {booking.prcity}, {booking.prprovince}
           </span>
         </p>
 
@@ -71,8 +73,8 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
                 onClick={() => {
                   setFeedback((prevState) => ({
                     ...prevState,
-                    // Since index starts at 0
-                    rtng: index + 1,
+
+                    rtng: index,
                   }));
                 }}
               >
@@ -106,7 +108,6 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
         className="absolute top-5 right-5 hover:text-red-500"
         onClick={() => {
           setShow(false);
-          setPitiquer({});
         }}
       >
         X

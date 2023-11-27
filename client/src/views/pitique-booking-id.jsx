@@ -111,7 +111,6 @@ const PitiqueBookingId = () => {
                 </p>
               </div>
             </div>
-            <button className="text-cyan-500 font-bold">Edit </button>
           </div>
         </div>
 
@@ -134,7 +133,6 @@ const PitiqueBookingId = () => {
                 <p className="text-gray-500 text-sm">Mid-day</p>
               </div>
             </div>
-            <button className="text-cyan-500 font-bold">Edit </button>
           </div>
         </div>
 
@@ -152,7 +150,6 @@ const PitiqueBookingId = () => {
                 <p className="text-gray-500 text-sm">{booking.email}</p>
               </div>
             </div>
-            <button className="text-cyan-500 font-bold">Edit </button>
           </div>
         </div>
 
