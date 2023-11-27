@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../../helper/api";
-const PitiqueProfilePortfolio = ({ pitiquerId }) => {
+const PitiqueProfilePortfolio = ({ pitiquerId, user }) => {
   const [portfolios, setPortfolios] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [flag, setFlag] = useState(false);
@@ -73,27 +73,30 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
                   alt={`Portfolio ${_p.id}`}
                   src={`data:image/png;base64, ${_p.img}`}
                 />
-                <button
-                  className="hover:text-red-500"
-                  onClick={() => handleDelete(_p.id)}
-                >
-                  Remove
-                </button>
+                {user && user.id == pitiquerId && (
+                  <button
+                    className="hover:text-red-500"
+                    onClick={() => handleDelete(_p.id)}
+                  >
+                    Remove
+                  </button>
+                )}
               </div>
             );
           })}
         </div>
       )}
-
-      <div className="mt-10 flex justify-center items-center">
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        <button
-          className="bg-gray-300 px-4 py-2 rounded-md"
-          onClick={handleUpload}
-        >
-          Upload
-        </button>
-      </div>
+      {user && user.id == pitiquerId && (
+        <div className="mt-10 flex justify-center items-center">
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          <button
+            className="bg-gray-300 px-4 py-2 rounded-md"
+            onClick={handleUpload}
+          >
+            Upload
+          </button>
+        </div>
+      )}
     </div>
   );
 };

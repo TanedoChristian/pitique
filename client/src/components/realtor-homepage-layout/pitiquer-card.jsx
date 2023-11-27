@@ -13,7 +13,10 @@ const PitiquerCard = ({ pitiquer }) => {
         src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
       />
       <div className="flex justify-between p-1 border-b border-gray-300">
-        <div className="flex gap-2 items-center">
+        <Link
+          to={`/profile/pitique/${pitiquer.id}`}
+          className="flex gap-2 items-center hover:text-red-500"
+        >
           <img
             className="w-8 h-8 rounded-full "
             src="https://cdn-icons-png.flaticon.com/512/5605/5605056.png"
@@ -21,7 +24,7 @@ const PitiquerCard = ({ pitiquer }) => {
           <h1 className="text-sm font-bold">
             {`${pitiquer?.fname} ${pitiquer?.lname}`}
           </h1>
-        </div>
+        </Link>
         <div className="flex gap-2 items-center">
           <svg
             className="w-4 h-4 text-yellow-300 ms-1"

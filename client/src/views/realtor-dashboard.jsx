@@ -8,7 +8,7 @@ import SideNav from "../components/common/sidenav";
 import { useNavigate } from "react-router-dom";
 
 const RealtorDashboard = () => {
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
   const [search, setSearch] = useState("");
   const [pitiquer, setPitiquer] = useState([]);
   const navigate = useNavigate();
