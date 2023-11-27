@@ -5,6 +5,7 @@ import RealtorTransactionPending from "./realtor-transaction-pending";
 import { useEffect, useState } from "react";
 import api from "../../helper/api";
 import RealtorTransactionCompeleted from "./realtor-transaction-completed";
+import RealtorTransactionHistory from "./realtor-transaction-history";
 
 const RealtorHistoryLayout = () => {
   const [bookings, setBookings] = useState([]);
@@ -51,6 +52,16 @@ const RealtorHistoryLayout = () => {
         />
         <RealtorTransactionCompeleted
           data={bookings.filter((booking) => booking.status === "completed")}
+        />
+
+        <RealtorTransactionHistory
+          data={bookings.filter(
+            (booking) =>
+              booking.status !== "pending" ||
+              booking.status !== "completed" ||
+              booking.status !== "payment"
+          )}
+          refresh={{ setFlag, flag }}
         />
       </div>
     </div>
