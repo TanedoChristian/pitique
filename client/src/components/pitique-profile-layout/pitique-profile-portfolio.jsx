@@ -69,7 +69,7 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
             return (
               <div key={_p.id}>
                 <img
-                  className="h-[100px] w-[100px]  object-cover rounded-md"
+                  className="h-[100px] w-[100px] object-fit rounded-md"
                   alt={`Portfolio ${_p.id}`}
                   src={`data:image/png;base64, ${_p.img}`}
                 />

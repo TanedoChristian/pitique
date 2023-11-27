@@ -5,13 +5,12 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
 
-const PitiqueBookingId = () => {
+const RealtorBookingId = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState({});
   const [flag, setFlag] = useState(false);
-  const user = JSON.parse(localStorage.getItem("p-user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  // TODO: check if the current user is equals to the pitiquer in booking id
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -26,42 +25,6 @@ const PitiqueBookingId = () => {
     fetch();
   }, [flag]);
 
-  const handleDecline = async () => {
-    try {
-      const { data } = await api.put(`/bookings/decline/${id}`);
-
-      if (data) {
-        setFlag(!flag);
-      }
-    } catch (error) {
-      console.error("Error declining booking" + error);
-    }
-  };
-
-  const handleConfirm = async () => {
-    try {
-      const { data } = await api.put(`/bookings/accept/${id}`);
-
-      if (data) {
-        setFlag(!flag);
-      }
-    } catch (error) {
-      console.error("Error accepting booking" + error);
-    }
-  };
-
-  const handleComplete = async () => {
-    try {
-      const { data } = await api.put(`/bookings/complete/${id}`);
-
-      if (data) {
-        setFlag(!flag);
-      }
-    } catch (error) {
-      console.error("Error completing booking" + error);
-    }
-  };
-
   const handleCancel = async () => {
     try {
       const { data } = await api.put(`/bookings/cancel/${id}`);
@@ -74,7 +37,7 @@ const PitiqueBookingId = () => {
     }
   };
 
-  if (!user || booking.ptqr_id !== user.id) {
+  if (!user || booking.rltr_id !== user.id) {
     return <div className="p-4">Forbidden Page.</div>;
   }
 
@@ -171,22 +134,6 @@ const PitiqueBookingId = () => {
             <p className="font-bold">Php {booking.total}</p>
           </div>
         </div>
-        {booking.status === "pending" && (
-          <div className="w-full">
-            <button
-              onClick={handleDecline}
-              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
-            >
-              DECLINE BOOKING
-            </button>
-            <button
-              className=" text-xl mt-2 p-3 w-full border-2  text-white bg-cyan-500  font-bold rounded-md shadow-md"
-              onClick={handleConfirm}
-            >
-              CONFIRM BOOKING
-            </button>
-          </div>
-        )}
 
         {booking.status === "accepted" && (
           <div className="w-full">
@@ -196,12 +143,6 @@ const PitiqueBookingId = () => {
             >
               CANCEL BOOKING
             </button>
-            <button
-              className=" text-xl mt-2 p-3 w-full border-2  text-white bg-cyan-500  font-bold rounded-md shadow-md"
-              onClick={handleComplete}
-            >
-              COMPLETE
-            </button>
           </div>
         )}
       </div>
@@ -209,4 +150,4 @@ const PitiqueBookingId = () => {
   );
 };
 
-export default PitiqueBookingId;
+export default RealtorBookingId;
