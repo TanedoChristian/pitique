@@ -24,6 +24,14 @@ const BookingScheduleForm = ({ setCount }) => {
     setCount((prev) => prev + 1);
   };
 
+  const handleChanges = (e) => {
+    setBookingInfo((prev) => ({
+      ...prev,
+      day: e.target.value,
+    }));
+    console.log(bookingInfo);
+  };
+
   return (
     <div className="w-full p-3">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -51,7 +59,14 @@ const BookingScheduleForm = ({ setCount }) => {
           onSubmit={handleSubmit}
         >
           <div className="bg-gray-200 shadow-md">
-            <input className="hidden" id="radio_1" type="radio" name="radio" />
+            <input
+              className="hidden"
+              id="radio_1"
+              type="radio"
+              name="day"
+              value={"Morning"}
+              onChange={handleChanges}
+            />
             <label
               className="flex flex-col p-2 border-2  cursor-pointer"
               htmlFor="radio_1"
@@ -60,7 +75,14 @@ const BookingScheduleForm = ({ setCount }) => {
             </label>
           </div>
           <div className="bg-gray-200 shadow-md">
-            <input className="hidden" id="radio_2" type="radio" name="radio" />
+            <input
+              className="hidden"
+              id="radio_2"
+              type="radio"
+              name="day"
+              value={"Mid Day"}
+              onChange={handleChanges}
+            />
             <label
               className="flex flex-col p-2 border-2  cursor-pointer"
               htmlFor="radio_2"
@@ -70,7 +92,14 @@ const BookingScheduleForm = ({ setCount }) => {
           </div>
 
           <div className="bg-gray-200 shadow-md">
-            <input className="hidden" id="radio_3" type="radio" name="radio" />
+            <input
+              className="hidden"
+              id="radio_3"
+              type="radio"
+              name="day"
+              value={"Afternoon"}
+              onChange={handleChanges}
+            />
             <label
               className="flex flex-col p-2 border-2  cursor-pointer"
               htmlFor="radio_3"

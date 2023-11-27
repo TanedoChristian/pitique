@@ -121,7 +121,7 @@ const RealtorBookingId = () => {
                     day: "numeric",
                   })}
                 </h1>
-                <p className="text-gray-500 text-sm">Mid-day</p>
+                <p className="text-gray-500 text-sm">{booking.day}</p>
               </div>
             </div>
             {booking.status === "pending" ||
