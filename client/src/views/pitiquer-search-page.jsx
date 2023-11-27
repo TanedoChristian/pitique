@@ -5,7 +5,7 @@ import Header from "../components/common/header";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import RealtorCard from "../components/realtor-homepage-layout/realtor-card";
+import PitiquerCard from "../components/realtor-homepage-layout/pitiquer-card";
 
 const PitiquerSearchPage = () => {
   const { name } = useParams();
@@ -46,7 +46,7 @@ const PitiquerSearchPage = () => {
         ) : (
           <div className="w-full p-3 flex flex-col items-center  h-[90vh] overflow-auto">
             {pitiquers.map((pitiquer, index) => (
-              <RealtorCard key={index} pitiquer={pitiquer} />
+              <PitiquerCard key={index} pitiquer={pitiquer} />
             ))}
           </div>
         )}

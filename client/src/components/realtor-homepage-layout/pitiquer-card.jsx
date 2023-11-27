@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-const RealtorCard = ({ pitiquer }) => {
+const PitiquerCard = ({ pitiquer }) => {
   return (
     <Link
       to={{ pathname: "/booking", state: pitiquer.id }}
@@ -55,4 +55,4 @@ const RealtorCard = ({ pitiquer }) => {
   );
 };
 
-export default RealtorCard;
+export default PitiquerCard;
