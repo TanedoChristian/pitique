@@ -57,8 +57,8 @@ const RealtorHistoryLayout = () => {
         <RealtorTransactionHistory
           data={bookings.filter(
             (booking) =>
-              booking.status !== "pending" ||
-              booking.status !== "completed" ||
+              booking.status !== "pending" &&
+              booking.status !== "completed" &&
               booking.status !== "payment"
           )}
           refresh={{ setFlag, flag }}

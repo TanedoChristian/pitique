@@ -168,16 +168,17 @@ const RealtorBookingId = () => {
           </div>
         </div>
 
-        {booking.status === "accepted" && (
-          <div className="w-full">
-            <button
-              onClick={handleCancel}
-              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
-            >
-              CANCEL BOOKING
-            </button>
-          </div>
-        )}
+        {booking.status === "accepted" ||
+          (booking.status === "pending" && (
+            <div className="w-full">
+              <button
+                onClick={handleCancel}
+                className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
+              >
+                CANCEL BOOKING
+              </button>
+            </div>
+          ))}
 
         {booking.status === "completed" && showFeedback && (
           <div className="w-full">
