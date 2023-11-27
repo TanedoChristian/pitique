@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import api from "../../helper/api";
+import { useEffect, useState } from "react";
 
 const PitiqueProfileDetails = ({
   setShowPortfolio,
@@ -7,6 +9,27 @@ const PitiqueProfileDetails = ({
   user,
   pitiquerId,
 }) => {
+  const { id } = JSON.parse(localStorage.getItem("user"));
+  const [showFavorite, setShowFavorite] = useState(true);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(
+          `/realtors/${id}/favorite/${pitiquerId}`
+        );
+
+        if (data) {
+          setShowFavorite(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
   return (
     <div className="poppins">
       <div className="w-full flex justify-center ">
@@ -41,6 +64,38 @@ const PitiqueProfileDetails = ({
             }}
           >
             View Package
+          </button>
+        )}
+
+        {/* Check if the current user is a pitiquer */}
+        {user === null && id && showFavorite ? (
+          <button
+            className="py-2 px-6 bg-green-400 text-white"
+            onClick={async () => {
+              try {
+                await api.post(`/realtors/${id}/favorite/${pitiquerId}`);
+                setShowFavorite(false);
+              } catch (error) {
+                console.error(error);
+              }
+            }}
+          >
+            Add to Favorite Pitiquer
+          </button>
+        ) : (
+          <button
+            className="py-2 px-6 bg-red-400 text-white"
+            onClick={async () => {
+              try {
+                await api.delete(`/realtors/${id}/favorite/${pitiquerId}`);
+
+                setShowFavorite(true);
+              } catch (error) {
+                console.error(error);
+              }
+            }}
+          >
+            Unfavorite Pitiquer
           </button>
         )}
       </div>

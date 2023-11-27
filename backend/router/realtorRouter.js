@@ -58,6 +58,47 @@ router.post("/", async (req, res) => {
   }
 });
 
+// FAVORITE
+// POST /realtors/:rid/favorite/:id - favorite a pitiquer
+router.post("/:rid/favorite/:id", async (req, res) => {
+  const pitiquerId = req.params.id;
+  const realtorId = req.params.rid;
+  try {
+    await realtorModel.addFavoritePitiquer(pitiquerId, realtorId);
+    res.status(201).json({ message: "Favorite successfully" });
+  } catch (error) {
+    console.error("Error creating favorite:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+// GET /realtors/:rid/favorite/:id - get favorite  pitiquer
+router.get("/:rid/favorite/:id", async (req, res) => {
+  const pitiquerId = req.params.id;
+  const realtorId = req.params.rid;
+  try {
+    const result = await realtorModel.getFavorite(pitiquerId, realtorId);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error creating realtor:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// GET /realtors/:rid/favorite/:id - get favorite  pitiquer
+router.delete("/:rid/favorite/:id", async (req, res) => {
+  const pitiquerId = req.params.id;
+  const realtorId = req.params.rid;
+  try {
+    await realtorModel.deleteFavorite(pitiquerId, realtorId);
+    res.status(201).json({ message: "get successfully" });
+  } catch (error) {
+    console.error("Error creating realtor:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// END OF FAVORITE
+
 // POST /realtors - logging in a realtor
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
