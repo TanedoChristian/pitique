@@ -19,8 +19,7 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
       const _feedback = {
         rltr_id: pitiquer.rltr_id,
         book_id: pitiquer.id,
-        //TODO: make this dynamic
-        rtng: 2,
+        rtng: feedback.rtng,
         fdbk: feedback.fdbk,
       };
 
@@ -38,7 +37,7 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center backdrop-blur-[1px] fixed top-0 bg-gray-300 bg-opacity-90 left-0">
-      <div className="w-[350px] border border-gray-300 rounded-md flex flex-col gap-2 items-center">
+      <div className="w-[350px] border border-white bg-white p-2 rounded-md flex flex-col gap-2 items-center">
         <div className="w-full flex justify-center ">
           <div className="  ml-5 w-full  flex justify-center p-3">
             <img
@@ -58,51 +57,29 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
         </p>
 
         <div className="flex items-center">
-          <svg
-            className="w-4 h-4 text-yellow-300 ms-1"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 22 20"
-          >
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg
-            className="w-4 h-4 text-yellow-300 ms-1"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 22 20"
-          >
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg
-            className="w-4 h-4 text-yellow-300 ms-1"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 22 20"
-          >
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg
-            className="w-4 h-4 text-yellow-300 ms-1"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 22 20"
-          >
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
-          <svg
-            className="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 22 20"
-          >
-            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-          </svg>
+          {Array.from({ length: 5 }).map((_, index) => {
+            return (
+              <svg
+                className={`w-4 h-4 text-${
+                  index <= feedback.rtng ? "yellow" : "gray"
+                }-300 ms-1 cursor-pointer`}
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 22 20"
+                key={index}
+                onClick={() => {
+                  setFeedback((prevState) => ({
+                    ...prevState,
+                    // Since index starts at 0
+                    rtng: index + 1,
+                  }));
+                }}
+              >
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+            );
+          })}
         </div>
         <div className="w-full  px-3">
           <p className="text-gray-600 font-semibold">Leave a comment</p>
