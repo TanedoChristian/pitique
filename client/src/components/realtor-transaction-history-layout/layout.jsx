@@ -8,6 +8,7 @@ import RealtorTransactionCompeleted from "./realtor-transaction-completed";
 
 const RealtorHistoryLayout = () => {
   const [bookings, setBookings] = useState([]);
+  const [flag, setFlag] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (user === undefined) {
@@ -26,7 +27,7 @@ const RealtorHistoryLayout = () => {
     };
 
     fetch();
-  }, []);
+  }, [flag]);
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
@@ -46,6 +47,7 @@ const RealtorHistoryLayout = () => {
       <div className="p-3">
         <RealtorTransactionPending
           data={bookings.filter((booking) => booking.status === "pending")}
+          refresh={{ setFlag, flag }}
         />
         <RealtorTransactionCompeleted
           data={bookings.filter((booking) => booking.status === "completed")}
