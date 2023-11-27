@@ -38,6 +38,14 @@ class PitiquerModel {
     return rows[0];
   }
 
+  async getPitiquerByEmail(email) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM pitiquer WHERE email = ?",
+      [email]
+    );
+    return rows[0];
+  }
+
   // LOGIN
   async authenticate(email, password) {
     const pitiquer = await this.getPitiquerByEmail(email);
@@ -98,6 +106,13 @@ class PitiquerModel {
         pitiquerId,
       ]
     );
+  }
+
+  async updatePitiquerPicture(pitiquerId, picture) {
+    await this.pool.query("UPDATE pitiquer SET prof_img = ? WHERE id = ?", [
+      picture,
+      pitiquerId,
+    ]);
   }
 
   //TODO: Not yet finish

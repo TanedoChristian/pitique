@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../../helper/api";
 import RealtorTransactionCompeleted from "./realtor-transaction-completed";
 import RealtorTransactionHistory from "./realtor-transaction-history";
+import { Link } from "react-router-dom";
 
 const RealtorHistoryLayout = () => {
   const [bookings, setBookings] = useState([]);
@@ -32,12 +33,12 @@ const RealtorHistoryLayout = () => {
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
-        <div className="absolute flex p-5">
+        <Link to={"/dashboard"} className="absolute flex p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
           />
-        </div>
+        </Link>
         <div className=" w-full">
           <h1 className="flex-grow text-xl text-white font-bold ">
             Transaction History

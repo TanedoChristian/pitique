@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import api from "../../helper/api";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PitiqueProfileDetails = ({
   setShowPortfolio,
@@ -11,7 +11,11 @@ const PitiqueProfileDetails = ({
 }) => {
   const { id } = JSON.parse(localStorage.getItem("user"));
   const [showFavorite, setShowFavorite] = useState(true);
+  const [profileImg, setProfileImg] = useState();
+  const [flag, setFlag] = useState(false);
+  const fileInputRef = useRef(null);
 
+  //Retreiving the favorite
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -30,15 +34,65 @@ const PitiqueProfileDetails = ({
     fetch();
   }, []);
 
+  // Retreiving the image
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(`/pitiquers/${pitiquerId}`);
+
+        if (data) {
+          setProfileImg(data.prof_img);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, [flag]);
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("prof_img", file);
+      formData.append("ptqr_id", pitiquerId);
+
+      try {
+        const { data } = await api.put("/pitiquers/edit/picture", formData);
+
+        if (data) {
+          alert("Updated Succesfully!");
+          setFlag(!flag);
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
+  };
+
   return (
     <div className="poppins">
       <div className="w-full flex justify-center ">
         <div className="  ml-5 w-[80%]  flex justify-center p-5 border-b-2 border-gray-300">
           <img
             className="w-48 h-48 rounded-full object-cover "
-            src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src={`data:image/png;base64,${profileImg}`}
           />
-          <span className="w-8 h-8 rounded-full bg-cyan-400 flex items-center justify-center">
+          {/* Hidden file input */}
+          <input
+            type="file"
+            style={{ display: "none" }}
+            ref={fileInputRef}
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+
+          <span
+            className="w-8 h-8 rounded-full bg-cyan-400 flex items-center justify-center cursor-pointer"
+            onClick={() => fileInputRef.current.click()}
+          >
             <FontAwesomeIcon
               icon={faPen}
               className="text-white font-bold text-lg "

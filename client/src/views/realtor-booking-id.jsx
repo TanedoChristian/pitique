@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -68,12 +68,12 @@ const RealtorBookingId = () => {
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
-        <div className="absolute flex p-5">
+        <Link to="/transaction" className="absolute flex p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
           />
-        </div>
+        </Link>
         <div className=" w-full">
           <h1 className="flex-grow text-xl text-white font-bold ">{`Booking ${id}`}</h1>
           <div className="flex justify-center items-center mt-1">

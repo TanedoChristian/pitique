@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
 const PitiquerModel = require("../model/pitiquerModel");
 
 const pitiquerModel = new PitiquerModel();
+
+// Set up Multer to handle file uploads
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage: storage });
 
 // GET /pitiquers/:id - Get all realtor
 router.get("/", async (req, res) => {
@@ -44,11 +49,14 @@ router.get("/:id", async (req, res) => {
 
   try {
     const pitiquer = await pitiquerModel.getPitiquerById(pitiquerId);
-
+    const finalResult = {
+      ...pitiquer,
+      prof_img: base64EncodeImage(pitiquer.prof_img),
+    };
     if (!pitiquer) {
       res.status(404).send("pitiquer not found");
     } else {
-      res.json(pitiquer);
+      res.json(finalResult);
     }
   } catch (error) {
     console.error(`Error getting pitiquer with ID ${pitiquerId}:`, error);
@@ -95,9 +103,14 @@ router.post("/login", async (req, res) => {
     const authResult = await pitiquerModel.authenticate(email, password);
 
     if (authResult) {
+      const finalResult = {
+        ...authResult,
+        prof_img: base64EncodeImage(authResult.prof_img),
+      };
+
       res.json({
         message: "Login successful",
-        user: authResult,
+        user: finalResult,
       });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
@@ -141,5 +154,28 @@ router.delete("/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+// PUT /pitiquers/edit/picture - Create a new portfolio
+router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
+  try {
+    const newPortfolio = {
+      pitiquerId: req.body.ptqr_id,
+      prof_img: req.file.buffer,
+    };
+
+    await pitiquerModel.updatePitiquerPicture(
+      newPortfolio.pitiquerId,
+      newPortfolio.prof_img
+    );
+    res.status(201).json({ message: "Updated successfully" });
+  } catch (error) {
+    console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+const base64EncodeImage = (buffer) => {
+  return buffer.toString("base64");
+};
 
 module.exports = router;
