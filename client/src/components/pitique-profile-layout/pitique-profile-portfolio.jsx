@@ -16,6 +16,7 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
         }
       } catch (error) {
         console.error(error);
+        setPortfolios([]);
       }
     };
 
@@ -31,8 +32,8 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
       const { data } = await api.delete("/portfolios/" + id);
 
       if (data) {
-        alert("Delete Succesfully!");
         setFlag(!flag);
+        alert("Delete Succesfully!");
       }
     } catch (error) {
       console.error(error);
@@ -49,9 +50,8 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
         const { data } = await api.post("/portfolios", formData);
 
         if (data) {
-          alert("Added Succesfully!");
-
           setFlag(!flag);
+          alert("Added Succesfully!");
         }
       } catch (error) {
         console.error("Error uploading file:", error);
