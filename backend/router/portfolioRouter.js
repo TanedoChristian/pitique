@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
 const PortfolioModel = require("../model/portfolioModel");
 
 const portfolioModel = new PortfolioModel();
+
+// Set up Multer to handle file uploads
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage: storage });
 
 // GET /portfolios/:id - Get a specific portfolio by ID
 router.get("/:id", async (req, res) => {
@@ -44,10 +49,13 @@ router.get("/pitiquer/:id", async (req, res) => {
 });
 
 // POST /portfolios - Create a new portfolio
-router.post("/", async (req, res) => {
-  const newPortfolio = req.body;
-
+router.post("/", upload.single("img"), async (req, res) => {
   try {
+    const newPortfolio = {
+      pitiquerId: req.body.ptqr_id,
+      img: req.file.buffer.toString("base64"),
+    };
+
     await portfolioModel.createPortfolio(newPortfolio);
     res.status(201).json({ message: "Portfolio created successfully" });
   } catch (error) {

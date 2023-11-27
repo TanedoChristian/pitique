@@ -7,8 +7,11 @@ import { faChevronLeft, faPen } from "@fortawesome/free-solid-svg-icons";
 import Header from "../common/header";
 import PitiqueProfilePackage from "./pitique-profile-package";
 import PitiqueProfilePortfolio from "./pitique-profile-portfolio";
+import { useParams } from "react-router-dom";
 
 const PitiqueProfileLayout = () => {
+  const { id } = useParams();
+
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showPackage, setShowPackage] = useState(false);
 
@@ -38,10 +41,10 @@ const PitiqueProfileLayout = () => {
 
       {showPortfolio ? (
         <div className="p-4 flex justify-center">
-          <PitiqueProfilePortfolio />
+          <PitiqueProfilePortfolio pitiquerId={id} />
         </div>
       ) : showPackage ? (
-        <PitiqueProfilePackage />
+        <PitiqueProfilePackage pitiquerId={id} />
       ) : (
         <PitiqueProfileDetails
           setShowPortfolio={setShowPortfolio}
