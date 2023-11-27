@@ -73,17 +73,14 @@ router.post("/", upload.single("img"), async (req, res) => {
 });
 
 // DELETE /portfolios/:id - Remove a portfolio by ID
-router.put("/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const portfolioId = req.params.id;
-  const { pitiquerId, visibility } = req.body;
 
   try {
-    await portfolioModel.removePortfolioById(
-      portfolioId,
-      pitiquerId,
-      visibility
-    );
-    res.send(`Realtor with ID ${portfolioId} remove successfully`);
+    await portfolioModel.removePortfolioById(portfolioId);
+    res
+      .status(200)
+      .send(`Portfolio with ID ${portfolioId} removed successfully`);
   } catch (error) {
     console.error(`Error removing portfolio with ID ${portfolioId}:`, error);
     res.status(500).send("Internal Server Error");

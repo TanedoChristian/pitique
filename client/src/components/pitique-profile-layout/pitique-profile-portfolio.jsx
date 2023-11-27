@@ -5,7 +5,7 @@ import api from "../../helper/api";
 const PitiqueProfilePortfolio = ({ pitiquerId }) => {
   const [portfolios, setPortfolios] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const [flag, setFlag] = useState(false);
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -20,10 +20,23 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
     };
 
     fetch();
-  }, []);
+  }, [flag]);
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await api.delete("/portfolios/" + id);
+
+      if (data) {
+        alert("Delete Succesfully!");
+        setFlag(!flag);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleUpload = async () => {
@@ -35,7 +48,11 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
       try {
         const { data } = await api.post("/portfolios", formData);
 
-        console.log(data);
+        if (data) {
+          alert("Added Succesfully!");
+
+          setFlag(!flag);
+        }
       } catch (error) {
         console.error("Error uploading file:", error);
       }
@@ -43,27 +60,39 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
   };
 
   return (
-    <div className="flex flex-wrap gap-6">
+    <div>
       {portfolios.length === 0 ? (
         <p>No portfolio/s found</p>
       ) : (
-        <div>
+        <div className="flex flex-wrap gap-6">
           {portfolios.map((_p) => {
             return (
-              <img
-                key={_p.id}
-                className="h-[100px] w-[100px]  object-cover rounded-md"
-                alt={`Portfolio ${_p.id}`}
-                src={`data:image/png;base64, ${_p.img}`}
-              />
+              <div key={_p.id}>
+                <img
+                  className="h-[100px] w-[100px]  object-cover rounded-md"
+                  alt={`Portfolio ${_p.id}`}
+                  src={`data:image/png;base64, ${_p.img}`}
+                />
+                <button
+                  className="hover:text-red-500"
+                  onClick={() => handleDelete(_p.id)}
+                >
+                  Remove
+                </button>
+              </div>
             );
           })}
         </div>
       )}
 
-      <div>
+      <div className="mt-10 flex justify-center items-center">
         <input type="file" accept="image/*" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload</button>
+        <button
+          className="bg-gray-300 px-4 py-2 rounded-md"
+          onClick={handleUpload}
+        >
+          Upload
+        </button>
       </div>
     </div>
   );
