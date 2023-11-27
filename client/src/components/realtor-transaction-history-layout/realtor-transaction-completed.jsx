@@ -7,12 +7,7 @@ const RealtorTransactionCompeleted = ({ data }) => {
         <h1 className="text-xl text-cyan-500 font-bold">Completed</h1>
 
         {data.map((booking) => (
-          <RealtorTransactionCard
-            booking={booking}
-            key={booking.id}
-            setShow={setShow}
-            setPitiquer={setPitiquer}
-          />
+          <RealtorTransactionCard booking={booking} key={booking.id} />
         ))}
       </div>
     )
