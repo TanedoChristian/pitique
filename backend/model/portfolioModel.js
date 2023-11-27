@@ -35,11 +35,8 @@ class PortfolioModel {
   }
 
   //Remove
-  async removePortfolioById(portfolioId, pitiquerId, visibility) {
-    await this.pool.query(
-      "UPDATE FROM portfolio SET isvisible = ? WHERE id = ? and ptqr_id = ?",
-      [visibility, portfolioId, pitiquerId]
-    );
+  async removePortfolioById(portfolioId) {
+    await this.pool.query("DELETE FROM portfolio WHERE id = ?", [portfolioId]);
   }
 }
 

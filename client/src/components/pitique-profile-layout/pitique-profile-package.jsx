@@ -3,14 +3,12 @@ import { packageItems } from "../../helper/package-item";
 import { useEffect, useState } from "react";
 import api from "../../helper/api";
 
-const PitiqueProfilePackage = () => {
+const PitiqueProfilePackage = ({ pitiquerId }) => {
   const [showModal, setShowModal] = useState(false);
   const [packageInfo, setPackageInfo] = useState({});
   const [packages, setPackages] = useState([{}]);
   const [flag, setFlag] = useState(false);
 
-  // TODO: change this to dynamic
-  const pitiquerId = 1;
   useEffect(() => {
     const fetch = async () => {
       const { data } = await api.get(`/packages/pitiquer/${pitiquerId}`);
@@ -32,8 +30,7 @@ const PitiqueProfilePackage = () => {
         hasamnty: type === "amenity",
         isavailable: info.isavailable ?? false,
         isvisible: info.isvisible ?? false,
-        // TODO: change this if the pitiquer is ready
-        ptqr_id: 1,
+        ptqr_id: pitiquerId,
       };
     });
   };
