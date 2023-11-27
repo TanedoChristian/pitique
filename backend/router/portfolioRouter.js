@@ -40,7 +40,15 @@ router.get("/pitiquer/:id", async (req, res) => {
     if (portfolios.length === 0) {
       res.status(404).send("pitiquer portfolio not found");
     } else {
-      res.json(portfolios);
+      // Pre-encode the image data before sending it to the client
+      const portfoliosWithBase64 = portfolios.map((portfolio) => {
+        return {
+          ...portfolio,
+          img: base64EncodeImage(portfolio.img),
+        };
+      });
+
+      res.json(portfoliosWithBase64);
     }
   } catch (error) {
     console.error(`Error getting portfolio with ID ${portfolios}:`, error);
@@ -53,7 +61,7 @@ router.post("/", upload.single("img"), async (req, res) => {
   try {
     const newPortfolio = {
       pitiquerId: req.body.ptqr_id,
-      img: req.file.buffer.toString("base64"),
+      img: req.file.buffer,
     };
 
     await portfolioModel.createPortfolio(newPortfolio);
@@ -81,5 +89,11 @@ router.put("/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+//helpers
+
+const base64EncodeImage = (buffer) => {
+  return buffer.toString("base64");
+};
 
 module.exports = router;

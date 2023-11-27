@@ -1,9 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../helper/api";
 const PitiqueProfilePortfolio = ({ pitiquerId }) => {
+  const [portfolios, setPortfolios] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(`/portfolios/pitiquer/${pitiquerId}`);
+
+        if (data) {
+          setPortfolios(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -27,42 +44,25 @@ const PitiqueProfilePortfolio = ({ pitiquerId }) => {
 
   return (
     <div className="flex flex-wrap gap-6">
-      <img
-        className="h-[100px] w-[100px]  object-cover rounded-md"
-        src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
+      {portfolios.length === 0 ? (
+        <p>No portfolio/s found</p>
+      ) : (
+        <div>
+          {portfolios.map((_p) => {
+            return (
+              <img
+                key={_p.id}
+                className="h-[100px] w-[100px]  object-cover rounded-md"
+                alt={`Portfolio ${_p.id}`}
+                src={`data:image/png;base64, ${_p.img}`}
+              />
+            );
+          })}
+        </div>
+      )}
 
-      <img
-        className="h-[100px] w-[100px]  object-cover rounded-md"
-        src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-
-      <img
-        className="h-[100px] w-[100px]  object-cover rounded-md"
-        src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-
-      <img
-        className="h-[100px] w-[100px]  object-cover rounded-md"
-        src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-
-      <img
-        className="h-[100px] w-[100px]  object-cover rounded-md"
-        src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-
-      <img
-        className="h-[100px] w-[100px]  object-cover rounded-md"
-        src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-
-      <img
-        className="h-[100px] w-[100px]  object-cover rounded-md"
-        src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
       <div>
-        <input type="file" onChange={handleFileChange} />
+        <input type="file" accept="image/*" onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>
       </div>
     </div>
