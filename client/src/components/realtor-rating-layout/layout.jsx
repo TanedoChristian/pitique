@@ -71,7 +71,8 @@ const RealtorRatingLayout = ({ setShow, pitiquer, setPitiquer }) => {
                 onClick={() => {
                   setFeedback((prevState) => ({
                     ...prevState,
-                    rtng: index,
+                    // Since index starts at 0
+                    rtng: index + 1,
                   }));
                 }}
               >
