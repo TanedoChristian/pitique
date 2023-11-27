@@ -55,12 +55,15 @@ const RealtorDashboard = () => {
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               handleSearch();
-              console.log("asdasd");
             }
           }}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <FontAwesomeIcon icon={faSearch} />
+        <FontAwesomeIcon
+          icon={faSearch}
+          className="cursor-pointer"
+          onClick={handleSearch}
+        />
       </Header>
 
       <RealtorLayout pitiquers={pitiquer} />

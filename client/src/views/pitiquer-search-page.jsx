@@ -27,12 +27,12 @@ const PitiquerSearchPage = () => {
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
-        <div className="absolute flex p-5">
+        <Link to="/dashboard" className="absolute flex p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
           />
-        </div>
+        </Link>
         <div className=" w-full">
           <h1 className="flex-grow text-xl text-white font-bold ">
             Result of "{name}"
