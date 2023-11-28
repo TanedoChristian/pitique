@@ -27,13 +27,14 @@ const AdminCreateAccount = () => {
         const { data } = await api.post("/pitiquers", user);
 
         if (data) {
-          console.log(data);
+          alert(user.type + " has been created successfully!");
           setUser({});
         }
       } catch (error) {
         console.error(error);
       }
     } else if (user.type === "admin") {
+      // Admin
     } else {
       alert("Choose account type!");
     }
@@ -46,8 +47,6 @@ const AdminCreateAccount = () => {
       [name]: value,
     }));
   };
-
-  console.log(user);
 
   return (
     <div className="w-full h-screen">

@@ -7,6 +7,14 @@ class RealtorModel {
   }
 
   //   GET REALTOR
+  async getRealtors() {
+    const [rows] = await this.pool.query(
+      "SELECT id,fname,mname,lname,email,phone,status FROM realtor"
+    );
+    return rows;
+  }
+
+  //   GET REALTOR
   async getRealtorByEmail(email) {
     const [rows] = await this.pool.query(
       "SELECT * FROM realtor WHERE email = ?",

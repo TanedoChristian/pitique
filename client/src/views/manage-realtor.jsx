@@ -2,10 +2,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminSideNav from "../components/common/admin-sidenav";
 import Header from "../components/common/header";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../helper/api";
 
 const ManageRealtor = () => {
   const [showSideNav, setShowNav] = useState(false);
+  const [realtors, setRealtors] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get("/realtors");
+
+        if (data) {
+          setRealtors(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
   return (
     <div className="">
       {showSideNav ? <AdminSideNav setShowNav={setShowNav} /> : ""}
@@ -48,32 +66,39 @@ const ManageRealtor = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                1
-              </th>
-              <td className="px-6 py-4">John Doe</td>
-              <td className="px-6 py-4">johndoe@gmail.com</td>
-              <td className="px-6 py-4">0924092940</td>
-              <td className="px-6 py-4">
-                <button className="py-1 px-3 rounded-xl bg-green-400 text-white">
-                  Active
-                </button>
-              </td>
-              <td className="px-6 py-4">
-                <div className="flex gap-2">
-                  <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
-                    Suspend
-                  </button>
-                  <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
-                    Terminate
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {realtors.length > 0 &&
+              realtors.map((realtor) => (
+                <tr className="bg-white border-b" key={realtor.id}>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {realtor.id}
+                  </th>
+                  <td className="px-6 py-4">
+                    {realtor.fname} {realtor.mname} {realtor.lname}
+                  </td>
+                  <td className="px-6 py-4">{realtor.email}</td>
+                  <td className="px-6 py-4">
+                    {realtor.phone !== "" ? realtor.phone : "N/A"}
+                  </td>
+                  <td className="px-6 py-4">
+                    <button className="py-1 px-3 rounded-xl bg-green-400 text-white">
+                      {realtor.status}
+                    </button>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-2">
+                      <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
+                        Suspend
+                      </button>
+                      <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
+                        Terminate
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

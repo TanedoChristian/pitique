@@ -9,6 +9,22 @@ const realtorModel = new RealtorModel();
 const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
+// GET /realtors - Get all realtors
+router.get("/", async (req, res) => {
+  try {
+    const realtors = await realtorModel.getRealtors();
+
+    if (!realtors) {
+      res.status(404).send("realtors not found");
+    } else {
+      res.json(realtors);
+    }
+  } catch (error) {
+    console.error(`Error getting realtors`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // GET /realtors/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
   const realtorId = req.params.id;
