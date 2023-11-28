@@ -7,6 +7,14 @@ class RealtorModel {
   }
 
   //   GET REALTOR
+  async getRealtors() {
+    const [rows] = await this.pool.query(
+      "SELECT id,fname,mname,lname,email,phone,status FROM realtor"
+    );
+    return rows;
+  }
+
+  //   GET REALTOR
   async getRealtorByEmail(email) {
     const [rows] = await this.pool.query(
       "SELECT * FROM realtor WHERE email = ?",
@@ -121,6 +129,13 @@ class RealtorModel {
         updatedInfo.rltr_id,
       ]
     );
+  }
+
+  async updateStatus(user) {
+    await this.pool.query("UPDATE realtor SET status = ?  WHERE id = ?", [
+      user.status,
+      user.rltr_id,
+    ]);
   }
 
   //TODO: Not yet finish

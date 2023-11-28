@@ -21,6 +21,7 @@ const portfolioRouter = require("./router/portfolioRouter");
 const bookingRouter = require("./router/bookingRouter");
 const realtorFeedbackRouter = require("./router/realtorFeedbackRouter");
 const paymentRouter = require("./router/paymentRouter");
+const adminRouter = require("./router/adminRouter");
 
 app.use(bodyParser.json());
 
@@ -31,6 +32,7 @@ app.use("/portfolios", portfolioRouter);
 app.use("/bookings", bookingRouter);
 app.use("/realtor-feedbacks", realtorFeedbackRouter);
 app.use("/payments", paymentRouter);
+app.use("/admins", adminRouter);
 
 const port = process.env.PORT || 8000;
 

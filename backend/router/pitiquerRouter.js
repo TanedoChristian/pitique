@@ -10,7 +10,7 @@ const pitiquerModel = new PitiquerModel();
 const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
-// GET /pitiquers/:id - Get all realtor
+// GET /pitiquers - Get all realtor for dashboard
 router.get("/", async (req, res) => {
   try {
     const pitiquer = await pitiquerModel.getPitiquers();
@@ -19,6 +19,22 @@ router.get("/", async (req, res) => {
       res.status(404).send("pitiquer not found");
     } else {
       res.json(pitiquer);
+    }
+  } catch (error) {
+    console.error(`Error getting pitiquers`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// GET /pitiquers - Get all pitiquers
+router.get("/admin/all", async (req, res) => {
+  try {
+    const pitiquers = await pitiquerModel.getAllPitiquers();
+
+    if (!pitiquers) {
+      res.status(404).send("pitiquers not found");
+    } else {
+      res.json(pitiquers);
     }
   } catch (error) {
     console.error(`Error getting pitiquers`, error);
@@ -168,6 +184,21 @@ router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
       newPortfolio.prof_img
     );
     res.status(201).json({ message: "Updated successfully" });
+  } catch (error) {
+    console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// PUT /pitiquers/edit/status - edit profile status
+router.put("/edit/status", async (req, res) => {
+  try {
+    const user = req.body;
+
+    await pitiquerModel.updateStatus(user);
+    res.status(201).json({
+      message: "Updated successfully",
+    });
   } catch (error) {
     console.error("Error Updating:", error);
     res.status(500).send("Internal Server Error");
