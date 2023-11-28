@@ -111,7 +111,6 @@ class RealtorModel {
   }
 
   async updateName(updatedInfo) {
-    console.log(updatedInfo);
     await this.pool.query(
       "UPDATE realtor SET fname = ?,mname = ?,lname = ?,birthdate = ? WHERE id = ?",
       [
