@@ -26,7 +26,7 @@ const RealtorProfilePage = () => {
     setUser(_user);
 
     setUserInfo({
-      rltr_id: _user.rltr_id,
+      rltr_id: _user.id,
       fname: _user.fname,
       mname: _user.mname,
       lname: _user.lname,

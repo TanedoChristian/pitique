@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SideNav = ({ setShowNav }) => {
   return (
@@ -26,12 +27,12 @@ const SideNav = ({ setShowNav }) => {
           <div className="flex flex-col gap-10">
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
-              <a>Account Settings </a>
+              <Link to={"/profile/realtor"}>Account Settings </Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faCalendar} />
-              <a>My Bookings </a>
+              <Link to={"/transaction"}>My Bookings</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">

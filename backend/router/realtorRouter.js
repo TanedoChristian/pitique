@@ -183,7 +183,6 @@ router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
 
 // PUT /realtors/edit/name - edit profile name
 router.put("/edit/name", async (req, res) => {
-  console.log(req.body);
   try {
     const newPortfolio = {
       ...req.body,
