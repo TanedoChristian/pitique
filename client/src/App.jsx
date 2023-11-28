@@ -11,6 +11,10 @@ import PitiqueBooking from "./views/pitique-booking";
 import PitiqueBookingId from "./views/pitique-booking-id";
 import PitiqueProfile from "./views/pitique-profile";
 import PitiqueServiceReport from "./views/pitique-service-report";
+import AdminDashboard from "./views/admin-dashboard";
+import AdminCreateAccount from "./views/admin-create-account";
+import ManagePitiquer from "./views/manage-pitiquer";
+import ManageRealtor from "./views/manage-realtor";
 import RealtorBookingId from "./views/realtor-booking-id";
 import PitiquerSearchPage from "./views/pitiquer-search-page";
 import RealtorProfilePage from "./views/realtor-profile-page";
@@ -25,6 +29,17 @@ const App = () => {
         <Route path="/dashboard" element={<RealtorDashboard />}></Route>
         <Route path="/account" element={<RealtorAccount />}></Route>
         <Route path="/booking" element={<RealtorBooking />}></Route>
+        <Route path="/admin" element={<AdminDashboard />}></Route>
+        <Route
+          path="/admin/create-account"
+          element={<AdminCreateAccount />}
+        ></Route>
+        <Route
+          path="/admin/manage-pitiquer"
+          element={<ManagePitiquer />}
+        ></Route>
+
+        <Route path="/admin/manage-realtor" element={<ManageRealtor />}></Route>
         <Route path="/booking/:id" element={<RealtorBookingId />}></Route>
         <Route path="/transaction" element={<RealtorTransaction />}></Route>
         <Route
