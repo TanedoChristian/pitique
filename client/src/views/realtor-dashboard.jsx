@@ -56,7 +56,6 @@ const RealtorDashboard = () => {
 
   return (
     <div className="w-full">
-      <PitiqueRatingLayout />
       {showSideNav ? <SideNav setShowNav={setShowNav} /> : ""}
 
       <Header className="flex items-center p-5 gap-5">
