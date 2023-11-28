@@ -11,15 +11,15 @@ const RealtorPayment = () => {
   const tokenHandler = async (token) => {
     try {
       const tempData = {
-        ptqr_id: 1,
-        rltr_id: 5,
-        book_id: 1,
-        status: "done",
-        total: 52,
-        pamt: 52,
+        ptqr_id: state.ptqr_id,
+        rltr_id: state.rltr_id,
+        book_id: state.book_id,
+        status: "",
+        total: state.price,
+        pamt: state.price,
         pdate: new Date().toISOString().slice(0, 10),
         preceipt: "",
-        famt: 52,
+        famt: state.price,
         fdate: new Date().toISOString().slice(0, 10),
         freceipt: "",
         rmrks: "",
@@ -35,10 +35,12 @@ const RealtorPayment = () => {
     }
   };
 
+  if (state === undefined) return <div>Forbidden Page!</div>;
+
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
-        <Link to={"/dashboard"} className="absolute flex p-5">
+        <Link to={`/booking/${state.id}`} className="absolute flex p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
@@ -48,7 +50,7 @@ const RealtorPayment = () => {
           <h1 className="flex-grow text-xl text-white font-bold ">
             CHOOSE PAYMENT METHOD
           </h1>
-          <h4>BOOKING # 0001</h4>
+          <h4>BOOKING # {state.id}</h4>
         </div>
       </Header>
       <StripeCheckout

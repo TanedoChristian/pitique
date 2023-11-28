@@ -7,6 +7,7 @@ import api from "../../helper/api";
 import RealtorTransactionCompeleted from "./realtor-transaction-completed";
 import RealtorTransactionHistory from "./realtor-transaction-history";
 import { Link } from "react-router-dom";
+import RealtorTransactionPayment from "./realtor-transaction-payment";
 
 const RealtorHistoryLayout = () => {
   const [bookings, setBookings] = useState([]);
@@ -47,6 +48,11 @@ const RealtorHistoryLayout = () => {
       </Header>
 
       <div className="p-3">
+        <RealtorTransactionPayment
+          data={bookings.filter((booking) => booking.status === "payment")}
+          refresh={{ setFlag, flag }}
+        />
+
         <RealtorTransactionPending
           data={bookings.filter((booking) => booking.status === "pending")}
           refresh={{ setFlag, flag }}

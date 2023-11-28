@@ -153,8 +153,28 @@ router.put("/accept/:id", async (req, res) => {
       return;
     }
 
-    await bookingModel.accecptBookingRequest(bookingId);
+    await bookingModel.acceptBookingRequest(bookingId);
     res.json({ message: "Booking accepted successfully" });
+  } catch (error) {
+    console.error(`Error accepting Booking with ID ${bookingId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// PUT /bookings/pay/:id - pay a booking by ID
+router.put("/pay/:id", async (req, res) => {
+  const bookingId = req.params.id;
+
+  try {
+    const existingBooking = await bookingModel.getBookingById(bookingId);
+
+    if (!existingBooking) {
+      res.status(404).send("booking not found");
+      return;
+    }
+
+    await bookingModel.payBookingRequest(bookingId);
+    res.json({ message: "Booking paid successfully" });
   } catch (error) {
     console.error(`Error accepting Booking with ID ${bookingId}:`, error);
     res.status(500).send("Internal Server Error");

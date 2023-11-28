@@ -96,9 +96,9 @@ class BookingModel {
   }
 
   //   Accept status
-  async accecptBookingRequest(bookingId) {
+  async acceptBookingRequest(bookingId) {
     // Default Value
-    const status = "accepted";
+    const status = "payment";
 
     // Convert to MySql DateTime
     const approvedDate = new Date().toISOString().split("T")[0];
@@ -107,6 +107,17 @@ class BookingModel {
       "UPDATE booking SET status = ?, approved=? WHERE id = ?",
       [status, approvedDate, bookingId]
     );
+  }
+
+  //   Accept status
+  async payBookingRequest(bookingId) {
+    // Default Value
+    const status = "accepted";
+
+    await this.pool.query("UPDATE booking SET status = ? WHERE id = ?", [
+      status,
+      bookingId,
+    ]);
   }
 
   //   Complete status
