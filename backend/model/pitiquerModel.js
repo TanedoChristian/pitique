@@ -66,22 +66,17 @@ class PitiquerModel {
     const status = "active";
 
     await this.pool.query(
-      "INSERT INTO pitiquer (fname,mname,lname,email,pass,phone,city,province,prof_img,bio,isphotog,isvideog,isamnty,status) VALUES (?, ?, ? ,? ,? ,?, ?,?, ?, ? ,? ,? ,?, ?)",
+      "INSERT INTO pitiquer (fname, mname,lname,email,pass, status,phone,city,province) VALUES (?, ?,?, ?, ? ,? ,? ,?,?)",
       [
-        pitiquer.firstName,
-        pitiquer.middleName,
-        pitiquer.lastName,
+        pitiquer.fname,
+        pitiquer.mname,
+        pitiquer.lname,
         pitiquer.email,
         hashedPassword,
+        status,
         pitiquer.phone,
         pitiquer.city,
         pitiquer.province,
-        pitiquer.prof_img,
-        pitiquer.bio,
-        pitiquer.isphotog,
-        pitiquer.isvideog,
-        pitiquer.isamnty,
-        status,
       ]
     );
   }

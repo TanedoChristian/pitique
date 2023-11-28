@@ -3,21 +3,52 @@ import AdminSideNav from "../components/common/admin-sidenav";
 import Header from "../components/common/header";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import api from "../helper/api";
 
 const AdminCreateAccount = () => {
   const [showSideNav, setShowNav] = useState(false);
+  const [user, setUser] = useState({});
   const [passwordMatch, setPasswordMatch] = useState(true);
 
   const handleConfirmPassword = (e) => {
     const { value } = e.target;
-    if (value != user.password) {
+    if (value !== user.password) {
       setPasswordMatch(false);
     } else {
       setPasswordMatch(true);
     }
   };
 
-  const handleChange = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (user.type === "pitiquer") {
+      try {
+        const { data } = await api.post("/pitiquers", user);
+
+        if (data) {
+          console.log(data);
+          setUser({});
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (user.type === "admin") {
+    } else {
+      alert("Choose account type!");
+    }
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  console.log(user);
+
   return (
     <div className="w-full h-screen">
       {showSideNav ? <AdminSideNav setShowNav={setShowNav} /> : ""}
@@ -35,31 +66,34 @@ const AdminCreateAccount = () => {
       </Header>
       <form
         className="flex flex-col gap-3 p-5 justify-between h-full"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-3">
           <input
             type="text"
             placeholder="First name"
-            name="firstname"
+            name="fname"
             onChange={handleChange}
             className="p-3 bg-gray-200 w-full rounded-sm"
+            value={user.fname ?? ""}
           />
 
           <input
             type="text"
             placeholder="Middle name"
-            name="middlename"
+            name="mname"
             onChange={handleChange}
             className="p-3 bg-gray-200 w-full rounded-sm "
+            value={user.mname ?? ""}
           />
 
           <input
             type="text"
             placeholder="Last name"
-            name="lastname"
+            name="lname"
             onChange={handleChange}
             className="p-3 bg-gray-200 w-full rounded-sm "
+            value={user.lname ?? ""}
           />
 
           <input
@@ -68,15 +102,7 @@ const AdminCreateAccount = () => {
             name="phone"
             onChange={handleChange}
             className="p-3 bg-gray-200 w-full rounded-sm "
-          />
-
-          <label>Birthday</label>
-          <input
-            type="date"
-            placeholder="Birthday"
-            onChange={handleChange}
-            name="birthday"
-            className="p-3 bg-gray-200 w-full rounded-sm text-gray-700 "
+            value={user.phone ?? ""}
           />
           <input
             type="text"
@@ -84,6 +110,23 @@ const AdminCreateAccount = () => {
             name="email"
             className="p-3 bg-gray-200 w-full rounded-sm"
             onChange={handleChange}
+            value={user.email ?? ""}
+          />
+          <input
+            type="text"
+            placeholder="Province"
+            name="province"
+            className="p-3 bg-gray-200 w-full rounded-sm"
+            onChange={handleChange}
+            value={user.province ?? ""}
+          />
+          <input
+            type="text"
+            placeholder="City"
+            name="city"
+            className="p-3 bg-gray-200 w-full rounded-sm"
+            onChange={handleChange}
+            value={user.city ?? ""}
           />
 
           <input
@@ -92,6 +135,8 @@ const AdminCreateAccount = () => {
             name="password"
             className="p-3 bg-gray-200 w-full rounded-sm "
             onChange={handleChange}
+            onBlur={handleConfirmPassword}
+            value={user.password ?? ""}
           />
           <input
             type="password"
@@ -107,7 +152,7 @@ const AdminCreateAccount = () => {
             <input
               id="default-radio-1"
               type="radio"
-              value=""
+              value="pitiquer"
               name="type"
               onChange={handleChange}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
@@ -115,7 +160,7 @@ const AdminCreateAccount = () => {
 
             <label
               htmlFor="default-radio-1"
-              className="ms-2 text-sm font-medium text-gray-900"
+              className="ms-2 text-sm font-medium text-gray-900 p-2"
             >
               Pitiquer
             </label>
@@ -123,23 +168,25 @@ const AdminCreateAccount = () => {
 
           <div className="flex items-center">
             <input
-              checked
               id="default-radio-2"
               type="radio"
-              value=""
+              value="admin"
               name="type"
               onChange={handleChange}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
             />
             <label
               htmlFor="default-radio-2"
-              className="ms-2 text-sm font-medium text-gray-900 "
+              className="ms-2 text-sm font-medium text-gray-900 p-2"
             >
               Admin
             </label>
           </div>
-          <button className="mt-10 p-3 w-full border-2 text-lg bg-cyan-500 text-white font-bold rounded-sm shadow-md">
-            Continue
+          <button
+            disabled={!passwordMatch}
+            className="mt-10 p-3 w-full border-2 text-lg bg-cyan-500 text-white font-bold rounded-sm shadow-md"
+          >
+            Create Account
           </button>
         </div>
       </form>
