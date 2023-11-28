@@ -180,6 +180,22 @@ const RealtorBookingId = () => {
             </div>
           ))}
 
+        {booking.status === "payment" && (
+          <div className="w-full">
+            <Link to={{ pathname: "/payment" }} state={booking}>
+              <div className=" text-xl mt-5 p-3 w-full border-2  text-white bg-green-500   font-bold rounded-md shadow-md text-center">
+                PAY
+              </div>
+            </Link>
+            <button
+              onClick={handleCancel}
+              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
+            >
+              CANCEL BOOKING
+            </button>
+          </div>
+        )}
+
         {booking.status === "completed" && showFeedback && (
           <div className="w-full">
             <button

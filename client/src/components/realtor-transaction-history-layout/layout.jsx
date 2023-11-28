@@ -7,6 +7,8 @@ import api from "../../helper/api";
 import RealtorTransactionCompeleted from "./realtor-transaction-completed";
 import RealtorTransactionHistory from "./realtor-transaction-history";
 import { Link } from "react-router-dom";
+import RealtorTransactionPayment from "./realtor-transaction-payment";
+import RealtorTransactionIncoming from "./realtor-transaction-incoming";
 
 const RealtorHistoryLayout = () => {
   const [bookings, setBookings] = useState([]);
@@ -47,20 +49,32 @@ const RealtorHistoryLayout = () => {
       </Header>
 
       <div className="p-3">
+        <RealtorTransactionPayment
+          data={bookings.filter((booking) => booking.status === "payment")}
+          refresh={{ setFlag, flag }}
+        />
+        <div className="mb-5"></div>
+        <RealtorTransactionIncoming
+          data={bookings.filter((booking) => booking.status === "accepted")}
+          refresh={{ setFlag, flag }}
+        />
+        <div className="mb-5"></div>
         <RealtorTransactionPending
           data={bookings.filter((booking) => booking.status === "pending")}
           refresh={{ setFlag, flag }}
         />
+        <div className="mb-5"></div>
         <RealtorTransactionCompeleted
           data={bookings.filter((booking) => booking.status === "completed")}
         />
-
+        <div className="mb-5"></div>
         <RealtorTransactionHistory
           data={bookings.filter(
             (booking) =>
               booking.status !== "pending" &&
               booking.status !== "completed" &&
-              booking.status !== "payment"
+              booking.status !== "payment" &&
+              booking.status !== "accepted"
           )}
           refresh={{ setFlag, flag }}
         />

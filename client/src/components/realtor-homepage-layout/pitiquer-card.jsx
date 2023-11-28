@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const PitiquerCard = ({ pitiquer }) => {
   return (
     <Link
-      to={{ pathname: "/booking", state: pitiquer.id }}
+      to={{ pathname: "/booking" }}
       state={{ id: pitiquer.id }}
       className=" h-[250px] w-[95%] rounded-md flex flex-col poppins p-3 bg-gray-100 shadow-md m-2"
     >
