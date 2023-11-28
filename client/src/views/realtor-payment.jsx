@@ -1,7 +1,13 @@
 import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import api from "../helper/api";
-const RealtorPayment = ({ booking }) => {
+import Header from "../components/common/header";
+import { Link, useLocation } from "react-router-dom";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const RealtorPayment = () => {
+  const { state } = useLocation();
+
   const tokenHandler = async (token) => {
     try {
       const tempData = {
@@ -31,6 +37,20 @@ const RealtorPayment = ({ booking }) => {
 
   return (
     <div>
+      <Header className={`flex items-center w-full text-center relative`}>
+        <Link to={"/dashboard"} className="absolute flex p-5">
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="text-white text-xl font-bold"
+          />
+        </Link>
+        <div className=" w-full">
+          <h1 className="flex-grow text-xl text-white font-bold ">
+            CHOOSE PAYMENT METHOD
+          </h1>
+          <h4>BOOKING # 0001</h4>
+        </div>
+      </Header>
       <StripeCheckout
         token={tokenHandler}
         name="Pitique"

@@ -47,7 +47,14 @@ router.post("/", async (req, res) => {
     );
 
     if (payment) {
-      await paymentModel.createPayment(userPaymentInfo);
+      const newPaymentInfo = {
+        ...userPaymentInfo,
+        status: payment.status,
+        preceipt: payment.id,
+        freceipt: payment.id,
+      };
+
+      await paymentModel.createPayment(newPaymentInfo);
       res.status(201).json({ message: "payment created successfully" });
     } else {
       res.status(400).send("Bad Payment Error");

@@ -17,7 +17,6 @@ class PaymentModel {
         payment.total,
         payment.pamt,
         payment.pdate,
-        payment.pdate,
         payment.preceipt,
         payment.famt,
         payment.fdate,
