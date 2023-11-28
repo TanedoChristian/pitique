@@ -2,18 +2,20 @@ import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import api from "../helper/api";
 import Header from "../components/common/header";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import card from "../assets/card.png";
+
 const RealtorPayment = () => {
   const { state } = useLocation();
-
+  const navigate = useNavigate();
   const tokenHandler = async (token) => {
     try {
       const tempData = {
         ptqr_id: state.ptqr_id,
         rltr_id: state.rltr_id,
-        book_id: state.book_id,
+        book_id: state.id,
         status: "",
         total: state.price,
         pamt: state.price,
@@ -29,7 +31,13 @@ const RealtorPayment = () => {
         userPaymentInfo: tempData,
       });
 
-      console.log(data);
+      if (data) {
+        const res = await api.put(`/bookings/pay/${state.id}`);
+
+        if (res.data) {
+          navigate(`/booking/${state.id}`);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +46,7 @@ const RealtorPayment = () => {
   if (state === undefined) return <div>Forbidden Page!</div>;
 
   return (
-    <div>
+    <div className="flex flex-col h-screen ">
       <Header className={`flex items-center w-full text-center relative`}>
         <Link to={`/booking/${state.id}`} className="absolute flex p-5">
           <FontAwesomeIcon
@@ -64,13 +72,17 @@ const RealtorPayment = () => {
         stripeKey="pk_test_51H4nyJL4yJIlpmX8YdYhwND9xFKXeWjML0s6ToNT5Ru2dzxaE6VMPs8TOp4qFlw78cYWesygUmchkWUOJLCxGfCP00bZyMFgy0"
       >
         <button
-          style={{ width: "100%", borderRadius: "40px", height: "3rem" }}
           variant="primary"
-          className="mt-3 shadow"
+          className=" mx-7 border-b-2 text-left py-4 flex items-center mt-5"
         >
-          <h5 className="mt-1">Pay</h5>
+          <img src={`${card}`} alt="card" className="w-[50%]" />
+          <h5 className="ml-5 font-semibold">Credit Cards</h5>
         </button>
       </StripeCheckout>
+
+      <div className="mt-auto mb-4  text-xl p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md text-center">
+        ADD NEW PAYMENT METHOD
+      </div>
     </div>
   );
 };
