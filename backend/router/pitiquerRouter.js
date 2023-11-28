@@ -155,7 +155,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// PUT /pitiquers/edit/picture - Create a new portfolio
+// PUT /pitiquers/edit/picture - edit profile picture
 router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
   try {
     const newPortfolio = {

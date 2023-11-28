@@ -78,7 +78,11 @@ const PitiqueProfileDetails = ({
         <div className="  ml-5 w-[80%]  flex justify-center p-5 border-b-2 border-gray-300">
           <img
             className="w-48 h-48 rounded-full object-cover "
-            src={`data:image/png;base64,${profileImg}`}
+            src={
+              profileImg
+                ? `data:image/png;base64,${profileImg}`
+                : "https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D}"
+            }
           />
           {/* Hidden file input */}
           <input

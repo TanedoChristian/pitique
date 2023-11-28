@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
+const multer = require("multer");
 const RealtorModel = require("../model/realtorModel");
 
 const realtorModel = new RealtorModel();
+
+// Set up Multer to handle file uploads
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage: storage });
 
 // GET /realtors/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
@@ -107,9 +111,14 @@ router.post("/login", async (req, res) => {
     const authResult = await realtorModel.authenticate(email, password);
 
     if (authResult) {
+      const finalResult = {
+        ...authResult,
+        prof_img: base64EncodeImage(authResult.prof_img),
+      };
+
       res.json({
         message: "Login successful",
-        user: authResult,
+        user: finalResult,
       });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
@@ -153,5 +162,45 @@ router.delete("/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+// PUT /realtors/edit/picture - edit profile picture and name
+router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
+  try {
+    const newPortfolio = {
+      prof_img: req.file.buffer,
+    };
+
+    await realtorModel.updatePicture(newPortfolio);
+    res.status(201).json({
+      message: "Updated successfully",
+      image: base64EncodeImage(newPortfolio.prof_img),
+    });
+  } catch (error) {
+    console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// PUT /realtors/edit/name - edit profile name
+router.put("/edit/name", async (req, res) => {
+  console.log(req.body);
+  try {
+    const newPortfolio = {
+      ...req.body,
+    };
+
+    await realtorModel.updateName(newPortfolio);
+    res.status(201).json({
+      message: "Updated successfully",
+    });
+  } catch (error) {
+    console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+const base64EncodeImage = (buffer) => {
+  return buffer.toString("base64");
+};
 
 module.exports = router;

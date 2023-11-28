@@ -29,7 +29,6 @@ const BookingScheduleForm = ({ setCount }) => {
       ...prev,
       day: e.target.value,
     }));
-    console.log(bookingInfo);
   };
 
   return (

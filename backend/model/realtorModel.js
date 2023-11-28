@@ -103,6 +103,26 @@ class RealtorModel {
     );
   }
 
+  async updatePicture(updatedInfo) {
+    await this.pool.query("UPDATE realtor SET prof_img = ? WHERE id = ?", [
+      updatedInfo.prof_img,
+      updatedInfo.rltr_id,
+    ]);
+  }
+
+  async updateName(updatedInfo) {
+    await this.pool.query(
+      "UPDATE realtor SET fname = ?,mname = ?,lname = ?,birthdate = ? WHERE id = ?",
+      [
+        updatedInfo.fname,
+        updatedInfo.mname,
+        updatedInfo.lname,
+        updatedInfo.birthdate,
+        updatedInfo.rltr_id,
+      ]
+    );
+  }
+
   //TODO: Not yet finish
   //Note: Dont use ID this is not secure. Change this.
   async deleteRealtorById(realtorId) {

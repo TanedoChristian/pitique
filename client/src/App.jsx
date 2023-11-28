@@ -7,13 +7,13 @@ import RealtorAccount from "./views/realtor-account";
 import RealtorBooking from "./views/realtor-booking";
 import RealtorTransaction from "./views/realtor-transaction";
 import PitiqueDashboard from "./views/pitique-dashboard";
-import PitiqueBookingLayout from "./components/pitique-booking-layout/layout";
 import PitiqueBooking from "./views/pitique-booking";
 import PitiqueBookingId from "./views/pitique-booking-id";
 import PitiqueProfile from "./views/pitique-profile";
 import PitiqueServiceReport from "./views/pitique-service-report";
 import RealtorBookingId from "./views/realtor-booking-id";
 import PitiquerSearchPage from "./views/pitiquer-search-page";
+import RealtorProfilePage from "./views/realtor-profile-page";
 
 const App = () => {
   return (
@@ -40,6 +40,7 @@ const App = () => {
         ></Route>
 
         <Route path="/profile/pitique/:id" element={<PitiqueProfile />}></Route>
+        <Route path="/profile/realtor" element={<RealtorProfilePage />}></Route>
         <Route
           path="/report/pitique"
           element={<PitiqueServiceReport />}
