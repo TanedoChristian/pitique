@@ -9,7 +9,9 @@ import { useState } from "react";
 
 const AdminSideNav = ({ setShowNav }) => {
   return (
-    <div className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins `}>
+    <div
+      className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins z-10`}
+    >
       <div className="w-[200px] h-full  bg-cyan-500 text-white border-r border-gray-200">
         <div className="flex justify-end w-full">
           <button
