@@ -8,6 +8,7 @@ import api from "../helper/api";
 const ManageRealtor = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [realtors, setRealtors] = useState([]);
+  const [flag, setFlag] = useState(false);
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -22,7 +23,22 @@ const ManageRealtor = () => {
     };
 
     fetch();
-  }, []);
+  }, [flag]);
+
+  const handleChangeStatus = async (status, id) => {
+    try {
+      const { data } = await api.put("/realtors/edit/status", {
+        status,
+        rltr_id: id,
+      });
+
+      if (data) {
+        setFlag(!flag);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="">
@@ -75,7 +91,7 @@ const ManageRealtor = () => {
                   >
                     {realtor.id}
                   </th>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 capitalize">
                     {realtor.fname} {realtor.mname} {realtor.lname}
                   </td>
                   <td className="px-6 py-4">{realtor.email}</td>
@@ -83,17 +99,46 @@ const ManageRealtor = () => {
                     {realtor.phone !== "" ? realtor.phone : "N/A"}
                   </td>
                   <td className="px-6 py-4">
-                    <button className="py-1 px-3 rounded-xl bg-green-400 text-white">
+                    <div
+                      className={`py-1 px-3 rounded-xl text-center capitalize bg-${
+                        realtor.status === "active" ? "green" : "red"
+                      }-400 text-white`}
+                    >
                       {realtor.status}
-                    </button>
+                    </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
-                      <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
+                      <button
+                        onClick={() =>
+                          handleChangeStatus("suspend", realtor.id)
+                        }
+                        className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
+                          realtor.status === "suspend" && " hidden"
+                        }`}
+                        disabled={realtor.status === "suspend"}
+                      >
                         Suspend
                       </button>
-                      <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
+                      <button
+                        onClick={() =>
+                          handleChangeStatus("terminate", realtor.id)
+                        }
+                        className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
+                          realtor.status === "terminate" && " hidden"
+                        }`}
+                        disabled={realtor.status === "terminate"}
+                      >
                         Terminate
+                      </button>
+                      <button
+                        onClick={() => handleChangeStatus("active", realtor.id)}
+                        className={`py-1 px-3 rounded-xl bg-green-500  text-white ${
+                          realtor.status === "active" && " hidden"
+                        }`}
+                        disabled={realtor.status === "active"}
+                      >
+                        Activate
                       </button>
                     </div>
                   </td>

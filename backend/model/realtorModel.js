@@ -131,6 +131,13 @@ class RealtorModel {
     );
   }
 
+  async updateStatus(user) {
+    await this.pool.query("UPDATE realtor SET status = ?  WHERE id = ?", [
+      user.status,
+      user.rltr_id,
+    ]);
+  }
+
   //TODO: Not yet finish
   //Note: Dont use ID this is not secure. Change this.
   async deleteRealtorById(realtorId) {

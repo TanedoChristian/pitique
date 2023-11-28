@@ -214,6 +214,21 @@ router.put("/edit/name", async (req, res) => {
   }
 });
 
+// PUT /realtors/edit/status - edit profile status
+router.put("/edit/status", async (req, res) => {
+  try {
+    const user = req.body;
+
+    await realtorModel.updateStatus(user);
+    res.status(201).json({
+      message: "Updated successfully",
+    });
+  } catch (error) {
+    console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 const base64EncodeImage = (buffer) => {
   return buffer.toString("base64");
 };
