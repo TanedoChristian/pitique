@@ -7,19 +7,23 @@ import { faChevronLeft, faPen } from "@fortawesome/free-solid-svg-icons";
 import Header from "../common/header";
 import PitiqueProfilePackage from "./pitique-profile-package";
 import PitiqueProfilePortfolio from "./pitique-profile-portfolio";
+import { useParams } from "react-router-dom";
 
-const PitiqueProfileLayout = () => {
+const PitiqueProfileLayout = ({ user }) => {
+  const { id } = useParams();
+
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showPackage, setShowPackage] = useState(false);
 
   const handleBack = () => {
-    if (showPortfolio) {
+    if (showPortfolio || showPackage) {
       setShowPortfolio(false);
       setShowPackage(false);
     } else {
       window.location.href = "/dashboard/pitique";
     }
   };
+
   return (
     <div className="poppins">
       <Header className="flex items-center w-full gap-16 relative">
@@ -38,14 +42,16 @@ const PitiqueProfileLayout = () => {
 
       {showPortfolio ? (
         <div className="p-4 flex justify-center">
-          <PitiqueProfilePortfolio />
+          <PitiqueProfilePortfolio pitiquerId={id} user={user} />
         </div>
       ) : showPackage ? (
-        <PitiqueProfilePackage />
+        <PitiqueProfilePackage pitiquerId={id} />
       ) : (
         <PitiqueProfileDetails
           setShowPortfolio={setShowPortfolio}
           setShowPackage={setShowPackage}
+          user={user}
+          pitiquerId={id}
         />
       )}
     </div>

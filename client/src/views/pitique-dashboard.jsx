@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
 import SideNav from "../components/common/sidenav";
+import { useState } from "react";
 const PitiqueDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
 

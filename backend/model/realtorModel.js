@@ -15,6 +15,34 @@ class RealtorModel {
     return rows[0];
   }
 
+  // Add to favorite
+  async addFavoritePitiquer(pitiquerId, realtorId) {
+    await this.pool.query(
+      "INSERT INTO favorite (rltr_id, ptqr_id) VALUES (?,?)",
+      [realtorId, pitiquerId]
+    );
+  }
+
+  // GET to favorite
+  async getFavorite(pitiquerId, realtorId) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM favorite WHERE rltr_id = ? AND ptqr_id = ?",
+      [realtorId, pitiquerId]
+    );
+
+    return rows[0];
+  }
+
+  // Delete to favorite
+  async deleteFavorite(pitiquerId, realtorId) {
+    await this.pool.query(
+      "DELETE FROM favorite WHERE rltr_id = ? AND ptqr_id = ?",
+      [realtorId, pitiquerId]
+    );
+  }
+
+  // ENDD OF FAVORITE
+  //   GET REALTOR
   async getRealtorById(realtorId) {
     const [rows] = await this.pool.query("SELECT * FROM realtor WHERE id = ?", [
       realtorId,
@@ -71,6 +99,27 @@ class RealtorModel {
         updatedInfo.id_type,
         updatedInfo.id_img,
         realtorId,
+      ]
+    );
+  }
+
+  async updatePicture(updatedInfo) {
+    await this.pool.query("UPDATE realtor SET prof_img = ? WHERE id = ?", [
+      updatedInfo.prof_img,
+      updatedInfo.rltr_id,
+    ]);
+  }
+
+  async updateName(updatedInfo) {
+    console.log(updatedInfo);
+    await this.pool.query(
+      "UPDATE realtor SET fname = ?,mname = ?,lname = ?,birthdate = ? WHERE id = ?",
+      [
+        updatedInfo.fname,
+        updatedInfo.mname,
+        updatedInfo.lname,
+        updatedInfo.birthdate,
+        updatedInfo.rltr_id,
       ]
     );
   }

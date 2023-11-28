@@ -31,6 +31,7 @@ const RealtorBooking = () => {
     date: "",
     pkg_id: "",
     pkg_name: "",
+    day: "",
     rltr_id: user.id,
     ptqr_id: pitiquerId,
   });

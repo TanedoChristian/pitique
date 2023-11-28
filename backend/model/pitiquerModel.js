@@ -6,16 +6,19 @@ class PitiquerModel {
     this.pool = createPromisePool();
   }
 
-  //   GET Pitiquer
-  async getPitiquerByEmail(email) {
+  // GET Pitiquer by name (first name or last name)
+  async getPitiquerByName(name) {
     const [rows] = await this.pool.query(
-      "SELECT * FROM pitiquer WHERE email = ?",
-      [email]
+      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price FROM pitiquer p INNER JOIN package pa" +
+        " ON p.id = pa.ptqr_id" +
+        " WHERE CONCAT(p.fname, ' ', p.lname) LIKE ?" +
+        " GROUP BY p.id ",
+      [`%${name}%`]
     );
-    return rows[0];
+
+    return rows;
   }
 
-  //TODO: please put here limit for tabulation
   //   GET Pitiquer
 
   async getPitiquers() {
@@ -31,6 +34,14 @@ class PitiquerModel {
     const [rows] = await this.pool.query(
       "SELECT * FROM pitiquer WHERE id = ?",
       [pitiquerId]
+    );
+    return rows[0];
+  }
+
+  async getPitiquerByEmail(email) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM pitiquer WHERE email = ?",
+      [email]
     );
     return rows[0];
   }
@@ -95,6 +106,13 @@ class PitiquerModel {
         pitiquerId,
       ]
     );
+  }
+
+  async updatePitiquerPicture(pitiquerId, picture) {
+    await this.pool.query("UPDATE pitiquer SET prof_img = ? WHERE id = ?", [
+      picture,
+      pitiquerId,
+    ]);
   }
 
   //TODO: Not yet finish

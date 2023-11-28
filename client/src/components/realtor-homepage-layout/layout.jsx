@@ -1,13 +1,13 @@
-import RealtorCard from "./realtor-card"
+import PitiquerCard from "./pitiquer-card";
 
-const RealtorLayout = ({realtors}) => {
-    return (
-        <div className="w-full p-3 flex flex-col items-center  h-[90vh] overflow-auto">
-            {realtors.map((realtor, index) => 
-                <RealtorCard key={index} realtor={...realtor} />
-            )}
-        </div>
-    )
-}
+const RealtorLayout = ({ pitiquers }) => {
+  return (
+    <div className="w-full p-3 flex flex-col items-center  h-[90vh] overflow-auto">
+      {pitiquers.map((pitiquer, index) => (
+        <PitiquerCard key={index} pitiquer={pitiquer} />
+      ))}
+    </div>
+  );
+};
 
-export default RealtorLayout
+export default RealtorLayout;
