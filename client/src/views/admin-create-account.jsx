@@ -7,7 +7,7 @@ import api from "../helper/api";
 
 const AdminCreateAccount = () => {
   const [showSideNav, setShowNav] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
   const [passwordMatch, setPasswordMatch] = useState(true);
 
   const handleConfirmPassword = (e) => {
@@ -34,7 +34,16 @@ const AdminCreateAccount = () => {
         console.error(error);
       }
     } else if (user.type === "admin") {
-      // Admin
+      try {
+        const { data } = await api.post("/admins", user);
+
+        if (data) {
+          alert(user.type + " has been created successfully!");
+          setUser({});
+        }
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       alert("Choose account type!");
     }
@@ -63,90 +72,9 @@ const AdminCreateAccount = () => {
           <h1 className="text-xl font-bold text-center">Create Account</h1>
         </div>
       </Header>
-      <form
-        className="flex flex-col gap-3 p-5 justify-between h-full"
-        onSubmit={handleSubmit}
-      >
-        <div className="flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder="First name"
-            name="fname"
-            onChange={handleChange}
-            className="p-3 bg-gray-200 w-full rounded-sm"
-            value={user.fname ?? ""}
-          />
-
-          <input
-            type="text"
-            placeholder="Middle name"
-            name="mname"
-            onChange={handleChange}
-            className="p-3 bg-gray-200 w-full rounded-sm "
-            value={user.mname ?? ""}
-          />
-
-          <input
-            type="text"
-            placeholder="Last name"
-            name="lname"
-            onChange={handleChange}
-            className="p-3 bg-gray-200 w-full rounded-sm "
-            value={user.lname ?? ""}
-          />
-
-          <input
-            type="text"
-            placeholder="Phone"
-            name="phone"
-            onChange={handleChange}
-            className="p-3 bg-gray-200 w-full rounded-sm "
-            value={user.phone ?? ""}
-          />
-          <input
-            type="text"
-            placeholder="Email"
-            name="email"
-            className="p-3 bg-gray-200 w-full rounded-sm"
-            onChange={handleChange}
-            value={user.email ?? ""}
-          />
-          <input
-            type="text"
-            placeholder="Province"
-            name="province"
-            className="p-3 bg-gray-200 w-full rounded-sm"
-            onChange={handleChange}
-            value={user.province ?? ""}
-          />
-          <input
-            type="text"
-            placeholder="City"
-            name="city"
-            className="p-3 bg-gray-200 w-full rounded-sm"
-            onChange={handleChange}
-            value={user.city ?? ""}
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            className="p-3 bg-gray-200 w-full rounded-sm "
-            onChange={handleChange}
-            onBlur={handleConfirmPassword}
-            value={user.password ?? ""}
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="p-3 bg-gray-200 w-full rounded-sm"
-            onBlur={handleConfirmPassword}
-          />
-          <p className="text-xs text-red-500">
-            {!passwordMatch ? "Password does not match" : ""}
-          </p>
-          <div className="flex w-full justify-center gap-2"></div>
+      <form className="flex flex-col gap-3 p-5  h-full" onSubmit={handleSubmit}>
+        <div>Select User Type:</div>
+        <div className="">
           <div className="flex items-center">
             <input
               id="default-radio-1"
@@ -164,7 +92,6 @@ const AdminCreateAccount = () => {
               Pitiquer
             </label>
           </div>
-
           <div className="flex items-center">
             <input
               id="default-radio-2"
@@ -181,13 +108,101 @@ const AdminCreateAccount = () => {
               Admin
             </label>
           </div>
-          <button
-            disabled={!passwordMatch}
-            className="mt-10 p-3 w-full border-2 text-lg bg-cyan-500 text-white font-bold rounded-sm shadow-md"
-          >
-            Create Account
-          </button>
         </div>
+        {user !== undefined && (
+          <div className="flex flex-col gap-3">
+            <input
+              type="text"
+              placeholder="First name"
+              name="fname"
+              onChange={handleChange}
+              className="p-3 bg-gray-200 w-full rounded-sm"
+              value={user.fname ?? ""}
+            />
+
+            <input
+              type="text"
+              placeholder="Middle name"
+              name="mname"
+              onChange={handleChange}
+              className="p-3 bg-gray-200 w-full rounded-sm "
+              value={user.mname ?? ""}
+            />
+
+            <input
+              type="text"
+              placeholder="Last name"
+              name="lname"
+              onChange={handleChange}
+              className="p-3 bg-gray-200 w-full rounded-sm "
+              value={user.lname ?? ""}
+            />
+
+            <input
+              type="text"
+              placeholder="Phone"
+              name="phone"
+              onChange={handleChange}
+              className="p-3 bg-gray-200 w-full rounded-sm "
+              value={user.phone ?? ""}
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              name="email"
+              className="p-3 bg-gray-200 w-full rounded-sm"
+              onChange={handleChange}
+              value={user.email ?? ""}
+            />
+            {user.type === "pitiquer" && (
+              <>
+                <input
+                  type="text"
+                  placeholder="Province"
+                  name="province"
+                  className="p-3 bg-gray-200 w-full rounded-sm"
+                  onChange={handleChange}
+                  value={user.province ?? ""}
+                />
+                <input
+                  type="text"
+                  placeholder="City"
+                  name="city"
+                  className="p-3 bg-gray-200 w-full rounded-sm"
+                  onChange={handleChange}
+                  value={user.city ?? ""}
+                />
+              </>
+            )}
+
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              className="p-3 bg-gray-200 w-full rounded-sm "
+              onChange={handleChange}
+              onBlur={handleConfirmPassword}
+              value={user.password ?? ""}
+            />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="p-3 bg-gray-200 w-full rounded-sm"
+              onBlur={handleConfirmPassword}
+            />
+            <p className="text-xs text-red-500">
+              {!passwordMatch ? "Password does not match" : ""}
+            </p>
+            <div className="flex w-full justify-center gap-2"></div>
+
+            <button
+              disabled={!passwordMatch}
+              className="mt-10 mb-5 p-3 w-full border-2 text-lg bg-cyan-500 text-white font-bold rounded-sm shadow-md"
+            >
+              Create Account
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

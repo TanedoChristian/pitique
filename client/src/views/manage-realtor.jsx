@@ -116,7 +116,6 @@ const ManageRealtor = () => {
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
                           realtor.status === "suspend" && " hidden"
                         }`}
-                        disabled={realtor.status === "suspend"}
                       >
                         Suspend
                       </button>
@@ -127,7 +126,6 @@ const ManageRealtor = () => {
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
                           realtor.status === "terminate" && " hidden"
                         }`}
-                        disabled={realtor.status === "terminate"}
                       >
                         Terminate
                       </button>
@@ -136,7 +134,6 @@ const ManageRealtor = () => {
                         className={`py-1 px-3 rounded-xl bg-green-500  text-white ${
                           realtor.status === "active" && " hidden"
                         }`}
-                        disabled={realtor.status === "active"}
                       >
                         Activate
                       </button>

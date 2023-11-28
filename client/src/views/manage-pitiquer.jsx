@@ -116,7 +116,6 @@ const ManagePitiquer = () => {
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
                           pitiquer.status === "suspend" && " hidden"
                         }`}
-                        disabled={pitiquer.status === "suspend"}
                       >
                         Suspend
                       </button>
@@ -127,7 +126,6 @@ const ManagePitiquer = () => {
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
                           pitiquer.status === "terminate" && " hidden"
                         }`}
-                        disabled={pitiquer.status === "terminate"}
                       >
                         Terminate
                       </button>
@@ -138,7 +136,6 @@ const ManagePitiquer = () => {
                         className={`py-1 px-3 rounded-xl bg-green-500  text-white ${
                           pitiquer.status === "active" && " hidden"
                         }`}
-                        disabled={pitiquer.status === "active"}
                       >
                         Activate
                       </button>
