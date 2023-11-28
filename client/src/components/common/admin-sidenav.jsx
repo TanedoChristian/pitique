@@ -6,9 +6,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminSideNav = ({ setShowNav }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   return (
     <div
       className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins z-10`}
@@ -44,7 +50,7 @@ const AdminSideNav = ({ setShowNav }) => {
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
-              <a>Logout </a>
+              <button onClick={handleLogout}>Logout </button>
             </li>
           </div>
         </div>

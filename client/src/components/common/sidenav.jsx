@@ -5,10 +5,16 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideNav = ({ setShowNav }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
     <div className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins `}>
       <div className="w-[200px] h-full  bg-cyan-500 text-white border-r border-gray-200">
@@ -42,7 +48,7 @@ const SideNav = ({ setShowNav }) => {
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
-              <a>Logout </a>
+              <button onClick={handleLogout}>Logout </button>
             </li>
           </div>
         </div>
