@@ -21,10 +21,13 @@ class PitiquerModel {
 
   //   GET Pitiquer for dashboard
   async getPitiquers() {
+    // const [rows] = await this.pool.query(
+    //   "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price FROM pitiquer p INNER JOIN package pa" +
+    //     " ON p.id = pa.ptqr_id" +
+    //     " GROUP BY p.id"
+    // );
     const [rows] = await this.pool.query(
-      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price FROM pitiquer p INNER JOIN package pa" +
-        " ON p.id = pa.ptqr_id" +
-        " GROUP BY p.id"
+      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price, COALESCE(AVG(rf.rtng), 0) as avg_rating FROM pitiquer p INNER JOIN package pa ON p.id = pa.ptqr_id LEFT JOIN booking b ON b.ptqr_id = p.id LEFT JOIN realtor_feedback rf ON rf.book_id = b.id GROUP BY p.id"
     );
     return rows;
   }
@@ -49,6 +52,14 @@ class PitiquerModel {
     const [rows] = await this.pool.query(
       "SELECT * FROM pitiquer WHERE email = ?",
       [email]
+    );
+    return rows[0];
+  }
+
+  async getPitiquerRating(id) {
+    const [rows] = await this.pool.query(
+      "SELECT AVG(rf.rtng) FROM booking b INNER JOIN realtor_feedback rf ON rf.book_id = b.id WHERE b.ptqr_id = ?",
+      [id]
     );
     return rows[0];
   }
