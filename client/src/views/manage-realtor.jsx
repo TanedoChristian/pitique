@@ -12,7 +12,7 @@ const ManageRealtor = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const { data } = await api.get("/realtors");
+        const { data } = await api.get("/realtors/admin/all");
 
         if (data) {
           setRealtors(data);

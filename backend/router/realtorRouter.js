@@ -10,7 +10,7 @@ const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
 // GET /realtors - Get all realtors
-router.get("/", async (req, res) => {
+router.get("/admin/all", async (req, res) => {
   try {
     const realtors = await realtorModel.getRealtors();
 

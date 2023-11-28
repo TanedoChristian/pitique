@@ -19,13 +19,20 @@ class PitiquerModel {
     return rows;
   }
 
-  //   GET Pitiquer
-
+  //   GET Pitiquer for dashboard
   async getPitiquers() {
     const [rows] = await this.pool.query(
       "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price FROM pitiquer p INNER JOIN package pa" +
         " ON p.id = pa.ptqr_id" +
         " GROUP BY p.id"
+    );
+    return rows;
+  }
+
+  //   GET All Pitiquer
+  async getAllPitiquers() {
+    const [rows] = await this.pool.query(
+      "SELECT id,fname,mname,lname,email,phone,status FROM pitiquer"
     );
     return rows;
   }
@@ -107,6 +114,13 @@ class PitiquerModel {
     await this.pool.query("UPDATE pitiquer SET prof_img = ? WHERE id = ?", [
       picture,
       pitiquerId,
+    ]);
+  }
+
+  async updateStatus(user) {
+    await this.pool.query("UPDATE pitiquer SET status = ?  WHERE id = ?", [
+      user.status,
+      user.ptqr_id,
     ]);
   }
 

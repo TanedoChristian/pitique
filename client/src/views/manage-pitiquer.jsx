@@ -2,10 +2,44 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminSideNav from "../components/common/admin-sidenav";
 import Header from "../components/common/header";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../helper/api";
 
 const ManagePitiquer = () => {
   const [showSideNav, setShowNav] = useState(false);
+  const [pitiquers, setPitiquers] = useState([]);
+  const [flag, setFlag] = useState(false);
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get("/pitiquers/admin/all");
+
+        if (data) {
+          setPitiquers(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, [flag]);
+
+  const handleChangeStatus = async (status, id) => {
+    try {
+      const { data } = await api.put("/pitiquers/edit/status", {
+        status,
+        ptqr_id: id,
+      });
+
+      if (data) {
+        setFlag(!flag);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="">
       {showSideNav ? <AdminSideNav setShowNav={setShowNav} /> : ""}
@@ -48,32 +82,70 @@ const ManagePitiquer = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                1
-              </th>
-              <td className="px-6 py-4">John Doe</td>
-              <td className="px-6 py-4">johndoe@gmail.com</td>
-              <td className="px-6 py-4">0924092940</td>
-              <td className="px-6 py-4">
-                <button className="py-1 px-3 rounded-xl bg-green-400 text-white">
-                  Active
-                </button>
-              </td>
-              <td className="px-6 py-4">
-                <div className="flex gap-2">
-                  <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
-                    Suspend
-                  </button>
-                  <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
-                    Terminate
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {pitiquers.length > 0 &&
+              pitiquers.map((pitiquer) => (
+                <tr className="bg-white border-b" key={pitiquer.id}>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {pitiquer.id}
+                  </th>
+                  <td className="px-6 py-4 capitalize">
+                    {pitiquer.fname} {pitiquer.mname} {pitiquer.lname}
+                  </td>
+                  <td className="px-6 py-4">{pitiquer.email}</td>
+                  <td className="px-6 py-4">
+                    {pitiquer.phone !== "" ? pitiquer.phone : "N/A"}
+                  </td>
+                  <td className="px-6 py-4">
+                    <div
+                      className={`py-1 px-3 rounded-xl text-center capitalize bg-${
+                        pitiquer.status === "active" ? "green" : "red"
+                      }-400 text-white`}
+                    >
+                      {pitiquer.status}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          handleChangeStatus("suspend", pitiquer.id)
+                        }
+                        className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
+                          pitiquer.status === "suspend" && " hidden"
+                        }`}
+                        disabled={pitiquer.status === "suspend"}
+                      >
+                        Suspend
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleChangeStatus("terminate", pitiquer.id)
+                        }
+                        className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
+                          pitiquer.status === "terminate" && " hidden"
+                        }`}
+                        disabled={pitiquer.status === "terminate"}
+                      >
+                        Terminate
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleChangeStatus("active", pitiquer.id)
+                        }
+                        className={`py-1 px-3 rounded-xl bg-green-500  text-white ${
+                          pitiquer.status === "active" && " hidden"
+                        }`}
+                        disabled={pitiquer.status === "active"}
+                      >
+                        Activate
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
