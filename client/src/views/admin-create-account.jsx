@@ -103,35 +103,37 @@ const AdminCreateAccount = () => {
             {!passwordMatch ? "Password does not match" : ""}
           </p>
           <div className="flex w-full justify-center gap-2"></div>
-          <div class="flex items-center">
+          <div className="flex items-center">
             <input
               id="default-radio-1"
               type="radio"
               value=""
-              name="default-radio"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+              name="type"
+              onChange={handleChange}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
             />
 
             <label
-              for="default-radio-1"
-              class="ms-2 text-sm font-medium text-gray-900"
+              htmlFor="default-radio-1"
+              className="ms-2 text-sm font-medium text-gray-900"
             >
               Pitiquer
             </label>
           </div>
 
-          <div class="flex items-center">
+          <div className="flex items-center">
             <input
               checked
               id="default-radio-2"
               type="radio"
               value=""
-              name="default-radio"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+              name="type"
+              onChange={handleChange}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
             />
             <label
-              for="default-radio-2"
-              class="ms-2 text-sm font-medium text-gray-900 "
+              htmlFor="default-radio-2"
+              className="ms-2 text-sm font-medium text-gray-900 "
             >
               Admin
             </label>

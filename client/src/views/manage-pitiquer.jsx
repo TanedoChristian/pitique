@@ -23,39 +23,47 @@ const ManagePitiquer = () => {
         <h1 className="text-xl font-bold">Manage Pitiquer </h1>
       </div>
 
-      <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-          <thead class="text-xs text-white uppercase bg-cyan-500">
+      <div className="relative overflow-x-auto">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead className="text-xs text-white uppercase bg-cyan-500">
             <tr>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 ID
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Name
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Email
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
                 Phone Number
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b">
+            <tr className="bg-white border-b">
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               >
                 1
               </th>
-              <td class="px-6 py-4">John Doe</td>
-              <td class="px-6 py-4">johndoe@gmail.com</td>
-              <td class="px-6 py-4">0924092940</td>
-              <td class="px-6 py-4">
+              <td className="px-6 py-4">John Doe</td>
+              <td className="px-6 py-4">johndoe@gmail.com</td>
+              <td className="px-6 py-4">0924092940</td>
+              <td className="px-6 py-4">
+                <button className="py-1 px-3 rounded-xl bg-green-400 text-white">
+                  Active
+                </button>
+              </td>
+              <td className="px-6 py-4">
                 <div className="flex gap-2">
                   <button className="py-1 px-3 rounded-xl bg-red-500 text-white">
                     Suspend
