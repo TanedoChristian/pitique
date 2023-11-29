@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -81,16 +81,16 @@ const PitiqueBookingId = () => {
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
-        <div className="absolute flex p-5">
+        <Link to={"/booking/pitique"} className="absolute flex p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
           />
-        </div>
+        </Link>
         <div className=" w-full">
           <h1 className="flex-grow text-xl text-white font-bold ">{`Booking ${id}`}</h1>
           <div className="flex justify-center items-center mt-1">
-            <p className=" bg-orange-400 text-white px-3  py-0 rounded-full text-sm">
+            <p className=" bg-orange-400 text-white px-3  py-0 rounded-full text-sm capitalize">
               {booking.status}
             </p>
           </div>
@@ -103,10 +103,10 @@ const PitiqueBookingId = () => {
             <div className="flex flex-col gap-1 p-3">
               <p className="text-gray-500 text-sm">Property Address</p>
               <div>
-                <h1 className="font-bold">
+                <h1 className="font-bold capitalize">
                   {booking.unit_no} {booking.street}
                 </h1>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 text-sm capitalize">
                   {booking.city}, {booking.province} {booking.postal}
                 </p>
               </div>
@@ -141,13 +141,13 @@ const PitiqueBookingId = () => {
             <div className="flex flex-col gap-2">
               <p className="text-gray-500 text-sm">Contact Info</p>
               <div>
-                <h1 className="font-bold">
-                  {booking.fname} {booking.lname}
+                <h1 className="font-bold capitalize">
+                  {booking.rfname} {booking.rlname}
                 </h1>
                 <p className="text-gray-500 text-sm">
-                  {booking.phone ?? "No Phone"}
+                  {booking.rphone ?? "No Phone"}
                 </p>
-                <p className="text-gray-500 text-sm">{booking.email}</p>
+                <p className="text-gray-500 text-sm">{booking.remail}</p>
               </div>
             </div>
           </div>

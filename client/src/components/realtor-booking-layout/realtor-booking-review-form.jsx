@@ -19,16 +19,18 @@ const BookingReviewForm = ({ setCount }) => {
     // TODO
     console.log(data);
   };
-
   return (
     <div className="poppins">
       <div className="border border-gray-300 shadow-md p-3 mt-5">
         <div className="flex  justify-between p-2">
           <div className="flex flex-col gap-2">
             <p className="text-gray-500 text-sm">Property Address</p>
-            <div>
-              <h1 className="font-bold">{bookingInfo?.unit}</h1>
-              <p className="text-gray-500 text-sm">{bookingInfo?.street}</p>
+            <div className="flex items-center gap-2">
+              <h1 className="font-bold">{bookingInfo?.unit_no}</h1>
+              <p className="font-bold">{bookingInfo?.street}</p>
+            </div>
+            <div className="text-sm text-gray-500 flex items-center">
+              <h1>{bookingInfo?.city}</h1> <p>, {bookingInfo?.province}</p>
             </div>
           </div>
           <button className="text-cyan-500 font-bold">Edit </button>
@@ -65,16 +67,16 @@ const BookingReviewForm = ({ setCount }) => {
       <div className="p-3 mt-5">
         <div className="w-full  flex justify-between">
           <h1>{bookingInfo?.pkg_name}</h1>
-          <p>Php {bookingInfo?.price}</p>
+          <p>Php {Number(bookingInfo?.price).toFixed(2)}</p>
         </div>
         <div className="w-full  flex justify-between  mt-3">
           <h1>Subtotal</h1>
-          <p>{bookingInfo?.price}</p>
+          <p>{Number(bookingInfo?.price).toFixed(2)}</p>
         </div>
 
         <div className="w-full  flex justify-between mt-2 p-3 border-t border-gray-300">
           <h1>Total </h1>
-          <p className="font-bold">{bookingInfo?.price}</p>
+          <p className="font-bold">{Number(bookingInfo?.price).toFixed(2)}</p>
         </div>
       </div>
       <button
