@@ -21,7 +21,7 @@ const PitiquerCard = ({ pitiquer }) => {
             className="w-8 h-8 rounded-full "
             src="https://cdn-icons-png.flaticon.com/512/5605/5605056.png"
           />
-          <h1 className="text-sm font-bold">
+          <h1 className="text-sm font-bold capitalize">
             {`${pitiquer?.fname} ${pitiquer?.lname}`}
           </h1>
         </Link>
@@ -47,7 +47,7 @@ const PitiquerCard = ({ pitiquer }) => {
             icon={faLocationDot}
             className="text-red-500 w-5 h-5"
           />
-          <h1 className="text-sm ">{`${pitiquer?.city}, ${pitiquer?.province}`}</h1>
+          <h1 className="text-sm capitalize">{`${pitiquer?.city}, ${pitiquer?.province}`}</h1>
         </div>
         <h1 className="text-sm">
           Starts at{" "}

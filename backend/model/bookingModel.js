@@ -8,7 +8,7 @@ class BookingModel {
   //   GET booking
   async getBookingById(bookingId) {
     const [rows] = await this.pool.query(
-      "SELECT b.city, b.date,b.day, b.fee, b.id, b.pkg_id, b.postal, b.price, b.province, b.ptqr_id, b.rltr_id, b.status, b.street, b.total, b.unit_no, r.fname AS rfname, r.lname AS rlname, r.email AS remail, r.phone AS rphone,pr.fname AS prfname, pr.lname AS prlname,pr.city AS prcity,pr.province AS prprovince, p.pkg_desc " +
+      "SELECT b.city, b.date,b.day, b.fee, b.id, b.pkg_id, b.postal, b.price, b.province, b.ptqr_id, b.rltr_id, b.status, b.street, b.total, b.unit_no, r.fname AS rfname, r.lname AS rlname, r.email AS remail, r.phone AS rphone, pr.fname AS prfname, pr.lname AS prlname,pr.city AS prcity,pr.province AS prprovince, p.pkg_desc " +
         "FROM booking b INNER JOIN package p ON b.pkg_id = p.id INNER JOIN realtor r ON b.rltr_id = r.id INNER JOIN pitiquer pr ON b.ptqr_id = pr.id WHERE b.id = ? GROUP BY b.id",
       [bookingId]
     );
@@ -68,17 +68,17 @@ class BookingModel {
     // Default Value
     const status = "pending";
 
-    await this.pool.query(
-      "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled,street, unit_no, city, province, postal, property_size) VALUES (?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
+    const result = await this.pool.query(
+      "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled,street, unit_no, city, province, postal, property_size,day) VALUES (?,?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
       [
         bookingInfo.pkg_id,
         bookingInfo.rltr_id,
         bookingInfo.ptqr_id,
         status,
         bookingInfo.price,
-        bookingInfo.share,
-        bookingInfo.fee,
-        bookingInfo.total,
+        0, // share
+        bookingInfo.price, // fee
+        bookingInfo.price, //total
         bookingInfo.date,
         bookingInfo.rmrks,
         bookingInfo.approved,
@@ -91,8 +91,11 @@ class BookingModel {
         bookingInfo.province,
         bookingInfo.postal,
         bookingInfo.property_size,
+        bookingInfo.day,
       ]
     );
+
+    return result[0].insertId;
   }
 
   //   Accept status

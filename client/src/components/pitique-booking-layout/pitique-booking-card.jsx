@@ -9,7 +9,7 @@ const PitiqueBookingCard = ({ booking }) => {
       className="rounded-md flex flex-col  bg-gray-100 poppins shadow-md p-2 text-sm"
     >
       <div className="flex w-full  justify-end px-3">
-        <p className="font-bold text-green-400">{booking.status}</p>
+        <p className="font-bold text-green-400 capitalize">{booking.status}</p>
       </div>
       <div className="flex justify-between px-3 items-center  p-1 border-b border-gray-300">
         <div className="flex gap-2 items-center">
@@ -17,7 +17,7 @@ const PitiqueBookingCard = ({ booking }) => {
             className="w-8 h-8 rounded-full "
             src="https://cdn-icons-png.flaticon.com/512/5605/5605056.png"
           />
-          <h1 className="text-xs font-bold">
+          <h1 className="text-xs font-bold capitalize">
             {booking.fname} {booking.lname}
           </h1>
         </div>
@@ -41,7 +41,7 @@ const PitiqueBookingCard = ({ booking }) => {
             icon={faLocationDot}
             className="text-red-500 w-4 h-4"
           />
-          <h1 className="text-xs ">
+          <h1 className="text-xs capitalize">
             {booking.unit_no} {booking.street} {booking.city},{" "}
             {booking.province} {booking.postal}
           </h1>

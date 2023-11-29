@@ -124,12 +124,6 @@ const PitiqueProfilePackage = ({ pitiquerId }) => {
           />
         );
       })}
-
-      <div>
-        <button className=" text-xl mt-5 p-3 w-full border-2 border-cyan-500 text-cyan-500  font-bold rounded-sm shadow-md">
-          NEXT
-        </button>
-      </div>
     </>
   );
 };
