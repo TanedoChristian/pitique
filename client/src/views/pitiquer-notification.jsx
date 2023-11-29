@@ -5,13 +5,13 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import api from "../helper/api";
 
-const RealtorNotification = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+const PitiquerNotification = () => {
+  const user = JSON.parse(localStorage.getItem("p-user"));
   const [notifications, setNotifications] = useState([]);
   useEffect(() => {
     const fetch = async () => {
       try {
-        const { data } = await api.get(`/notifications/realtor/${user.id}`);
+        const { data } = await api.get(`/notifications/pitiquer/${user.id}`);
 
         if (data) {
           setNotifications(data);
@@ -62,4 +62,4 @@ const RealtorNotification = () => {
   );
 };
 
-export default RealtorNotification;
+export default PitiquerNotification;
