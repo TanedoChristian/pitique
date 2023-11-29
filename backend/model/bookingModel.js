@@ -68,7 +68,7 @@ class BookingModel {
     // Default Value
     const status = "pending";
 
-    await this.pool.query(
+    const result = await this.pool.query(
       "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled,street, unit_no, city, province, postal, property_size,day) VALUES (?,?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
       [
         bookingInfo.pkg_id,
@@ -94,6 +94,8 @@ class BookingModel {
         bookingInfo.day,
       ]
     );
+
+    return result[0].insertId;
   }
 
   //   Accept status

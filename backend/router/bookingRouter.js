@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const BookingModel = require("../model/bookingModel");
+const NotificationModel = require("../model/notificationModel");
 
 const bookingModel = new BookingModel();
+const notificationModel = new NotificationModel();
 
 // GET /bookings/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
@@ -133,8 +135,13 @@ router.post("/request", async (req, res) => {
   const bookingInfo = req.body;
 
   try {
-    await bookingModel.requestBooking(bookingInfo);
-    res.status(201).json({ message: "Reqeust created successfully" });
+    const id = await bookingModel.requestBooking(bookingInfo);
+
+    await notificationModel.createNotification(
+      id,
+      "The booking is created and pending."
+    );
+    res.status(201).json({ message: "Request created successfully" });
   } catch (error) {
     console.error("Error creating request:", error);
     res.status(500).send("Internal Server Error");
@@ -154,6 +161,10 @@ router.put("/accept/:id", async (req, res) => {
     }
 
     await bookingModel.acceptBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is accepted by pitiquer."
+    );
     res.json({ message: "Booking accepted successfully" });
   } catch (error) {
     console.error(`Error accepting Booking with ID ${bookingId}:`, error);
@@ -174,6 +185,10 @@ router.put("/pay/:id", async (req, res) => {
     }
 
     await bookingModel.payBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is paid."
+    );
     res.json({ message: "Booking paid successfully" });
   } catch (error) {
     console.error(`Error accepting Booking with ID ${bookingId}:`, error);
@@ -194,6 +209,10 @@ router.put("/complete/:id", async (req, res) => {
     }
 
     await bookingModel.completeBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is completed. You can rate and put feedback."
+    );
     res.json({ message: "Booking completed successfully" });
   } catch (error) {
     console.error(`Error completing Booking with ID ${bookingId}:`, error);
@@ -214,6 +233,10 @@ router.put("/decline/:id", async (req, res) => {
     }
 
     await bookingModel.declineBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is declined."
+    );
     res.json({ message: "Booking declined successfully" });
   } catch (error) {
     console.error(`Error declining Booking with ID ${bookingId}:`, error);
