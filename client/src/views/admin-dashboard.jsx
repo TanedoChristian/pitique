@@ -24,7 +24,30 @@ const AdminDashboard = () => {
           <DashboardChart />
         </div>
 
-        <div className="flex w-full justify-center gap-2 text-white mt-10">
+        <div className="flex justify-center gap-3 mt-5">
+          <div className="w-[30%] bg-cyan-500 rounded-md p-2 text-white flex justify-center items-center">
+            <div className="flex flex-col">
+              <h1 className="font-semibold text-xs">Total Users</h1>
+              <h1 className="mt-1 text-xs text-center">50</h1>
+            </div>
+          </div>
+
+          <div className="w-[30%] bg-cyan-500 text-white rounded-md p-2 text-center">
+            <div className="flex-col flex">
+              <h1 className="font-semibold text-xs">Suspended Users</h1>
+              <h1 className="mt-1 text-xs">5</h1>
+            </div>
+          </div>
+
+          <div className="w-[30%] bg-cyan-500 text-white rounded-md p-2 text-center">
+            <div className="flex flex-col">
+              <h1 className="font-semibold text-xs">Terminated Users</h1>
+              <h1 className="mt-1 text-xs">2</h1>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex w-full justify-center gap-2 text-white mt-5">
           <div className="w-[48%] bg-[#a2fa4b] rounded-md p-2 ">
             <h1 className="font-semibold text-xs">Revenue</h1>
             <h1 className=" font-bold  mt-1">Php 25,200.00</h1>
@@ -50,7 +73,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="mt-5 p-3 w-full flex h-[40vh]  ">
+        <div className="mt-5 p-3 w-full flex h-[30vh]  ">
           <div className=" w-full bg-gray-300 rounded-xl">
             <div className="flex justify-between px-3 items-center mt-2">
               <h1 className="font-bold text-gray-700">Top Pitiquer</h1>
