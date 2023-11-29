@@ -21,6 +21,7 @@ import RealtorProfilePage from "./views/realtor-profile-page";
 import RealtorPayment from "./views/realtor-payment";
 import RealtorNotification from "./views/realtor-notification";
 import PitiquerNotification from "./views/pitiquer-notification";
+import PaymentInfo from "./views/payment-info";
 
 const App = () => {
   return (
@@ -65,6 +66,7 @@ const App = () => {
           path="/p/notification"
           element={<PitiquerNotification />}
         ></Route>
+        <Route path="/payment/info/:bid" element={<PaymentInfo />}></Route>
         <Route
           path="/report/pitique"
           element={<PitiqueServiceReport />}

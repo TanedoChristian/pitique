@@ -1,10 +1,11 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
 import PitiquerRatingLayout from "../components/pitiquer-rating-layout/layout";
+import PitiquerFeedback from "../components/pitiquer-rating-layout/feedback-show";
 
 const PitiqueBookingId = () => {
   const { id } = useParams();
@@ -16,7 +17,9 @@ const PitiqueBookingId = () => {
   const [newDate, setNewDate] = useState();
 
   const [showFeedback, setShowFeedback] = useState(false);
-
+  const [showFeedbackDetails, setShowFeedbackDetails] = useState(false);
+  const [feedback, setFeedback] = useState();
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("p-user"));
 
   useEffect(() => {
@@ -43,6 +46,7 @@ const PitiqueBookingId = () => {
 
         if (data) {
           setShowFeedback(false);
+          setFeedback(data);
         }
       } catch (error) {
         // If rating not found
@@ -273,15 +277,33 @@ const PitiqueBookingId = () => {
           </div>
         )}
 
-        {booking.status === "completed" && showFeedback && (
-          <div className="w-full">
-            <button
-              onClick={() => setShow(true)}
-              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
-            >
-              ADD FEEDBACK
-            </button>
-          </div>
+        {booking.status === "completed" &&
+          (showFeedback ? (
+            <div className="w-full">
+              <button
+                onClick={() => setShow(true)}
+                className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                ADD FEEDBACK
+              </button>
+            </div>
+          ) : (
+            <div className="w-full">
+              <button
+                onClick={() => setShowFeedbackDetails(true)}
+                className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                SHOW FEEDBACK
+              </button>
+            </div>
+          ))}
+        {(booking.status === "completed" || booking.status === "accepted") && (
+          <button
+            onClick={() => navigate(`/payment/info/${booking.id}`)}
+            className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+          >
+            SHOW RECEIPT
+          </button>
         )}
 
         {show && (
@@ -289,6 +311,14 @@ const PitiqueBookingId = () => {
             setShow={setShow}
             booking={booking}
             refresh={{ setFlag, flag }}
+          />
+        )}
+
+        {showFeedbackDetails && (
+          <PitiquerFeedback
+            feedback={feedback}
+            setShowFeedback={setShowFeedbackDetails}
+            booking={booking}
           />
         )}
       </div>

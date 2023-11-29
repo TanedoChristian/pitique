@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
-import SideNav from "../components/common/sidenav";
 import { useState } from "react";
 import PitiquerSideNav from "../components/common/pitiquer-sidenav";
 const PitiqueDashboard = () => {

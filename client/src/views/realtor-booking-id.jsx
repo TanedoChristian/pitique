@@ -1,10 +1,11 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
 import RealtorRatingLayout from "../components/realtor-rating-layout/layout";
+import RealtorFeedback from "../components/realtor-rating-layout/feedback-show";
 
 const RealtorBookingId = () => {
   const { id } = useParams();
@@ -14,8 +15,10 @@ const RealtorBookingId = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [newDate, setNewDate] = useState();
   const [flag, setFlag] = useState(false);
-
+  const navigate = useNavigate();
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showFeedbackDetails, setShowFeedbackDetails] = useState(false);
+  const [feedback, setFeedback] = useState();
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -43,6 +46,7 @@ const RealtorBookingId = () => {
 
         if (data) {
           setShowFeedback(false);
+          setFeedback(data);
         }
       } catch (error) {
         // If rating not found
@@ -235,16 +239,35 @@ const RealtorBookingId = () => {
             </button>
           </div>
         )}
+        {console.log(feedback)}
+        {booking.status === "completed" &&
+          (showFeedback ? (
+            <div className="w-full">
+              <button
+                onClick={() => setShow(true)}
+                className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                ADD FEEDBACK
+              </button>
+            </div>
+          ) : (
+            <div className="w-full">
+              <button
+                onClick={() => setShowFeedbackDetails(true)}
+                className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                SHOW FEEDBACK
+              </button>
+            </div>
+          ))}
 
-        {booking.status === "completed" && showFeedback && (
-          <div className="w-full">
-            <button
-              onClick={() => setShow(true)}
-              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
-            >
-              ADD FEEDBACK
-            </button>
-          </div>
+        {(booking.status === "completed" || booking.status === "accepted") && (
+          <button
+            onClick={() => navigate(`/payment/info/${booking.id}`)}
+            className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+          >
+            SHOW RECEIPT
+          </button>
         )}
 
         {show && (
@@ -252,6 +275,14 @@ const RealtorBookingId = () => {
             setShow={setShow}
             booking={booking}
             refresh={{ setFlag, flag }}
+          />
+        )}
+
+        {showFeedbackDetails && (
+          <RealtorFeedback
+            feedback={feedback}
+            setShowFeedback={setShowFeedbackDetails}
+            booking={booking}
           />
         )}
       </div>
