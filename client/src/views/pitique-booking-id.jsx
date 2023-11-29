@@ -9,9 +9,11 @@ const PitiqueBookingId = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState({});
   const [flag, setFlag] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
+
   const user = JSON.parse(localStorage.getItem("p-user"));
 
-  // TODO: check if the current user is equals to the pitiquer in booking id
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -25,6 +27,27 @@ const PitiqueBookingId = () => {
 
     fetch();
   }, [flag]);
+
+  useEffect(() => {
+    if (booking.ptqr_id === undefined) return;
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(
+          `/pitiquer-feedbacks/${booking.ptqr_id}/booking/${booking.id}`
+        );
+
+        if (data) {
+          setShowFeedback(false);
+        }
+      } catch (error) {
+        // If rating not found
+
+        setShowFeedback(true);
+      }
+    };
+
+    fetch();
+  }, [booking]);
 
   const handleDecline = async () => {
     try {
@@ -200,6 +223,25 @@ const PitiqueBookingId = () => {
               COMPLETE
             </button>
           </div>
+        )}
+
+        {booking.status === "completed" && showFeedback && (
+          <div className="w-full">
+            <button
+              onClick={() => setShow(true)}
+              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+            >
+              ADD FEEDBACK
+            </button>
+          </div>
+        )}
+
+        {show && (
+          <RealtorRatingLayout
+            setShow={setShow}
+            booking={booking}
+            refresh={{ setFlag, flag }}
+          />
         )}
       </div>
     </div>
