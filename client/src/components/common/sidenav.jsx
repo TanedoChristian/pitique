@@ -43,7 +43,7 @@ const SideNav = ({ setShowNav }) => {
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faBell} />
-              <a>Notification </a>
+              <Link to={"/r/notification"}>Notification</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
