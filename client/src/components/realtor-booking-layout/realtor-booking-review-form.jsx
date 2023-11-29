@@ -7,13 +7,6 @@ const BookingReviewForm = ({ setCount }) => {
   const [bookingInfo, setBookingInfo] = useContext(BookingContext);
 
   const handleSubmit = async () => {
-    setBookingInfo((prev) => ({
-      ...prev,
-      total: bookingInfo.price,
-      fee: bookingInfo.price,
-      share: 0,
-    }));
-
     const { data } = await api.post("/bookings/request", bookingInfo);
 
     // TODO

@@ -76,9 +76,9 @@ class BookingModel {
         bookingInfo.ptqr_id,
         status,
         bookingInfo.price,
-        bookingInfo.share,
-        bookingInfo.fee,
-        bookingInfo.total,
+        0, // share
+        bookingInfo.price, // fee
+        bookingInfo.price, //total
         bookingInfo.date,
         bookingInfo.rmrks,
         bookingInfo.approved,

@@ -28,12 +28,10 @@ const RealtorNotification = () => {
     return (
       <Link
         to={`/booking/${notif.book_id}`}
-        className="rounded bg-cyan-500 p-2 flex justify-between items-center"
+        className="rounded bg-cyan-500 p-2 mb-2 flex justify-between items-center"
       >
         <div>
-          <p className="text-white capitalize">
-            {notif.fname} {notif.mname} {notif.lname}
-          </p>
+          <p className="text-white capitalize">Booking #{notif.book_id}</p>
           <p className="text-sm text-white opacity-50">{notif.message}</p>
         </div>
         <p className="text-white opacity-50">

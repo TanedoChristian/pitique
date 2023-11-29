@@ -24,14 +24,19 @@ const PitiquerNotification = () => {
     fetch();
   }, []);
 
-  const NotificationItem = () => {
+  const NotificationItem = ({ notif }) => {
     return (
-      <Link className="rounded bg-cyan-500 p-2 flex justify-between">
+      <Link
+        to={`/booking/pitique/${notif.book_id}`}
+        className="rounded bg-cyan-500 p-2 mb-2 flex justify-between items-center"
+      >
         <div>
-          <p className="text-white">John Doe</p>
-          <p className="text-sm text-white opacity-50">Message</p>
+          <p className="text-white capitalize">Booking #{notif.book_id}</p>
+          <p className="text-sm text-white opacity-50">{notif.message}</p>
         </div>
-        <p className="text-white opacity-50">date</p>
+        <p className="text-white opacity-50">
+          {new Date(notif.date).toLocaleDateString()}
+        </p>
       </Link>
     );
   };
@@ -55,7 +60,9 @@ const PitiquerNotification = () => {
         {notifications.length === 0 ? (
           <div>No notification available</div>
         ) : (
-          notifications.map((notif) => <NotificationItem key={notif.id} />)
+          notifications.map((notif, index) => (
+            <NotificationItem key={index} notif={notif} />
+          ))
         )}
       </div>
     </div>
