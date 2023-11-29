@@ -44,7 +44,7 @@ const PitiquerNotification = () => {
   return (
     <div>
       <Header className="flex items-center w-full gap-16">
-        <Link to="/dashboard" className="p-5">
+        <Link to="/dashboard/pitique" className="p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
