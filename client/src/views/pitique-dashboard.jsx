@@ -3,13 +3,14 @@ import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
 import SideNav from "../components/common/sidenav";
 import { useState } from "react";
+import PitiquerSideNav from "../components/common/pitiquer-sidenav";
 const PitiqueDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
 
   return (
     <div className="poppins">
+      {showSideNav ? <PitiquerSideNav setShowNav={setShowNav} /> : ""}
       <Header className="flex items-center p-5 gap-5">
-        {showSideNav ? <SideNav setShowNav={setShowNav} /> : ""}
         <button
           onClick={() => {
             setShowNav(true);
