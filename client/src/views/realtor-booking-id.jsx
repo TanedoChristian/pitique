@@ -84,8 +84,8 @@ const RealtorBookingId = () => {
         </div>
       </Header>
 
-      <div className="poppins p-2">
-        <div className="border border-gray-300 shadow-md ">
+      <div className="poppins p-3">
+        <div className="border border-gray-300 shadow-md p-2">
           <div className="flex  justify-between">
             <div className="flex flex-col gap-1 p-3">
               <p className="text-gray-500 text-sm">Property Address</p>
@@ -98,10 +98,9 @@ const RealtorBookingId = () => {
                 </p>
               </div>
             </div>
-            {booking.status === "pending" ||
-              (booking.status === "paid" && (
-                <button className="text-cyan-500 font-bold">Edit </button>
-              ))}
+            {booking.status === "pending" && (
+              <button className="text-cyan-500 font-bold">Edit </button>
+            )}
           </div>
         </div>
 
@@ -124,10 +123,9 @@ const RealtorBookingId = () => {
                 <p className="text-gray-500 text-sm">{booking.day}</p>
               </div>
             </div>
-            {booking.status === "pending" ||
-              (booking.status === "paid" && (
-                <button className="text-cyan-500 font-bold">Edit </button>
-              ))}
+            {booking.status === "pending" && (
+              <button className="text-cyan-500 font-bold">Edit </button>
+            )}
           </div>
         </div>
 

@@ -52,12 +52,6 @@ const RealtorTransactionPending = ({ data, refresh }) => {
           <div className="">
             <div className="flex justify-end flex-col gap-1">
               <button
-                className="text-white bg-cyan-500 py-1 px-1.5 text-sm"
-                onClick={() => alert("weee")}
-              >
-                Edit
-              </button>
-              <button
                 onClick={() => handleCancel(booking.id)}
                 className="text-white bg-cyan-500 py-1 px-1.5 text-sm"
               >
