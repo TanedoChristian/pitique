@@ -10,7 +10,11 @@ const RealtorBookingId = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState({});
   const [show, setShow] = useState(false);
+
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [newDate, setNewDate] = useState();
   const [flag, setFlag] = useState(false);
+
   const [showFeedback, setShowFeedback] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -65,6 +69,22 @@ const RealtorBookingId = () => {
   if (!user || booking.rltr_id !== user.id) {
     return <div className="p-4">Forbidden Page.</div>;
   }
+
+  const handleReschedule = async () => {
+    try {
+      const { data } = await api.put(`/bookings/reschedule/${booking.id}`, {
+        date: new Date(newDate).toISOString().slice(0, 10),
+      });
+
+      if (data) {
+        alert("reschedule successfully!");
+        setFlag(!flag);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
@@ -98,9 +118,6 @@ const RealtorBookingId = () => {
                 </p>
               </div>
             </div>
-            {booking.status === "pending" && (
-              <button className="text-cyan-500 font-bold">Edit </button>
-            )}
           </div>
         </div>
 
@@ -124,9 +141,34 @@ const RealtorBookingId = () => {
               </div>
             </div>
             {booking.status === "pending" && (
-              <button className="text-cyan-500 font-bold">Edit </button>
+              <button
+                onClick={() => setShowCalendar(!showCalendar)}
+                className="text-cyan-500 font-bold"
+              >
+                {showCalendar ? "Cancel" : "Edit"}{" "}
+              </button>
             )}
           </div>
+          {showCalendar && (
+            <div className="p-2">
+              <label htmlFor="new_date" className="text-gray-400 pr-2">
+                Select New Date:{" "}
+              </label>
+              <input
+                type="date"
+                name="new_date"
+                id="new_date"
+                onChange={(e) => setNewDate(e.target.value)}
+              />
+
+              <button
+                onClick={handleReschedule}
+                className="text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                Save
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="border border-gray-300 shadow-md p-3 mt-1">
