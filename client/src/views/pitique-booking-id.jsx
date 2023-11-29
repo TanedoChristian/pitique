@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
+import PitiquerRatingLayout from "../components/pitiquer-rating-layout/layout";
 
 const PitiqueBookingId = () => {
   const { id } = useParams();
@@ -237,7 +238,7 @@ const PitiqueBookingId = () => {
         )}
 
         {show && (
-          <RealtorRatingLayout
+          <PitiquerRatingLayout
             setShow={setShow}
             booking={booking}
             refresh={{ setFlag, flag }}

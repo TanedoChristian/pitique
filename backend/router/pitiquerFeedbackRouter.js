@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
   const newPitiquerFeedbackModel = req.body;
 
   try {
-    const exist = await pitiquerFeedbackModel.getpitiquerFeedbackModelById(
+    const exist = await pitiquerFeedbackModel.getPitiquerFeedbackById(
       newPitiquerFeedbackModel.ptqr_id,
       newPitiquerFeedbackModel.book_id
     );
