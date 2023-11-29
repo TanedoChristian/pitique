@@ -19,10 +19,10 @@ const RealtorPayment = () => {
         status: "",
         total: state.price,
         pamt: state.price,
-        pdate: new Date().toISOString().slice(0, 10),
+        pdate: new Date().toISOString(),
         preceipt: "",
         famt: state.price,
-        fdate: new Date().toISOString().slice(0, 10),
+        fdate: new Date().toISOString(),
         freceipt: "",
         rmrks: "",
       };
@@ -65,7 +65,7 @@ const RealtorPayment = () => {
         token={tokenHandler}
         name="Pitique"
         // Amount * 100
-        amount={52 * 100}
+        amount={state.price * 100}
         billingAddress
         shippingAddress
         currency="PHP"
