@@ -6,7 +6,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import card from "../assets/card.png";
-import { showLoadingMessage } from "../helper/messageHelper";
+import {
+  showLoadingMessage,
+  showSuccessMessage,
+} from "../helper/messageHelper";
 
 const RealtorPayment = () => {
   const { state } = useLocation();
@@ -21,10 +24,10 @@ const RealtorPayment = () => {
         status: "",
         total: state.price,
         pamt: state.price,
-        pdate: new Date().toISOString(),
+        pdate: new Date().toLocaleDateString(),
         preceipt: "",
         famt: state.price,
-        fdate: new Date().toISOString(),
+        fdate: new Date().toLocaleDateString(),
         freceipt: "",
         rmrks: "",
       };
