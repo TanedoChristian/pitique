@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../helper/api";
 import PitiquerRatingLayout from "../components/pitiquer-rating-layout/layout";
 import PitiquerFeedback from "../components/pitiquer-rating-layout/feedback-show";
+import { showSuccessMessage } from "../helper/messageHelper";
 
 const PitiqueBookingId = () => {
   const { id } = useParams();
@@ -266,12 +267,6 @@ const PitiqueBookingId = () => {
 
         {booking.status === "accepted" && (
           <div className="w-full">
-            <button
-              onClick={handleCancel}
-              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
-            >
-              CANCEL BOOKING
-            </button>
             <button
               className=" text-xl mt-2 p-3 w-full border-2  text-white bg-cyan-500  font-bold rounded-md shadow-md"
               onClick={handleComplete}

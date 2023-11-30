@@ -50,6 +50,10 @@ const PitiquerSideNav = ({ setShowNav }) => {
               <FontAwesomeIcon icon={faBell} />
               <Link to={"/p/notification"}>Notification</Link>
             </li>
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faBell} />
+              <Link to={"/report/pitique"}>Report</Link>
+            </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />

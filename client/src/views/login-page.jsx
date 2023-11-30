@@ -29,7 +29,6 @@ const LoginPage = () => {
 
         if (data.user.status !== "active") {
           showInfoMessage(
-            "Alert!",
             "Account is suspended/terminated! Please contact an admin."
           );
         } else if (data) {
@@ -62,7 +61,6 @@ const LoginPage = () => {
 
         if (data.user.status !== "active") {
           showInfoMessage(
-            "Alert!",
             "Account is suspended/terminated! Please contact an admin."
           );
         } else if (data) {

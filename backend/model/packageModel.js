@@ -25,7 +25,7 @@ class PackageModel {
   async getPackageByPitiquerIdAndPackageName(pitiquerId, packageName) {
     const [rows] = await this.pool.query(
       "SELECT * FROM package WHERE ptqr_id = ? AND pkg_desc = ?",
-      [pitiquerId, packageName]
+      [pitiquerId, packageName, true]
     );
     return rows[0];
   }

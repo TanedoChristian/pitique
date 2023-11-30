@@ -24,10 +24,10 @@ const RealtorPayment = () => {
         status: "",
         total: state.price,
         pamt: state.price,
-        pdate: new Date().toLocaleDateString(),
+        pdate: new Date().toISOString(),
         preceipt: "",
         famt: state.price,
-        fdate: new Date().toLocaleDateString(),
+        fdate: new Date().toISOString(),
         freceipt: "",
         rmrks: "",
       };

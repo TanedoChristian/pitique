@@ -111,20 +111,20 @@ const ManageRealtor = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() =>
-                          handleChangeStatus("suspend", realtor.id)
+                          handleChangeStatus("suspended", realtor.id)
                         }
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
-                          realtor.status === "suspend" && " hidden"
+                          realtor.status === "suspended" && " hidden"
                         }`}
                       >
                         Suspend
                       </button>
                       <button
                         onClick={() =>
-                          handleChangeStatus("terminate", realtor.id)
+                          handleChangeStatus("terminated", realtor.id)
                         }
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
-                          realtor.status === "terminate" && " hidden"
+                          realtor.status === "terminated" && " hidden"
                         }`}
                       >
                         Terminate

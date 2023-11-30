@@ -184,8 +184,9 @@ router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
   try {
     const newPortfolio = {
       prof_img: req.file.buffer,
+      rltr_id: req.body.rltr_id,
     };
-
+    console.log(newPortfolio);
     await realtorModel.updatePicture(newPortfolio);
     res.status(201).json({
       message: "Updated successfully",

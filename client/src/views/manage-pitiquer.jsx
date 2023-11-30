@@ -111,20 +111,20 @@ const ManagePitiquer = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() =>
-                          handleChangeStatus("suspend", pitiquer.id)
+                          handleChangeStatus("suspended", pitiquer.id)
                         }
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
-                          pitiquer.status === "suspend" && " hidden"
+                          pitiquer.status === "suspended" && " hidden"
                         }`}
                       >
                         Suspend
                       </button>
                       <button
                         onClick={() =>
-                          handleChangeStatus("terminate", pitiquer.id)
+                          handleChangeStatus("terminated", pitiquer.id)
                         }
                         className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
-                          pitiquer.status === "terminate" && " hidden"
+                          pitiquer.status === "terminated" && " hidden"
                         }`}
                       >
                         Terminate
