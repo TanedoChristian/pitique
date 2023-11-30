@@ -65,4 +65,22 @@ router.post("/", async (req, res) => {
   }
 });
 
+// GET /payments/info/:bid
+router.get("/info/:bid", async (req, res) => {
+  const bookingId = req.params.bid;
+
+  try {
+    const payment = await paymentModel.getPaymentInfo(bookingId);
+
+    if (!payment) {
+      res.status(404).send("payment not found");
+    } else {
+      res.json(payment);
+    }
+  } catch (error) {
+    console.error(`Error getting payment with ID ${bookingId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;
