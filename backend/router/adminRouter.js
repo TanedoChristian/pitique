@@ -76,6 +76,22 @@ router.get("/top-pitiquers", async (req, res) => {
   }
 });
 
+// GET /admins/top-pitiquers
+router.get("/revenue", async (req, res) => {
+  try {
+    const revenue = await adminModel.getRevenue();
+
+    if (!revenue) {
+      res.status(404).send("revenue not found");
+    } else {
+      res.json(revenue);
+    }
+  } catch (error) {
+    console.error(`Error getting revenue`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 const base64EncodeImage = (buffer) => {
   return buffer.toString("base64");
 };

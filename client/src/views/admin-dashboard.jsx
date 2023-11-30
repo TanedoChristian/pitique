@@ -5,11 +5,13 @@ import React, { useEffect, useState } from "react";
 import AdminSideNav from "../components/common/admin-sidenav";
 import { DashboardChart } from "../components/common/DashboardChart";
 import api from "../helper/api";
+import { color } from "../helper/revenueColor";
 
 const AdminDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [user, setUser] = useState();
   const [topPitiquers, setTopPitiquers] = useState([]);
+  const [revenue, setRevenue] = useState([]);
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -30,6 +32,20 @@ const AdminDashboard = () => {
         const { data } = await api.get("/admins/top-pitiquers");
 
         setTopPitiquers(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get("/admins/revenue");
+
+        setRevenue(data);
       } catch (error) {
         console.error(error);
       }
@@ -79,45 +95,38 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
-
-        <div className="flex w-full justify-center gap-2 text-white mt-5">
-          <div className="w-[48%] bg-[#a2fa4b] rounded-md p-2 ">
-            <h1 className="font-semibold text-xs">Revenue</h1>
-            <h1 className=" font-bold  mt-1">Php 25,200.00</h1>
-            <h1 className="mt-1 text-xs">January</h1>
-          </div>
-          <div className="w-[48%] bg-violet-300 rounded-md p-2">
-            <h1 className="font-semibold text-xs">Revenue</h1>
-            <h1 className=" font-bold  mt-1">Php 25,200.00</h1>
-            <h1 className="mt-1 text-xs">January</h1>
-          </div>
+        {console.log(revenue)}
+        <div className="grid grid-cols-2 w-full gap-2 ">
+          {revenue.length !== 0 &&
+            revenue.map((rev, index) => {
+              return (
+                <div
+                  className={`mx-6 text-white mt-3 bg-${color[index]}-${
+                    index % 2 !== 0 ? "300" : "500"
+                  } rounded-md p-2 `}
+                  key={index}
+                >
+                  <h1 className="font-semibold text-xs">Revenue</h1>
+                  <h1 className=" font-bold  mt-1">
+                    {Number(rev.total_revenue).toFixed(2)}
+                  </h1>
+                  <h1 className="mt-1 text-xs">
+                    {new Date(rev.month).toLocaleDateString("en-US", {
+                      month: "long",
+                    })}
+                  </h1>
+                </div>
+              );
+            })}
         </div>
 
-        <div className="flex w-full justify-center gap-2 text-white mt-2">
-          <div className="w-[48%] bg-green-400 rounded-md p-2">
-            <h1 className="font-semibold text-xs">Revenue</h1>
-            <h1 className=" font-bold  mt-1">Php 25,200.00</h1>
-            <h1 className="mt-1 text-xs">January</h1>
-          </div>
-          <div className="w-[48%] bg-orange-500 rounded-md p-2">
-            <h1 className="font-semibold text-xs">Revenue</h1>
-            <h1 className=" font-bold  mt-1">Php 25,200.00</h1>
-            <h1 className="mt-1 text-xs">January</h1>
-          </div>
-        </div>
-
-        <div className="mt-5 p-3 w-full flex h-[30vh]  ">
+        <div className="mt-5 p-3 w-full flex   ">
           <div className=" w-full bg-gray-300 rounded-xl">
             <div className="flex justify-between px-3 items-center mt-2">
-              <h1 className="font-bold text-gray-700">Top Pitiquer</h1>
-
-              <select className="bg-gray-300 outline-none">
-                <option>Month</option>
-                <option>Year</option>
-              </select>
+              <h1 className="font-bold text-gray-700 mb-5">Top Pitiquer</h1>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 w-full">
+            <div className="grid grid-cols-3 gap-x-4 w-full">
               <div className="p-3  text-center font-bold text-sm">Name</div>
               <div className="p-3  text-center font-bold text-sm">
                 Bookings Completed
@@ -127,7 +136,9 @@ const AdminDashboard = () => {
               {topPitiquers.length !== 0 &&
                 topPitiquers.map((pitiquer, index) => (
                   <React.Fragment key={index}>
-                    <div className="p-3 text-sm text-left">{pitiquer.name}</div>
+                    <div className="p-3 text-sm text-left capitalize">
+                      {pitiquer.name}
+                    </div>
                     <div className="p-3 text-sm text-center">
                       {pitiquer.completed_bookings}
                     </div>

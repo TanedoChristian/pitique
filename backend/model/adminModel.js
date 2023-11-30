@@ -64,6 +64,14 @@ class AdminModel {
 
     return rows;
   }
+
+  async getRevenue() {
+    const [rows] = await this.pool.query(
+      "SELECT DATE_FORMAT(b.date, '%Y-%m') AS month, COALESCE(SUM(b.total), 0) AS total_revenue FROM booking b WHERE b.status = 'completed' GROUP BY month ORDER BY month;"
+    );
+
+    return rows;
+  }
 }
 
 module.exports = AdminModel;
