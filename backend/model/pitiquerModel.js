@@ -135,6 +135,19 @@ class PitiquerModel {
     ]);
   }
 
+  async getStatistics(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT COUNT(b.status) AS all_booking, COUNT(CASE WHEN b.status = 'pending' THEN 1 END) AS pending, " +
+        "COUNT(CASE WHEN b.status = 'accepted' THEN 1 END) AS paid,  " +
+        "COUNT(CASE WHEN b.status = 'payment' THEN 1 END) AS accepted,  " +
+        "COUNT(CASE WHEN b.status = 'completed' THEN 1 END) AS completed  " +
+        "FROM booking b WHERE ptqr_id = ?;",
+      [pitiquerId]
+    );
+
+    return rows[0];
+  }
+
   //TODO: Not yet finish
   //Note: Dont use ID this is not secure. Change this.
   async deletePitiquerById(pitiquerId) {

@@ -205,6 +205,18 @@ router.put("/edit/status", async (req, res) => {
   }
 });
 
+router.get("/statistics/:id", async (req, res) => {
+  try {
+    const pitiquerId = req.params.id;
+
+    const stats = await pitiquerModel.getStatistics(pitiquerId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 const base64EncodeImage = (buffer) => {
   return buffer.toString("base64");
 };
