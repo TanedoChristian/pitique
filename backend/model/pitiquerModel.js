@@ -137,16 +137,27 @@ class PitiquerModel {
 
   async getStatistics(pitiquerId) {
     const [rows] = await this.pool.query(
-      "SELECT COUNT(b.status) AS all_booking, COUNT(CASE WHEN b.status = 'pending' THEN 1 END) AS pending, " +
-        "COUNT(CASE WHEN b.status = 'accepted' THEN 1 END) AS paid,  " +
-        "COUNT(CASE WHEN b.status = 'payment' THEN 1 END) AS accepted,  " +
-        "COUNT(CASE WHEN b.status = 'completed' THEN 1 END) AS completed  " +
+      "SELECT COUNT(*) AS all_booking, COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending, " +
+        "COUNT(CASE WHEN status = 'accepted' THEN 1 END) AS paid,  " +
+        "COUNT(CASE WHEN status = 'payment' THEN 1 END) AS accepted,  " +
+        "COUNT(CASE WHEN status = 'completed' THEN 1 END) AS completed  " +
         "FROM booking b WHERE ptqr_id = ?;",
       [pitiquerId]
     );
 
     return rows[0];
   }
+
+  async getStatisticsRating(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT AVG(rf.rtng) AS rating, COUNT(rf.rtng) AS total_rating FROM realtor_feedback rf INNER JOIN booking b ON rf.book_id = b.id WHERE b.ptqr_id = ? AND b.status = ?",
+      [pitiquerId, "completed"]
+    );
+
+    return rows[0];
+  }
+
+  //
 
   //TODO: Not yet finish
   //Note: Dont use ID this is not secure. Change this.

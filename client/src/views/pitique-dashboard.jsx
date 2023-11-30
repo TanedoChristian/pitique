@@ -7,6 +7,7 @@ import api from "../helper/api";
 const PitiqueDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [statistics, setStatistics] = useState();
+  const [ratings, setRatings] = useState();
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     const fetch = async () => {
@@ -22,7 +23,24 @@ const PitiqueDashboard = () => {
     fetch();
   }, []);
 
-  if (statistics === undefined) return <div>Loading...</div>;
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(
+          `/pitiquers/statistics/ratings/${user.id}`
+        );
+
+        setRatings(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
+  if (statistics === undefined || ratings === undefined)
+    return <div>Loading...</div>;
 
   return (
     <div className="poppins">
@@ -97,12 +115,12 @@ const PitiqueDashboard = () => {
             <div className="flex flex-col ">
               <div className="flex gap-1 items-center">
                 <h1 className="font-bold text-xl">
-                  {Number(statistics.rating).toFixed(1)}
+                  {Number(ratings.rating).toFixed(1)}
                 </h1>
                 <p className="text-gray-500">average rating</p>
               </div>
               <p className="text-blue-600 text-sm font-bold">
-                {statistics.total_rating} Total Reviews
+                {ratings.total_rating} Total Reviews
               </p>
             </div>
           </div>
