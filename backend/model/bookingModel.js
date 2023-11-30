@@ -70,7 +70,9 @@ class BookingModel {
   async requestBooking(bookingInfo) {
     // Default Value
     const status = "pending";
-
+    const date = moment(new Date(bookingInfo.date))
+      .tz("Asia/Manila")
+      .format("YYYY-MM-DD HH:mm:ss");
     const result = await this.pool.query(
       "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled,street, unit_no, city, province, postal, property_size,day) VALUES (?,?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
       [
@@ -82,7 +84,7 @@ class BookingModel {
         0, // share
         bookingInfo.price, // fee
         bookingInfo.price, //total
-        bookingInfo.date,
+        date,
         bookingInfo.rmrks,
         bookingInfo.approved,
         bookingInfo.declined,

@@ -17,6 +17,7 @@ const BookingReviewForm = ({ setCount }) => {
       navigate(`/transaction`);
     }
   };
+
   return (
     <div className="poppins">
       <div className="border border-gray-300 shadow-md p-3 mt-5">
@@ -24,8 +25,8 @@ const BookingReviewForm = ({ setCount }) => {
           <div className="flex flex-col gap-2">
             <p className="text-gray-500 text-sm">Property Address</p>
             <div className="flex items-center gap-2">
-              <h1 className="font-bold">{bookingInfo?.unit_no}</h1>
-              <p className="font-bold">{bookingInfo?.street}</p>
+              <h1 className="font-bold capitalize">{bookingInfo?.unit_no}</h1>
+              <p className="font-bold capitalize">{bookingInfo?.street}</p>
             </div>
             <div className="text-sm text-gray-500 flex items-center">
               <h1>{bookingInfo?.city}</h1> <p>, {bookingInfo?.province}</p>
@@ -39,8 +40,14 @@ const BookingReviewForm = ({ setCount }) => {
           <div className="flex flex-col gap-2">
             <p className="text-gray-500 text-sm">Appointment Details</p>
             <div>
-              <h1 className="font-bold">Test Date</h1>
-              <p className="text-gray-500 text-sm">Mid-day</p>
+              <h1 className="font-bold">
+                {new Date(bookingInfo.date).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </h1>
+              <p className="text-gray-500 text-sm">{bookingInfo.day}</p>
             </div>
           </div>
         </div>

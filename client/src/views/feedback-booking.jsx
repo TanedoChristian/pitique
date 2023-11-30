@@ -97,7 +97,7 @@ const FeedbackBooking = () => {
         ) : (
           <div className="bg-gray-200 text-gray-600 p-6 rounded-md shadow-md">
             <h2 className="text-3xl font-bold mb-4">No Feedback</h2>
-            <p>There is no feedback from the realtor.</p>
+            <p>There is no feedback from the pitiquer.</p>
           </div>
         )}
       </div>
