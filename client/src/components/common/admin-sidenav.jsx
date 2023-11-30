@@ -1,6 +1,8 @@
 import {
   faBell,
   faCalendar,
+  faCog,
+  faGauge,
   faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -33,6 +35,10 @@ const AdminSideNav = ({ setShowNav }) => {
 
         <div className=" w-full h-screen flex flex-col gap-3 p-3 justify-between mt-10">
           <div className="flex flex-col gap-10">
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faGauge} />
+              <Link to="/admin">Dashboard </Link>
+            </li>
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
               <Link to="/admin/create-account">Create Account </Link>

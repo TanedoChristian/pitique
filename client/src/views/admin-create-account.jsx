@@ -4,6 +4,7 @@ import Header from "../components/common/header";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import api from "../helper/api";
+import { showSuccessMessage } from "../helper/messageHelper";
 
 const AdminCreateAccount = () => {
   const [showSideNav, setShowNav] = useState(false);
@@ -27,7 +28,11 @@ const AdminCreateAccount = () => {
         const { data } = await api.post("/pitiquers", user);
 
         if (data) {
-          alert(user.type + " has been created successfully!");
+          showSuccessMessage(
+            "Success",
+            user.type + " has been created successfully!"
+          );
+
           setUser({});
         }
       } catch (error) {
@@ -38,7 +43,10 @@ const AdminCreateAccount = () => {
         const { data } = await api.post("/admins", user);
 
         if (data) {
-          alert(user.type + " has been created successfully!");
+          showSuccessMessage(
+            "Success",
+            user.type + " has been created successfully!"
+          );
           setUser({});
         }
       } catch (error) {

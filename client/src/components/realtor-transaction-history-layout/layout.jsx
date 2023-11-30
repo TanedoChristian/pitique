@@ -47,7 +47,11 @@ const RealtorHistoryLayout = () => {
           </h1>
         </div>
       </Header>
-
+      {bookings.length === 0 && (
+        <div className="p-4">
+          <p>No booking found. Book now!</p>
+        </div>
+      )}
       <div className="p-3">
         <RealtorTransactionPayment
           data={bookings.filter((booking) => booking.status === "payment")}

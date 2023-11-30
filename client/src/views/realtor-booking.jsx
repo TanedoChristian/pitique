@@ -75,10 +75,8 @@ const RealtorBooking = () => {
           ) : count == 3 ? (
             <BookingScheduleForm setCount={setCount} />
           ) : count == 4 ? (
-            <BookingContactForm setCount={setCount} />
-          ) : count == 5 ? (
             <BookingReviewForm setCount={setCount} />
-          ) : count == 6 ? (
+          ) : count == 5 ? (
             <BookingSuccess />
           ) : (
             ""

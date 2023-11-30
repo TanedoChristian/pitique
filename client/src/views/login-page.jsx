@@ -1,6 +1,13 @@
 import { useState } from "react";
 import api from "../helper/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import {
+  showErrorMessage,
+  showInfoMessage,
+  showLoadingMessage,
+  showSuccessMessage,
+} from "../helper/messageHelper";
 const LoginPage = () => {
   const [type, setType] = useState("");
   const [user, setUser] = useState({ email: "", password: "" });
@@ -15,48 +22,60 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    showLoadingMessage("Logging in...");
     if (type !== "admins") {
       try {
         const { data } = await api.post(`/${type}/login`, user);
 
         if (data.user.status !== "active") {
-          alert("Account is suspended/terminated! Please contact an admin.");
+          showInfoMessage(
+            "Alert!",
+            "Account is suspended/terminated! Please contact an admin."
+          );
         } else if (data) {
+          showSuccessMessage("Logging in successfully!");
+
           localStorage.setItem(
             `${type === "pitiquers" ? "p-user" : "user"}`,
             JSON.stringify(data.user)
           );
-          navigate(type === "realtors" ? "/dashboard" : "/dashboard/pitique");
+          window.location.href =
+            type === "realtors" ? "/dashboard" : "/dashboard/pitique";
         } else {
-          alert("Account not found!");
+          showErrorMessage("Account not found!");
         }
       } catch (e) {
-        if (e.response.status === 401) alert("Unauthorized");
-        else alert("Something went wrong!");
+        if (e.response.status === 401) showErrorMessage("Unauthorized!");
+        else showErrorMessage("Error!", "Account not found!");
       }
     } else {
       try {
         // TODO: Temporary
         if (user.email === "jdoe@gmail.com" && user.password === "asd") {
-          navigate("/admin");
+          showSuccessMessage("Logging in successfully!");
+
+          window.location.href = "/admin";
           return;
         }
 
         const { data } = await api.post(`/admins/login`, user);
 
         if (data.user.status !== "active") {
-          alert(
-            "Account is suspended/terminated! Please contact an super admin."
+          showInfoMessage(
+            "Alert!",
+            "Account is suspended/terminated! Please contact an admin."
           );
         } else if (data) {
           localStorage.setItem("admin", JSON.stringify(data.user));
-          navigate("/admin");
+          showSuccessMessage("Logging in successfully!");
+
+          window.location.href = "/admin";
         } else {
-          alert("Account not found!");
+          showErrorMessage("Account not found!");
         }
       } catch (e) {
-        if (e.response.status === 401) alert("Unauthorized");
-        else alert("Something went wrong!");
+        if (e.response.status === 401) showErrorMessage("Unauthorized!");
+        else showErrorMessage("Error!", "Account not found!");
       }
     }
   };
@@ -124,6 +143,12 @@ const LoginPage = () => {
           </button>
         </div>
       )}
+      <Link
+        to="/register"
+        className="mt-5 p-3 w-full text-black font-bold text-sm hover:text-cyan-500 text-center"
+      >
+        Register
+      </Link>
     </div>
   );
 };

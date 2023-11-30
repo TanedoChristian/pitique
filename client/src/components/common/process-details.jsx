@@ -3,18 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 const ProcessDetails = ({ count }) => {
-  const processDetails = [
-    "Location",
-    "Services",
-    "Schedule",
-    "Contact Info",
-    "Review",
-  ];
+  const processDetails = ["Location", "Services", "Schedule", "Review"];
 
   return (
     <div
       className={`p-2 w-full flex gap-5 justify-center items-center poppins border-b-2 border-gray-300 ${
-        count > 5 ? "hidden" : ""
+        count > 4 ? "hidden" : ""
       }`}
     >
       <div className="flex gap-3 items-center">
@@ -23,7 +17,7 @@ const ProcessDetails = ({ count }) => {
         </div>
         <p className="font-bold">{processDetails[count - 1]}</p>
       </div>
-      <div className={`flex items-center gap-3 ${count == 5 ? "hidden" : ""}`}>
+      <div className={`flex items-center gap-3 ${count == 4 ? "hidden" : ""}`}>
         <FontAwesomeIcon
           icon={faChevronRight}
           className="font-bold text-gray-400"

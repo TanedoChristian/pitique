@@ -1,6 +1,10 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import api from "../../helper/api";
+import {
+  showErrorMessage,
+  showSuccessMessage,
+} from "../../helper/messageHelper";
 const AccountDetailsForm = ({ setUser, user }) => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isChecked, setChecked] = useState(false);
@@ -30,10 +34,10 @@ const AccountDetailsForm = ({ setUser, user }) => {
     const { data } = await api.post("/realtors", user);
 
     if (data) {
+      showSuccessMessage("Success!", "Succesfully created realtor account.");
       window.location.href = "/login";
     } else {
-      //TODO: change this to swal2
-      alert("Something went wrong");
+      showErrorMessage("Something went wrong!");
     }
   };
 
@@ -79,7 +83,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
           />
           <p>
             I agree to the
-            <span className="font-bold">Terms and Conditions </span>
+            <span className="font-bold"> Terms and Conditions </span>
           </p>
         </div>
         <button

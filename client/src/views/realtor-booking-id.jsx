@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../helper/api";
 import RealtorRatingLayout from "../components/realtor-rating-layout/layout";
 import RealtorFeedback from "../components/realtor-rating-layout/feedback-show";
+import { showSuccessMessage } from "../helper/messageHelper";
 
 const RealtorBookingId = () => {
   const { id } = useParams();
@@ -64,6 +65,7 @@ const RealtorBookingId = () => {
 
       if (data) {
         setFlag(!flag);
+        showSuccessMessage("Success", "Successfully cancel the booking!");
       }
     } catch (error) {
       console.error("Error completing booking" + error);
@@ -81,7 +83,7 @@ const RealtorBookingId = () => {
       });
 
       if (data) {
-        alert("reschedule successfully!");
+        showSuccessMessage("Success!", "Successfully reschedule the booking!");
         setFlag(!flag);
       }
     } catch (error) {

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import api from "../../helper/api";
 import { useEffect, useRef, useState } from "react";
+import { showSuccessMessage } from "../../helper/messageHelper";
 
 const PitiqueProfileDetails = ({
   setShowPortfolio,
@@ -64,7 +65,10 @@ const PitiqueProfileDetails = ({
         const { data } = await api.put("/pitiquers/edit/picture", formData);
 
         if (data) {
-          alert("Updated Succesfully!");
+          showSuccessMessage(
+            "Success",
+            "Updated profile picture successfully!"
+          );
           setFlag(!flag);
         }
       } catch (error) {

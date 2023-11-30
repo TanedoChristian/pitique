@@ -2,15 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { BookingContext } from "../../context/bookingContext";
 import api from "../../helper/api";
+import { showSuccessMessage } from "../../helper/messageHelper";
+import { useNavigate } from "react-router-dom";
 
 const BookingReviewForm = ({ setCount }) => {
   const [bookingInfo, setBookingInfo] = useContext(BookingContext);
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   const handleSubmit = async () => {
     const { data } = await api.post("/bookings/request", bookingInfo);
 
-    // TODO
-    console.log(data);
+    if (data) {
+      showSuccessMessage("Success", "Book successfully!");
+      navigate(`/transaction`);
+    }
   };
   return (
     <div className="poppins">
@@ -26,7 +31,6 @@ const BookingReviewForm = ({ setCount }) => {
               <h1>{bookingInfo?.city}</h1> <p>, {bookingInfo?.province}</p>
             </div>
           </div>
-          <button className="text-cyan-500 font-bold">Edit </button>
         </div>
       </div>
 
@@ -39,7 +43,6 @@ const BookingReviewForm = ({ setCount }) => {
               <p className="text-gray-500 text-sm">Mid-day</p>
             </div>
           </div>
-          <button className="text-cyan-500 font-bold">Edit </button>
         </div>
       </div>
 
@@ -48,12 +51,11 @@ const BookingReviewForm = ({ setCount }) => {
           <div className="flex flex-col gap-2">
             <p className="text-gray-500 text-sm">Contact Info</p>
             <div>
-              <h1 className="font-bold">{`${bookingInfo?.firstName} ${bookingInfo.lastName}`}</h1>
-              <p className="text-gray-500 text-sm">{bookingInfo?.phone}</p>
-              <p className="text-gray-500 text-sm">{bookingInfo?.email}</p>
+              <h1 className="font-bold capitalize">{`${user?.fname} ${user.lname}`}</h1>
+              <p className="text-gray-500 text-sm">{user?.phone}</p>
+              <p className="text-gray-500 text-sm">{user?.email}</p>
             </div>
           </div>
-          <button className="text-cyan-500 font-bold">Edit </button>
         </div>
       </div>
 

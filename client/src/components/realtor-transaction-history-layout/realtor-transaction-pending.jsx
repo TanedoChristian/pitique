@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import api from "../../helper/api";
+import { showSuccessMessage } from "../../helper/messageHelper";
 
 const RealtorTransactionPending = ({ data, refresh }) => {
   const handleCancel = async (id) => {
@@ -7,7 +8,7 @@ const RealtorTransactionPending = ({ data, refresh }) => {
       const { data } = await api.put(`/bookings/cancel/${id}`);
 
       if (data) {
-        alert("Cancel Successfully!");
+        showSuccessMessage("Success", "Successfully cancel the booking!");
         refresh.setFlag(!refresh.flag);
       }
     } catch (error) {

@@ -1,5 +1,6 @@
 import {
   faBell,
+  faGauge,
   faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -32,6 +33,10 @@ const PitiquerSideNav = ({ setShowNav }) => {
 
         <div className=" w-full h-screen flex flex-col gap-3 p-3 justify-between mt-10">
           <div className="flex flex-col gap-10">
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faGauge} />
+              <Link to={`/dashboard/pitique`}>Dashboard</Link>
+            </li>
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
               <Link to={`/profile/pitique/${user.id}`}>Account Settings </Link>

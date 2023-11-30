@@ -5,20 +5,21 @@ import PitiqueBookingCard from "./pitique-booking-card";
 import { useEffect, useState } from "react";
 import api from "../../helper/api";
 import PitiquerSideNav from "../common/pitiquer-sidenav";
+import { showInfoMessage } from "../../helper/messageHelper";
 
 const PitiqueBookingLayout = () => {
   const [bookings, setBookings] = useState([]);
   const [showSideNav, setShowNav] = useState(false);
+  const user = JSON.parse(localStorage.getItem("p-user"));
 
   useEffect(() => {
     const fetch = async () => {
       // CHANGE The 1 to current user
       try {
-        const { data } = await api.get("/bookings/pitiquer/1");
+        const { data } = await api.get(`/bookings/pitiquer/${user.id}`);
 
         setBookings(data);
       } catch (error) {
-        alert("No bookings found");
         console.error(error);
       }
     };
@@ -39,10 +40,15 @@ const PitiqueBookingLayout = () => {
       </Header>
 
       <div className="w-full p-3">
-        {bookings.length !== 0 &&
+        {bookings.length !== 0 ? (
           bookings.map((booking) => (
             <PitiqueBookingCard booking={booking} key={booking.id} />
-          ))}
+          ))
+        ) : (
+          <div>
+            <p>No bookings found!</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const PitiqueDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [statistics, setStatistics] = useState();
   const [ratings, setRatings] = useState();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("p-user"));
   useEffect(() => {
     const fetch = async () => {
       try {

@@ -95,7 +95,6 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
-        {console.log(revenue)}
         <div className="grid grid-cols-2 w-full gap-2 ">
           {revenue.length !== 0 &&
             revenue.map((rev, index) => {

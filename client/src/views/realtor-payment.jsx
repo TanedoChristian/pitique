@@ -6,11 +6,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import card from "../assets/card.png";
+import { showLoadingMessage } from "../helper/messageHelper";
 
 const RealtorPayment = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const tokenHandler = async (token) => {
+    showLoadingMessage("Transacting...");
     try {
       const tempData = {
         ptqr_id: state.ptqr_id,
@@ -35,6 +37,8 @@ const RealtorPayment = () => {
         const res = await api.put(`/bookings/pay/${state.id}`);
 
         if (res.data) {
+          showSuccessMessage("Success", "Successfully paid the booking!");
+
           navigate(`/booking/${state.id}`);
         }
       }
@@ -79,10 +83,6 @@ const RealtorPayment = () => {
           <h5 className="ml-5 font-semibold">Credit Cards</h5>
         </button>
       </StripeCheckout>
-
-      <div className="mt-auto mb-4  text-xl p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md text-center">
-        ADD NEW PAYMENT METHOD
-      </div>
     </div>
   );
 };

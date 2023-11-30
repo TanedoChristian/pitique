@@ -72,7 +72,6 @@ router.post("/", async (req, res) => {
       newPackage.ptqr_id,
       newPackage.pkg_desc
     );
-
     if (!packages) {
       await packageModel.createPackage(newPackage);
       res.status(201).json({ message: "Package created successfully" });

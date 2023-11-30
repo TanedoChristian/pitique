@@ -64,6 +64,7 @@ const PitiqueBookingId = () => {
 
       if (data) {
         setFlag(!flag);
+        showSuccessMessage("Success", "Successfully declined the booking!");
       }
     } catch (error) {
       console.error("Error declining booking" + error);
@@ -75,6 +76,7 @@ const PitiqueBookingId = () => {
       const { data } = await api.put(`/bookings/accept/${id}`);
 
       if (data) {
+        showSuccessMessage("Success", "Successfully accept the booking!");
         setFlag(!flag);
       }
     } catch (error) {
@@ -87,6 +89,7 @@ const PitiqueBookingId = () => {
       const { data } = await api.put(`/bookings/complete/${id}`);
 
       if (data) {
+        showSuccessMessage("Success", "Successfully done the booking!");
         setFlag(!flag);
       }
     } catch (error) {
@@ -100,6 +103,7 @@ const PitiqueBookingId = () => {
 
       if (data) {
         setFlag(!flag);
+        showSuccessMessage("Success", "Successfully cancel the booking!");
       }
     } catch (error) {
       console.error("Error completing booking" + error);
@@ -113,7 +117,7 @@ const PitiqueBookingId = () => {
       });
 
       if (data) {
-        alert("reschedule successfully!");
+        showSuccessMessage("Success", "Successfully reschedule the booking!");
         setFlag(!flag);
       }
     } catch (error) {
