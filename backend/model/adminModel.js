@@ -56,6 +56,14 @@ class AdminModel {
 
     return rows[0];
   }
+
+  async getTopPitiquers() {
+    const [rows] = await this.pool.query(
+      "SELECT CONCAT(p.fname, ' ', p.mname, ' ' , p.lname) AS name ,p.id AS ptqr_id, CONCAT(MONTH(b.date), '-', YEAR(b.date)) AS month_year, COALESCE(COUNT(b.id), 0) AS completed_bookings, COALESCE(SUM(b.fee), 0) AS total_fee FROM pitiquer p LEFT JOIN booking b ON p.id = b.ptqr_id AND b.status = 'completed' GROUP BY p.id, MONTH(b.date), YEAR(b.date) ORDER BY completed_bookings DESC;"
+    );
+
+    return rows;
+  }
 }
 
 module.exports = AdminModel;

@@ -60,6 +60,22 @@ router.get("/users", async (req, res) => {
   }
 });
 
+// GET /admins/top-pitiquers
+router.get("/top-pitiquers", async (req, res) => {
+  try {
+    const users = await adminModel.getTopPitiquers();
+
+    if (!users) {
+      res.status(404).send("users not found");
+    } else {
+      res.json(users);
+    }
+  } catch (error) {
+    console.error(`Error getting users`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 const base64EncodeImage = (buffer) => {
   return buffer.toString("base64");
 };

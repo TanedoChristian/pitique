@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../components/common/header";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminSideNav from "../components/common/admin-sidenav";
 import { DashboardChart } from "../components/common/DashboardChart";
 import api from "../helper/api";
@@ -9,12 +9,27 @@ import api from "../helper/api";
 const AdminDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [user, setUser] = useState();
+  const [topPitiquers, setTopPitiquers] = useState([]);
   useEffect(() => {
     const fetch = async () => {
       try {
         const { data } = await api.get("/admins/users");
 
         setUser(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get("/admins/top-pitiquers");
+
+        setTopPitiquers(data);
       } catch (error) {
         console.error(error);
       }
@@ -102,45 +117,26 @@ const AdminDashboard = () => {
               </select>
             </div>
 
-            <table className=" w-full ">
-              <thead className="flex justify-between w-full p-3 mt-5 font-bold text-sm text-gray-700">
-                <tr>
-                  <td>Name</td>
-                </tr>
-                <tr>
-                  <td>Bookings Completed</td>
-                </tr>
-                <tr>
-                  <td>Revenue</td>
-                </tr>
-              </thead>
+            <div className="grid grid-cols-3 gap-4 w-full">
+              <div className="p-3  text-center font-bold text-sm">Name</div>
+              <div className="p-3  text-center font-bold text-sm">
+                Bookings Completed
+              </div>
+              <div className="p-3  text-center font-bold text-sm">Revenue</div>
 
-              <tbody className="font-light text-sm overflow-y-auto">
-                <tr className="flex justify-between w-full p-2  ">
-                  <td className="flex gap-2 items-center">
-                    <img
-                      src="https://mb.com.ph/wp-content/uploads/2021/03/Probinsyano-Full-Photo-March-4.jpg"
-                      className="w-8 h-8 rounded-full "
-                    />
-                    Tyle
-                  </td>
-                  <td className="p-2">17</td>
-                  <td className="p-2">154,535.00</td>
-                </tr>
-
-                <tr className="flex justify-between w-full p-2  ">
-                  <td className="flex gap-2 items-center">
-                    <img
-                      src="https://mb.com.ph/wp-content/uploads/2021/03/Probinsyano-Full-Photo-March-4.jpg"
-                      className="w-8 h-8 rounded-full "
-                    />
-                    Tyle
-                  </td>
-                  <td className="p-2">17</td>
-                  <td className="p-2">154,535.00</td>
-                </tr>
-              </tbody>
-            </table>
+              {topPitiquers.length !== 0 &&
+                topPitiquers.map((pitiquer, index) => (
+                  <React.Fragment key={index}>
+                    <div className="p-3 text-sm text-left">{pitiquer.name}</div>
+                    <div className="p-3 text-sm text-center">
+                      {pitiquer.completed_bookings}
+                    </div>
+                    <div className="p-3 text-sm text-center">
+                      {pitiquer.total_fee}
+                    </div>
+                  </React.Fragment>
+                ))}
+            </div>
           </div>
         </div>
       </main>
