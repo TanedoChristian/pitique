@@ -22,6 +22,9 @@ import RealtorPayment from "./views/realtor-payment";
 import RealtorNotification from "./views/realtor-notification";
 import PitiquerNotification from "./views/pitiquer-notification";
 import PaymentInfo from "./views/payment-info";
+import RealtorServiceReport from "./views/realtor-service-report";
+import PitiquerAllBooking from "./views/pitiquer-all-booking";
+import FeedbackBooking from "./views/feedback-booking";
 
 const App = () => {
   return (
@@ -58,7 +61,14 @@ const App = () => {
           path="/booking/pitique/:id"
           element={<PitiqueBookingId />}
         ></Route>
-
+        <Route
+          path="/booking/pitique/all/:id"
+          element={<PitiquerAllBooking />}
+        ></Route>
+        <Route
+          path="/booking/feedback/:bid"
+          element={<FeedbackBooking />}
+        ></Route>
         <Route path="/profile/pitique/:id" element={<PitiqueProfile />}></Route>
         <Route path="/profile/realtor" element={<RealtorProfilePage />}></Route>
         <Route path="/r/notification" element={<RealtorNotification />}></Route>
@@ -70,6 +80,10 @@ const App = () => {
         <Route
           path="/report/pitique"
           element={<PitiqueServiceReport />}
+        ></Route>
+        <Route
+          path="/report/realtor"
+          element={<RealtorServiceReport />}
         ></Route>
       </Routes>
     </Router>

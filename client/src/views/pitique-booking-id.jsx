@@ -18,8 +18,6 @@ const PitiqueBookingId = () => {
   const [newDate, setNewDate] = useState();
 
   const [showFeedback, setShowFeedback] = useState(false);
-  const [showFeedbackDetails, setShowFeedbackDetails] = useState(false);
-  const [feedback, setFeedback] = useState();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("p-user"));
 
@@ -47,7 +45,6 @@ const PitiqueBookingId = () => {
 
         if (data) {
           setShowFeedback(false);
-          setFeedback(data);
         }
       } catch (error) {
         // If rating not found
@@ -92,19 +89,6 @@ const PitiqueBookingId = () => {
       if (data) {
         showSuccessMessage("Success", "Successfully done the booking!");
         setFlag(!flag);
-      }
-    } catch (error) {
-      console.error("Error completing booking" + error);
-    }
-  };
-
-  const handleCancel = async () => {
-    try {
-      const { data } = await api.put(`/bookings/cancel/${id}`);
-
-      if (data) {
-        setFlag(!flag);
-        showSuccessMessage("Success", "Successfully cancel the booking!");
       }
     } catch (error) {
       console.error("Error completing booking" + error);
@@ -289,7 +273,7 @@ const PitiqueBookingId = () => {
           ) : (
             <div className="w-full">
               <button
-                onClick={() => setShowFeedbackDetails(true)}
+                onClick={() => navigate(`/booking/feedback/${booking.id}`)}
                 className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
               >
                 SHOW FEEDBACK
@@ -310,14 +294,6 @@ const PitiqueBookingId = () => {
             setShow={setShow}
             booking={booking}
             refresh={{ setFlag, flag }}
-          />
-        )}
-
-        {showFeedbackDetails && (
-          <PitiquerFeedback
-            feedback={feedback}
-            setShowFeedback={setShowFeedbackDetails}
-            booking={booking}
           />
         )}
       </div>

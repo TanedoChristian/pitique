@@ -8,8 +8,8 @@ import {
 import api from "../helper/api";
 import { Link } from "react-router-dom";
 
-const PitiqueServiceReport = () => {
-  const user = JSON.parse(localStorage.getItem("p-user"));
+const RealtorServiceReport = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [report, setReport] = useState([]);
   const [income, setIncome] = useState(0);
 
@@ -17,7 +17,7 @@ const PitiqueServiceReport = () => {
     const fetch = async () => {
       try {
         const { data } = await api.get(
-          `/pitiquers/statistics/report/${user.id}`
+          `/realtors/statistics/report/${user.id}`
         );
 
         setReport(data);
@@ -33,7 +33,7 @@ const PitiqueServiceReport = () => {
     const fetch = async () => {
       try {
         const { data } = await api.get(
-          `/pitiquers/statistics/report/income/${user.id}`
+          `/realtors/statistics/report/income/${user.id}`
         );
 
         setIncome(data);
@@ -47,7 +47,7 @@ const PitiqueServiceReport = () => {
   return (
     <div className="poppins">
       <Header className="flex items-center w-full gap-16 relative">
-        <Link to="/dashboard/pitique" className="p-5 absolute">
+        <Link to="/dashboard" className="p-5 absolute">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
@@ -55,14 +55,14 @@ const PitiqueServiceReport = () => {
         </Link>
         <div className="w-full flex justify-center   ">
           <h1 className=" text-xl text-white font-bold ">
-            Service Income Report
+            Service Expense Report
           </h1>
         </div>
       </Header>
       <div className="w-full p-3">
         <div className="flex flex-col gap-1 w-full justify-center  bg-gray-100 rounded-xl mt-2">
           <div className="flex gap-6 items-center p-3 justify-center">
-            <p className="font-bold">Profit </p>
+            <p className="font-bold">Expense </p>
             <h1 className="text-3xl font-bold text-cyan-500">
               Php {Number(income.total).toFixed(2)}
             </h1>
@@ -80,7 +80,7 @@ const PitiqueServiceReport = () => {
         {report.length > 0 &&
           report.map((r, index) => (
             <Link
-              to={`/booking/pitique/${r.id}`}
+              to={`/booking/${r.id}`}
               className="rounded-md flex flex-col  bg-gray-100 poppins shadow-md p-2 text-sm"
               key={index}
             >
@@ -136,4 +136,4 @@ const PitiqueServiceReport = () => {
   );
 };
 
-export default PitiqueServiceReport;
+export default RealtorServiceReport;

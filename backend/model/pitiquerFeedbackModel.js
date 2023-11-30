@@ -15,6 +15,15 @@ class PitiquerFeedbackModel {
     return rows[0];
   }
 
+  //   GET
+  async getFeedbackById(book_id) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM pitiquer_feedback WHERE book_id = ?",
+      [book_id]
+    );
+    return rows[0];
+  }
+
   // CDU
   async createPitiquerFeedback(feedback) {
     const isvisible = true;

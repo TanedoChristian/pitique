@@ -21,11 +21,6 @@ class PitiquerModel {
 
   //   GET Pitiquer for dashboard
   async getPitiquers() {
-    // const [rows] = await this.pool.query(
-    //   "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price FROM pitiquer p INNER JOIN package pa" +
-    //     " ON p.id = pa.ptqr_id" +
-    //     " GROUP BY p.id"
-    // );
     const [rows] = await this.pool.query(
       "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price, COALESCE(AVG(rf.rtng), 0) as avg_rating FROM pitiquer p INNER JOIN package pa ON p.id = pa.ptqr_id LEFT JOIN booking b ON b.ptqr_id = p.id LEFT JOIN realtor_feedback rf ON rf.book_id = b.id WHERE pa.isvisible = true GROUP BY p.id "
     );
@@ -156,8 +151,24 @@ class PitiquerModel {
 
     return rows[0];
   }
+  async getReportComplete(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT b.id,b.total, CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS name, CONCAT(b.unit_no, ' ', b.street, ' ', b.city, ' ', b.province) AS location, p.pkg_desc, b.status, b.day, b.completed " +
+        " FROM booking b INNER JOIN realtor r ON r.id = b.rltr_id INNER JOIN pitiquer pt ON pt.id = b.ptqr_id INNER JOIN package p ON p.ptqr_id = pt.id WHERE pt.id = ? AND b.status = ? GROUP BY b.id",
+      [pitiquerId, "completed"]
+    );
 
-  //
+    return rows;
+  }
+
+  async getReportSumIncome(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT SUM(b.total) AS total FROM booking b INNER JOIN pitiquer p ON p.id = b.ptqr_id WHERE p.id = ? AND b.status = ?",
+      [pitiquerId, "completed"]
+    );
+
+    return rows[0];
+  }
 
   //TODO: Not yet finish
   //Note: Dont use ID this is not secure. Change this.

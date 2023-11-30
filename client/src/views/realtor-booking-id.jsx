@@ -18,8 +18,6 @@ const RealtorBookingId = () => {
   const [flag, setFlag] = useState(false);
   const navigate = useNavigate();
   const [showFeedback, setShowFeedback] = useState(false);
-  const [showFeedbackDetails, setShowFeedbackDetails] = useState(false);
-  const [feedback, setFeedback] = useState();
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -47,7 +45,6 @@ const RealtorBookingId = () => {
 
         if (data) {
           setShowFeedback(false);
-          setFeedback(data);
         }
       } catch (error) {
         // If rating not found
@@ -241,7 +238,6 @@ const RealtorBookingId = () => {
             </button>
           </div>
         )}
-        {console.log(feedback)}
         {booking.status === "completed" &&
           (showFeedback ? (
             <div className="w-full">
@@ -255,7 +251,7 @@ const RealtorBookingId = () => {
           ) : (
             <div className="w-full">
               <button
-                onClick={() => setShowFeedbackDetails(true)}
+                onClick={() => navigate(`/booking/feedback/${booking.id}`)}
                 className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
               >
                 SHOW FEEDBACK
@@ -277,14 +273,6 @@ const RealtorBookingId = () => {
             setShow={setShow}
             booking={booking}
             refresh={{ setFlag, flag }}
-          />
-        )}
-
-        {showFeedbackDetails && (
-          <RealtorFeedback
-            feedback={feedback}
-            setShowFeedback={setShowFeedbackDetails}
-            booking={booking}
           />
         )}
       </div>

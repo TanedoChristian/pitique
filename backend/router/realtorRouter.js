@@ -230,6 +230,30 @@ router.put("/edit/status", async (req, res) => {
   }
 });
 
+router.get("/statistics/report/:id", async (req, res) => {
+  try {
+    const realtorId = req.params.id;
+
+    const stats = await realtorModel.getReportComplete(realtorId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/statistics/report/income/:id", async (req, res) => {
+  try {
+    const realtorId = req.params.id;
+
+    const stats = await realtorModel.getReportSumIncome(realtorId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 const base64EncodeImage = (buffer) => {
   return buffer.toString("base64");
 };

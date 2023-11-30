@@ -3,6 +3,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import api from "../../helper/api";
 import { useEffect, useRef, useState } from "react";
 import { showSuccessMessage } from "../../helper/messageHelper";
+import { Link } from "react-router-dom";
 
 const PitiqueProfileDetails = ({
   setShowPortfolio,
@@ -130,9 +131,15 @@ const PitiqueProfileDetails = ({
             View Package
           </button>
         )}
+        <Link
+          className="py-2 px-6 bg-orange-400 text-white text-center"
+          to={`/booking/pitique/all/${pitiquerId}`}
+        >
+          All Bookings
+        </Link>
 
-        {/* Check if the current user is a pitiquer */}
-        {user === null &&
+        {/* Check if the current user is a realtor */}
+        {realtorUser !== null &&
           (id !== undefined && showFavorite ? (
             <button
               className="py-2 px-6 bg-green-400 text-white"

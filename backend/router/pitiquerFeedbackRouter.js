@@ -30,6 +30,27 @@ router.get("/:pid/booking/:bid", async (req, res) => {
   }
 });
 
+// GET /pitiquer-feedbacks/booking/:bid - Get a specific pitiquer by ID
+router.get("/booking/:bid", async (req, res) => {
+  const bookingId = req.params.bid;
+
+  try {
+    const pitiquer = await pitiquerFeedbackModel.getFeedbackById(bookingId);
+
+    if (!pitiquer) {
+      res.status(404).send("pitiquer feedback is not found");
+    } else {
+      res.json(pitiquer);
+    }
+  } catch (error) {
+    console.error(
+      `Error getting pitiquer feedback with ID ${pitiquerId}:`,
+      error
+    );
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // POST /pitiquer-feedbacks - Create a new pitiquer feedback
 router.post("/", async (req, res) => {
   const newPitiquerFeedbackModel = req.body;

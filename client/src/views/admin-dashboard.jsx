@@ -93,6 +93,13 @@ const AdminDashboard = () => {
                 <h1 className="mt-1 text-xs">{user.total_terminated}</h1>
               </div>
             </div>
+
+            <div className="w-[30%] bg-cyan-500 text-white rounded-md p-2 text-center">
+              <div className="flex flex-col">
+                <h1 className="font-semibold text-xs">Active Users</h1>
+                <h1 className="mt-1 text-xs">{user.total_active}</h1>
+              </div>
+            </div>
           </div>
         )}
         <div className="grid grid-cols-2 w-full gap-2 ">

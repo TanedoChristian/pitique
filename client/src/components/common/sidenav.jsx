@@ -1,5 +1,6 @@
 import {
   faBell,
+  faBook,
   faCalendar,
   faRightFromBracket,
   faUser,
@@ -44,6 +45,10 @@ const SideNav = ({ setShowNav }) => {
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faBell} />
               <Link to={"/r/notification"}>Notification</Link>
+            </li>
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faBook} />
+              <Link to={"/report/realtor"}>Expense Report</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">

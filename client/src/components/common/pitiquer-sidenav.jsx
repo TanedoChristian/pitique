@@ -1,8 +1,10 @@
 import {
   faBell,
+  faBook,
   faGauge,
   faRightFromBracket,
   faUser,
+  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
@@ -51,8 +53,8 @@ const PitiquerSideNav = ({ setShowNav }) => {
               <Link to={"/p/notification"}>Notification</Link>
             </li>
             <li className="flex gap-2 items-center font-semibold">
-              <FontAwesomeIcon icon={faBell} />
-              <Link to={"/report/pitique"}>Report</Link>
+              <FontAwesomeIcon icon={faBook} />
+              <Link to={"/report/pitique"}>Income Report</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">

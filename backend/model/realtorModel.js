@@ -138,6 +138,25 @@ class RealtorModel {
     ]);
   }
 
+  async getReportComplete(realtorId) {
+    const [rows] = await this.pool.query(
+      "SELECT b.id,b.total, CONCAT(pt.fname, ' ', pt.mname, ' ', pt.lname) AS name, CONCAT(b.unit_no, ' ', b.street, ' ', b.city, ' ', b.province) AS location, p.pkg_desc, b.status, b.day, b.completed " +
+        " FROM booking b INNER JOIN realtor r ON r.id = b.rltr_id INNER JOIN pitiquer pt ON pt.id = b.ptqr_id INNER JOIN package p ON p.ptqr_id = pt.id WHERE r.id = ? AND b.status = ? GROUP BY b.id",
+      [realtorId, "completed"]
+    );
+
+    return rows;
+  }
+
+  async getReportSumIncome(realtorId) {
+    const [rows] = await this.pool.query(
+      "SELECT SUM(b.total) AS total FROM booking b INNER JOIN realtor p ON p.id = b.rltr_id WHERE p.id = ? AND b.status = ?",
+      [realtorId, "completed"]
+    );
+
+    return rows[0];
+  }
+
   //TODO: Not yet finish
   //Note: Dont use ID this is not secure. Change this.
   async deleteRealtorById(realtorId) {

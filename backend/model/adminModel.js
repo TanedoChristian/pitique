@@ -51,7 +51,7 @@ class AdminModel {
 
   async getUserStatistic() {
     const [rows] = await this.pool.query(
-      "SELECT SUM(total_users) AS total_users, SUM(total_suspended) AS total_suspended, SUM(total_terminated) AS total_terminated FROM (SELECT COUNT(*) AS total_users, SUM(CASE WHEN status IN ('suspended') THEN 1 ELSE 0 END) AS total_suspended, SUM(CASE WHEN status = 'terminated' THEN 1 ELSE 0 END) AS total_terminated FROM pitiquer UNION ALL SELECT COUNT(*) AS total_users, SUM(CASE WHEN status IN ('suspended') THEN 1 ELSE 0 END) AS total_suspended, SUM(CASE WHEN status = 'terminated' THEN 1 ELSE 0 END) AS total_terminated FROM realtor) AS user_counts"
+      "SELECT SUM(total_users) AS total_users, SUM(total_suspended) AS total_suspended, SUM(total_terminated) AS total_terminated, SUM(total_active) AS total_active FROM (SELECT COUNT(*) AS total_users, SUM(CASE WHEN status IN ('suspended') THEN 1 ELSE 0 END) AS total_suspended, SUM(CASE WHEN status = 'terminated' THEN 1 ELSE 0 END) AS total_terminated, SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) AS total_active FROM pitiquer UNION ALL SELECT COUNT(*) AS total_users, SUM(CASE WHEN status IN ('suspended') THEN 1 ELSE 0 END) AS total_suspended, SUM(CASE WHEN status = 'terminated' THEN 1 ELSE 0 END) AS total_terminated, SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) AS total_active FROM realtor) AS user_counts;"
     );
 
     return rows[0];

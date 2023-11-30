@@ -15,6 +15,15 @@ class RealtorFeedbackModel {
     return rows[0];
   }
 
+  //   GET
+  async getFeedbackById(book_id) {
+    const [rows] = await this.pool.query(
+      "SELECT * FROM realtor_feedback WHERE book_id = ?",
+      [book_id]
+    );
+    return rows[0];
+  }
+
   // CDU
   async createRealtorFeedback(feedback) {
     const isvisible = true;

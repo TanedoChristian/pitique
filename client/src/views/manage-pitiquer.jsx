@@ -4,6 +4,7 @@ import Header from "../components/common/header";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
+import { Link } from "react-router-dom";
 
 const ManagePitiquer = () => {
   const [showSideNav, setShowNav] = useState(false);
@@ -91,8 +92,10 @@ const ManagePitiquer = () => {
                   >
                     {pitiquer.id}
                   </th>
-                  <td className="px-6 py-4 capitalize">
-                    {pitiquer.fname} {pitiquer.mname} {pitiquer.lname}
+                  <td className="px-6 py-4 capitalize text-cyan-600 font-semibold">
+                    <Link to={`/profile/pitique/${pitiquer.id}`}>
+                      {pitiquer.fname} {pitiquer.mname} {pitiquer.lname}
+                    </Link>
                   </td>
                   <td className="px-6 py-4">{pitiquer.email}</td>
                   <td className="px-6 py-4">
