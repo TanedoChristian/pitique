@@ -2,6 +2,10 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import api from "../../helper/api";
+import {
+  showErrorMessage,
+  showSuccessMessage,
+} from "../../helper/messageHelper";
 
 const PitiquerRatingLayout = ({ setShow, booking, refresh }) => {
   const [feedback, setFeedback] = useState({});
@@ -27,12 +31,12 @@ const PitiquerRatingLayout = ({ setShow, booking, refresh }) => {
       const { data } = await api.post("/pitiquer-feedbacks", _feedback);
 
       if (data) {
-        alert("Rating Created!");
+        showSuccessMessage("Success", "Rating created!");
         setShow(false);
         refresh.setFlag(!refresh.flag);
       }
     } catch (error) {
-      alert("Please input the required fields");
+      showErrorMessage("Please input the required fields");
       console.error(error);
     }
   };

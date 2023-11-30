@@ -1,8 +1,11 @@
 const createPromisePool = require("../helper/mysqlPromise");
-
+const moment = require("moment-timezone");
 class PaymentModel {
   constructor() {
     this.pool = createPromisePool();
+    this.philippinesDateTime = moment(new Date())
+      .tz("Asia/Manila")
+      .format("YYYY-MM-DD HH:mm:ss");
   }
 
   // CDU
@@ -16,10 +19,10 @@ class PaymentModel {
         payment.status,
         payment.total,
         payment.pamt,
-        payment.pdate,
+        this.philippinesDateTime,
         payment.preceipt,
         payment.famt,
-        payment.fdate,
+        this.philippinesDateTime,
         payment.freceipt,
         payment.rmrks,
       ]

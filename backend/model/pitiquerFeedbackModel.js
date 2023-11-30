@@ -1,9 +1,12 @@
 const createPromisePool = require("../helper/mysqlPromise");
-const bcrypt = require("bcrypt");
+const moment = require("moment-timezone");
 
 class PitiquerFeedbackModel {
   constructor() {
     this.pool = createPromisePool();
+    this.philippinesDateTime = moment(new Date())
+      .tz("Asia/Manila")
+      .format("YYYY-MM-DD HH:mm:ss");
   }
 
   //   GET Pitiquer
@@ -28,9 +31,6 @@ class PitiquerFeedbackModel {
   async createPitiquerFeedback(feedback) {
     const isvisible = true;
 
-    // Convert to MySql DateTime
-    const date = new Date().toISOString().split("T")[0];
-
     await this.pool.query(
       "INSERT INTO pitiquer_feedback (ptqr_id,book_id,rtng, fdbk,date,isvisible) VALUES (?, ?, ? ,? ,? ,?)",
       [
@@ -38,7 +38,7 @@ class PitiquerFeedbackModel {
         feedback.book_id,
         feedback.rtng,
         feedback.fdbk,
-        date,
+        this.philippinesDateTime,
         isvisible,
       ]
     );

@@ -1,8 +1,11 @@
 const createPromisePool = require("../helper/mysqlPromise");
-
+const moment = require("moment-timezone");
 class BookingModel {
   constructor() {
     this.pool = createPromisePool();
+    this.philippinesDateTime = moment(new Date())
+      .tz("Asia/Manila")
+      .format("YYYY-MM-DD HH:mm:ss");
   }
 
   //   GET booking
@@ -103,12 +106,9 @@ class BookingModel {
     // Default Value
     const status = "payment";
 
-    // Convert to MySql DateTime
-    const approvedDate = new Date().toISOString().split("T")[0];
-
     await this.pool.query(
       "UPDATE booking SET status = ?, approved=? WHERE id = ?",
-      [status, approvedDate, bookingId]
+      [status, this.philippinesDateTime, bookingId]
     );
   }
 
@@ -128,12 +128,9 @@ class BookingModel {
     // Default Value
     const status = "completed";
 
-    // Convert to MySql DateTime
-    const completedDate = new Date().toISOString().split("T")[0];
-
     await this.pool.query(
       "UPDATE booking SET status = ?, completed=? WHERE id = ?",
-      [status, completedDate, bookingId]
+      [status, this.philippinesDateTime, bookingId]
     );
   }
 
@@ -142,12 +139,9 @@ class BookingModel {
     // Default Value
     const status = "declined";
 
-    // Convert to MySql DateTime
-    const declinedRequest = new Date().toISOString().split("T")[0];
-
     await this.pool.query(
       "UPDATE booking SET status = ?, declined=? WHERE id = ?",
-      [status, declinedRequest, bookingId]
+      [status, this.philippinesDateTime, bookingId]
     );
   }
 
@@ -156,12 +150,9 @@ class BookingModel {
     // Default Value
     const status = "cancelled";
 
-    // Convert to MySql DateTime
-    const cancelledDate = new Date().toISOString().split("T")[0];
-
     await this.pool.query(
       "UPDATE booking SET status = ?, cancelled=? WHERE id = ?",
-      [status, cancelledDate, bookingId]
+      [status, this.philippinesDateTime, bookingId]
     );
   }
 
@@ -183,7 +174,7 @@ class BookingModel {
         updatedInfo.share,
         updatedInfo.fee,
         updatedInfo.total,
-        updatedInfo.date,
+        this.philippinesDateTime,
         updatedInfo.rmrks,
         updatedInfo.approved,
         updatedInfo.declined,

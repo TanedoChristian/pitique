@@ -1,15 +1,17 @@
 const createPromisePool = require("../helper/mysqlPromise");
-
+const moment = require("moment-timezone");
 class NotificationModel {
   constructor() {
     this.pool = createPromisePool();
+    this.philippinesDateTime = moment(new Date())
+      .tz("Asia/Manila")
+      .format("YYYY-MM-DD HH:mm:ss");
   }
   // CDU
   async createNotification(bookingId, message) {
-    const date = new Date().toISOString();
     await this.pool.query(
       "INSERT INTO notification (book_id,message,date ) VALUES (?, ?, ?)",
-      [bookingId, message, date]
+      [bookingId, message, this.philippinesDateTime]
     );
   }
 

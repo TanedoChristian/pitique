@@ -5,7 +5,6 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
 import PitiquerRatingLayout from "../components/pitiquer-rating-layout/layout";
-import PitiquerFeedback from "../components/pitiquer-rating-layout/feedback-show";
 import { showSuccessMessage } from "../helper/messageHelper";
 
 const PitiqueBookingId = () => {

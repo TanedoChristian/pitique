@@ -29,7 +29,7 @@ class RealtorFeedbackModel {
     const isvisible = true;
 
     // Convert to MySql DateTime
-    const date = new Date().toISOString().split("T")[0];
+    const date = new Date().toLocaleString();
 
     await this.pool.query(
       "INSERT INTO realtor_feedback (rltr_id,book_id,rtng, fdbk,date,isvisible) VALUES (?, ?, ? ,? ,? ,?)",
