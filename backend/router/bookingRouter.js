@@ -257,6 +257,10 @@ router.put("/cancel/:id", async (req, res) => {
     }
 
     await bookingModel.cancelledBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is cancelled."
+    );
     res.json({ message: "Booking cancelled successfully" });
   } catch (error) {
     console.error(`Error cancelling Booking with ID ${bookingId}:`, error);
@@ -276,7 +280,10 @@ router.put("/reschedule/:id", async (req, res) => {
       res.status(404).send("booking not found");
       return;
     }
-
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is rescheduled."
+    );
     await bookingModel.rescheduleBooking(bookingId, date);
     res.json({ message: "Booking reschedule successfully" });
   } catch (error) {
@@ -297,7 +304,10 @@ router.put("/reschedule/:id", async (req, res) => {
       res.status(404).send("booking not found");
       return;
     }
-
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is rescheduled."
+    );
     await bookingModel.updateBooking(pitiquerId, bookingId, updatedInfo);
     res.json({ message: "Booking update successfully" });
   } catch (error) {
