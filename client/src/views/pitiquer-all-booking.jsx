@@ -41,7 +41,7 @@ const PitiquerAllBooking = () => {
         </div>
       </Header>
       <div className="px-3 flex flex-col gap-3">
-        {bookings.length > 0 &&
+        {bookings.length > 0 ? (
           bookings.map((r, index) => (
             <Link
               to={`/booking/feedback/${r.id}`}
@@ -86,7 +86,12 @@ const PitiquerAllBooking = () => {
                 </h1>
               </div>
             </Link>
-          ))}
+          ))
+        ) : (
+          <div>
+            <p>No bookings found!</p>
+          </div>
+        )}
       </div>
     </div>
   );

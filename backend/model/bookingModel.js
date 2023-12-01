@@ -74,7 +74,7 @@ class BookingModel {
       .tz("Asia/Manila")
       .format("YYYY-MM-DD HH:mm:ss");
     const result = await this.pool.query(
-      "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,approved,declined,completed,cancelled,street, unit_no, city, province, postal, property_size,day) VALUES (?,?, ?, ?,?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
+      "INSERT INTO booking (pkg_id,rltr_id,ptqr_id,status,price,share,fee,total,date,rmrks,street, unit_no, city, province, postal, property_size,day) VALUES (?, ?, ?,?, ?, ?,?, ?, ?,?,?,?,?, ?, ?,?,?)",
       [
         bookingInfo.pkg_id,
         bookingInfo.rltr_id,
@@ -86,10 +86,6 @@ class BookingModel {
         bookingInfo.price, //total
         date,
         bookingInfo.rmrks,
-        bookingInfo.approved,
-        bookingInfo.declined,
-        bookingInfo.completed,
-        bookingInfo.cancelled,
         bookingInfo.street,
         bookingInfo.unit_no,
         bookingInfo.city,
