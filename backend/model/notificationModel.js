@@ -10,8 +10,8 @@ class NotificationModel {
   // CDU
   async createNotification(bookingId, message) {
     await this.pool.query(
-      "INSERT INTO notification (book_id,message,date ) VALUES (?, ?, ?)",
-      [bookingId, message, this.philippinesDateTime]
+      "INSERT INTO notification (book_id,message,date,status ) VALUES (?, ?, ?, ?)",
+      [bookingId, message, this.philippinesDateTime, "unread"]
     );
   }
 
