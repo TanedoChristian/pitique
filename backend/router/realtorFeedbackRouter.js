@@ -30,6 +30,44 @@ router.get("/:rid/booking/:bid", async (req, res) => {
   }
 });
 
+// GET /realtor-feedbacks/booking/:bid - Get a specific realtor by ID
+router.get("/booking/:bid", async (req, res) => {
+  const bookingId = req.params.bid;
+
+  try {
+    const realtor = await realtorFeedback.getFeedbackById(bookingId);
+
+    if (!realtor) {
+      res.status(404).send("realtor feedback is not found");
+    } else {
+      res.json(realtor);
+    }
+  } catch (error) {
+    console.error(
+      `Error getting realtor feedback with ID ${bookingId}:`,
+      error
+    );
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// DELTE /realtor-feedbacks/booking/:bid
+router.delete("/booking/:bid", async (req, res) => {
+  const bookingId = req.params.bid;
+
+  try {
+    await realtorFeedback.removeFeedback(bookingId);
+
+    res.status(200).send("realtor feedback is successfully deleted.");
+  } catch (error) {
+    console.error(
+      `Error deletting realtor feedback with ID ${bookingId}:`,
+      error
+    );
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // POST /realtor-feedbacks - Create a new realtor feedback
 router.post("/", async (req, res) => {
   const newRealtorFeedback = req.body;

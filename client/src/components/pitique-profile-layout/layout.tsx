@@ -7,11 +7,11 @@ import { faChevronLeft, faPen } from "@fortawesome/free-solid-svg-icons";
 import Header from "../common/header";
 import PitiqueProfilePackage from "./pitique-profile-package";
 import PitiqueProfilePortfolio from "./pitique-profile-portfolio";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PitiqueProfileLayout = ({ user }) => {
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [showPackage, setShowPackage] = useState(false);
 
@@ -20,7 +20,7 @@ const PitiqueProfileLayout = ({ user }) => {
       setShowPortfolio(false);
       setShowPackage(false);
     } else {
-      window.location.href = "/dashboard/pitique";
+      navigate(-1);
     }
   };
 

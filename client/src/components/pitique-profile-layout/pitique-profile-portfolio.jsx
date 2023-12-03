@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../../helper/api";
+import { showSuccessMessage } from "../../helper/messageHelper";
 const PitiqueProfilePortfolio = ({ pitiquerId, user }) => {
   const [portfolios, setPortfolios] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -33,7 +34,7 @@ const PitiqueProfilePortfolio = ({ pitiquerId, user }) => {
 
       if (data) {
         setFlag(!flag);
-        alert("Delete Succesfully!");
+        showSuccessMessage("Deleted!", "Successfully deleted!");
       }
     } catch (error) {
       console.error(error);
@@ -51,7 +52,7 @@ const PitiqueProfilePortfolio = ({ pitiquerId, user }) => {
 
         if (data) {
           setFlag(!flag);
-          alert("Added Succesfully!");
+          showSuccessMessage("Success", "Added Successfully!");
         }
       } catch (error) {
         console.error("Error uploading file:", error);

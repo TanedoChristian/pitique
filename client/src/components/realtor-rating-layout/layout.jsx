@@ -2,6 +2,10 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import api from "../../helper/api";
+import {
+  showErrorMessage,
+  showSuccessMessage,
+} from "../../helper/messageHelper";
 
 const RealtorRatingLayout = ({ setShow, booking, refresh }) => {
   const [feedback, setFeedback] = useState({});
@@ -27,12 +31,12 @@ const RealtorRatingLayout = ({ setShow, booking, refresh }) => {
       const { data } = await api.post("/realtor-feedbacks", _feedback);
 
       if (data) {
-        alert("Rating Created!");
+        showSuccessMessage("Success", "Rating Created!");
         setShow(false);
         refresh.setFlag(!refresh.flag);
       }
     } catch (error) {
-      alert("Please input the required fields");
+      showErrorMessage("Please input the required fields");
       console.error(error);
     }
   };
@@ -48,11 +52,14 @@ const RealtorRatingLayout = ({ setShow, booking, refresh }) => {
             />
           </div>
         </div>
-        <h1 className="font-bold">
+        <h1 className="font-bold capitalize">
           {booking.prfname} {booking.prlname}
         </h1>
         <p className="flex gap-2 items-center">
-          <FontAwesomeIcon icon={faLocationDot} className="text-red-600" />
+          <FontAwesomeIcon
+            icon={faLocationDot}
+            className="text-red-600 capitalize"
+          />
           <span>
             {booking.prcity}, {booking.prprovince}
           </span>

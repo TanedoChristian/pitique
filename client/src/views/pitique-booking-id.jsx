@@ -1,17 +1,31 @@
-import { useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
+import PitiquerRatingLayout from "../components/pitiquer-rating-layout/layout";
+import { showSuccessMessage } from "../helper/messageHelper";
+import DeclineForm from "../components/pitiquer-rating-layout/decline-form";
 
 const PitiqueBookingId = () => {
   const { id } = useParams();
   const [booking, setBooking] = useState({});
   const [flag, setFlag] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [newDate, setNewDate] = useState();
+
+  const [decline, setDecline] = useState({
+    show: false,
+    description: "",
+  });
+
+  const [showFeedback, setShowFeedback] = useState(false);
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("p-user"));
 
-  // TODO: check if the current user is equals to the pitiquer in booking id
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -26,12 +40,37 @@ const PitiqueBookingId = () => {
     fetch();
   }, [flag]);
 
-  const handleDecline = async () => {
+  useEffect(() => {
+    if (booking.ptqr_id === undefined) return;
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(
+          `/pitiquer-feedbacks/${booking.ptqr_id}/booking/${booking.id}`
+        );
+
+        if (data) {
+          setShowFeedback(false);
+        }
+      } catch (error) {
+        // If rating not found
+
+        setShowFeedback(true);
+      }
+    };
+
+    fetch();
+  }, [booking]);
+
+  const handleDecline = async (msg) => {
     try {
-      const { data } = await api.put(`/bookings/decline/${id}`);
+      const { data } = await api.put(`/bookings/decline/${id}`, {
+        msg: decline.description,
+      });
 
       if (data) {
         setFlag(!flag);
+        setDecline({ show: false, description: "" });
+        showSuccessMessage("Success", "Successfully declined the booking!");
       }
     } catch (error) {
       console.error("Error declining booking" + error);
@@ -43,6 +82,7 @@ const PitiqueBookingId = () => {
       const { data } = await api.put(`/bookings/accept/${id}`);
 
       if (data) {
+        showSuccessMessage("Success", "Successfully accept the booking!");
         setFlag(!flag);
       }
     } catch (error) {
@@ -55,6 +95,7 @@ const PitiqueBookingId = () => {
       const { data } = await api.put(`/bookings/complete/${id}`);
 
       if (data) {
+        showSuccessMessage("Success", "Successfully done the booking!");
         setFlag(!flag);
       }
     } catch (error) {
@@ -62,15 +103,18 @@ const PitiqueBookingId = () => {
     }
   };
 
-  const handleCancel = async () => {
+  const handleReschedule = async () => {
     try {
-      const { data } = await api.put(`/bookings/cancel/${id}`);
+      const { data } = await api.put(`/bookings/reschedule/${booking.id}`, {
+        date: new Date(newDate).toISOString().slice(0, 10),
+      });
 
       if (data) {
+        showSuccessMessage("Success", "Successfully reschedule the booking!");
         setFlag(!flag);
       }
     } catch (error) {
-      console.error("Error completing booking" + error);
+      console.error(error);
     }
   };
 
@@ -81,16 +125,16 @@ const PitiqueBookingId = () => {
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
-        <div className="absolute flex p-5">
+        <Link to={"/booking/pitique"} className="absolute flex p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
           />
-        </div>
+        </Link>
         <div className=" w-full">
           <h1 className="flex-grow text-xl text-white font-bold ">{`Booking ${id}`}</h1>
           <div className="flex justify-center items-center mt-1">
-            <p className=" bg-orange-400 text-white px-3  py-0 rounded-full text-sm">
+            <p className=" bg-orange-400 text-white px-3  py-0 rounded-full text-sm capitalize">
               {booking.status}
             </p>
           </div>
@@ -103,10 +147,10 @@ const PitiqueBookingId = () => {
             <div className="flex flex-col gap-1 p-3">
               <p className="text-gray-500 text-sm">Property Address</p>
               <div>
-                <h1 className="font-bold">
+                <h1 className="font-bold capitalize">
                   {booking.unit_no} {booking.street}
                 </h1>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 text-sm capitalize">
                   {booking.city}, {booking.province} {booking.postal}
                 </p>
               </div>
@@ -133,7 +177,35 @@ const PitiqueBookingId = () => {
                 <p className="text-gray-500 text-sm">Mid-day</p>
               </div>
             </div>
+            {booking.status === "pending" && (
+              <button
+                onClick={() => setShowCalendar(!showCalendar)}
+                className="text-cyan-500 font-bold"
+              >
+                {showCalendar ? "Cancel" : "Edit"}{" "}
+              </button>
+            )}
           </div>
+          {showCalendar && (
+            <div className="p-2">
+              <label htmlFor="new_date" className="text-gray-400 pr-2">
+                Select New Date:{" "}
+              </label>
+              <input
+                type="date"
+                name="new_date"
+                id="new_date"
+                onChange={(e) => setNewDate(e.target.value)}
+              />
+
+              <button
+                onClick={handleReschedule}
+                className="text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                Save
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="border border-gray-300 shadow-md p-3 mt-1">
@@ -141,13 +213,13 @@ const PitiqueBookingId = () => {
             <div className="flex flex-col gap-2">
               <p className="text-gray-500 text-sm">Contact Info</p>
               <div>
-                <h1 className="font-bold">
-                  {booking.fname} {booking.lname}
+                <h1 className="font-bold capitalize">
+                  {booking.rfname} {booking.rlname}
                 </h1>
                 <p className="text-gray-500 text-sm">
-                  {booking.phone ?? "No Phone"}
+                  {booking.rphone ?? "No Phone"}
                 </p>
-                <p className="text-gray-500 text-sm">{booking.email}</p>
+                <p className="text-gray-500 text-sm">{booking.remail}</p>
               </div>
             </div>
           </div>
@@ -171,7 +243,7 @@ const PitiqueBookingId = () => {
         {booking.status === "pending" && (
           <div className="w-full">
             <button
-              onClick={handleDecline}
+              onClick={() => setDecline({ show: true })}
               className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
             >
               DECLINE BOOKING
@@ -188,18 +260,56 @@ const PitiqueBookingId = () => {
         {booking.status === "accepted" && (
           <div className="w-full">
             <button
-              onClick={handleCancel}
-              className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
-            >
-              CANCEL BOOKING
-            </button>
-            <button
               className=" text-xl mt-2 p-3 w-full border-2  text-white bg-cyan-500  font-bold rounded-md shadow-md"
               onClick={handleComplete}
             >
               COMPLETE
             </button>
           </div>
+        )}
+
+        {booking.status === "completed" &&
+          (showFeedback ? (
+            <div className="w-full">
+              <button
+                onClick={() => setShow(true)}
+                className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                ADD FEEDBACK
+              </button>
+            </div>
+          ) : (
+            <div className="w-full">
+              <button
+                onClick={() => navigate(`/booking/feedback/${booking.id}`)}
+                className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+              >
+                SHOW FEEDBACK
+              </button>
+            </div>
+          ))}
+        {(booking.status === "completed" || booking.status === "accepted") && (
+          <button
+            onClick={() => navigate(`/payment/info/${booking.id}`)}
+            className=" text-xl mt-5 p-3 w-full border-2  text-white bg-cyan-500   font-bold rounded-md shadow-md"
+          >
+            SHOW RECEIPT
+          </button>
+        )}
+
+        {show && (
+          <PitiquerRatingLayout
+            setShow={setShow}
+            booking={booking}
+            refresh={{ setFlag, flag }}
+          />
+        )}
+        {decline.show && (
+          <DeclineForm
+            setDecline={setDecline}
+            handleDecline={handleDecline}
+            decline={decline}
+          />
         )}
       </div>
     </div>

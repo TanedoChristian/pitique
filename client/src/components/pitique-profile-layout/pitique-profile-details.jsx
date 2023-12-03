@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import api from "../../helper/api";
 import { useEffect, useRef, useState } from "react";
+import { showSuccessMessage } from "../../helper/messageHelper";
+import { Link } from "react-router-dom";
 
 const PitiqueProfileDetails = ({
   setShowPortfolio,
@@ -9,7 +11,8 @@ const PitiqueProfileDetails = ({
   user,
   pitiquerId,
 }) => {
-  const { id } = JSON.parse(localStorage.getItem("user"));
+  const realtorUser = JSON.parse(localStorage.getItem("user"));
+  const id = realtorUser ? realtorUser.id : undefined;
   const [showFavorite, setShowFavorite] = useState(true);
   const [profileImg, setProfileImg] = useState();
   const [flag, setFlag] = useState(false);
@@ -63,7 +66,10 @@ const PitiqueProfileDetails = ({
         const { data } = await api.put("/pitiquers/edit/picture", formData);
 
         if (data) {
-          alert("Updated Succesfully!");
+          showSuccessMessage(
+            "Success",
+            "Updated profile picture successfully!"
+          );
           setFlag(!flag);
         }
       } catch (error) {
@@ -125,38 +131,45 @@ const PitiqueProfileDetails = ({
             View Package
           </button>
         )}
+        <Link
+          className="py-2 px-6 bg-orange-400 text-white text-center"
+          to={`/booking/pitique/all/${pitiquerId}`}
+        >
+          All Bookings
+        </Link>
 
-        {/* Check if the current user is a pitiquer */}
-        {user === null && id && showFavorite ? (
-          <button
-            className="py-2 px-6 bg-green-400 text-white"
-            onClick={async () => {
-              try {
-                await api.post(`/realtors/${id}/favorite/${pitiquerId}`);
-                setShowFavorite(false);
-              } catch (error) {
-                console.error(error);
-              }
-            }}
-          >
-            Add to Favorite Pitiquer
-          </button>
-        ) : (
-          <button
-            className="py-2 px-6 bg-red-400 text-white"
-            onClick={async () => {
-              try {
-                await api.delete(`/realtors/${id}/favorite/${pitiquerId}`);
+        {/* Check if the current user is a realtor */}
+        {realtorUser !== null &&
+          (id !== undefined && showFavorite ? (
+            <button
+              className="py-2 px-6 bg-green-400 text-white"
+              onClick={async () => {
+                try {
+                  await api.post(`/realtors/${id}/favorite/${pitiquerId}`);
+                  setShowFavorite(false);
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+            >
+              Add to Favorite Pitiquer
+            </button>
+          ) : (
+            <button
+              className="py-2 px-6 bg-red-400 text-white"
+              onClick={async () => {
+                try {
+                  await api.delete(`/realtors/${id}/favorite/${pitiquerId}`);
 
-                setShowFavorite(true);
-              } catch (error) {
-                console.error(error);
-              }
-            }}
-          >
-            Unfavorite Pitiquer
-          </button>
-        )}
+                  setShowFavorite(true);
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+            >
+              Unfavorite Pitiquer
+            </button>
+          ))}
       </div>
     </div>
   );

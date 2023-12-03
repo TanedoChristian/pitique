@@ -2,6 +2,7 @@ import PitiqueProfilePackageItem from "./pitique-profile-package-item";
 import { packageItems } from "../../helper/package-item";
 import { useEffect, useState } from "react";
 import api from "../../helper/api";
+import { showSuccessMessage } from "../../helper/messageHelper";
 
 const PitiqueProfilePackage = ({ pitiquerId }) => {
   const [showModal, setShowModal] = useState(false);
@@ -37,8 +38,9 @@ const PitiqueProfilePackage = ({ pitiquerId }) => {
 
   const handleSubmit = async () => {
     const { data } = await api.post("/packages", packageInfo);
-
+    console.log(data);
     if (data) {
+      showSuccessMessage("Success!", "Successfully added package!");
       setFlag(!flag);
       setShowModal(false);
     }
@@ -124,12 +126,6 @@ const PitiqueProfilePackage = ({ pitiquerId }) => {
           />
         );
       })}
-
-      <div>
-        <button className=" text-xl mt-5 p-3 w-full border-2 border-cyan-500 text-cyan-500  font-bold rounded-sm shadow-md">
-          NEXT
-        </button>
-      </div>
     </>
   );
 };

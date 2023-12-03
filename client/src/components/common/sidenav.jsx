@@ -1,14 +1,21 @@
 import {
   faBell,
+  faBook,
   faCalendar,
   faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideNav = ({ setShowNav }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
     <div className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins `}>
       <div className="w-[200px] h-full  bg-cyan-500 text-white border-r border-gray-200">
@@ -35,22 +42,18 @@ const SideNav = ({ setShowNav }) => {
               <Link to={"/transaction"}>My Bookings</Link>
             </li>
 
-            <li className="flex gap-2 items-center font-semibold -ml-3">
-              <span className="p-2.5 relative ">
-                <FontAwesomeIcon icon={faBell} className="" />
-
-                <span className="w-5 h-5 rounded-full bg-red-500 text-white font-bold flex justify-center items-center text-xs absolute top-0 right-0">
-                  2
-                </span>
-              </span>
-
-              <a>Notification </a>
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faBell} />
+              <Link to={"/r/notification"}>Notification</Link>
+            </li>
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faBook} />
+              <Link to={"/report/realtor"}>Expense Report</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
-
-              <a>Logout </a>
+              <button onClick={handleLogout}>Logout </button>
             </li>
           </div>
         </div>

@@ -38,38 +38,42 @@ const BookingServiceForm = ({ setCount, pitiquerId, handleChangePackage }) => {
       onSubmit={handleSubmit}
     >
       {packageInfos.length > 0 ? (
-        packageInfos.map((packages, index) => (
-          <div
-            className="bg-gray-200 shadow-md"
-            key={packages.id}
-            onClick={() => handleChangePackage(packages.id, packages.pkg_desc)}
-          >
-            <input
-              className="hidden"
-              id={`radio ${index}`}
-              type="radio"
-              name="price"
-              value={packages.min_price}
-              onChange={handleChange}
-            />
-
-            <label
-              className="flex flex-col p-2 border-2  cursor-pointer"
-              htmlFor={`radio ${index}`}
+        packageInfos
+          .filter((_p) => _p.isvisible)
+          .map((packages, index) => (
+            <div
+              className="bg-gray-200 shadow-md"
+              key={packages.id}
+              onClick={() =>
+                handleChangePackage(packages.id, packages.pkg_desc)
+              }
             >
-              <div className="flex gap-3">
-                <img
-                  className="w-[150px] h-[70px] rounded-xl"
-                  src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                />
-                <div>
-                  <h1 className="font-bold">{packages.pkg_desc}</h1>
-                  <p>Php {packages.min_price.toFixed(2)}</p>
+              <input
+                className="hidden"
+                id={`radio ${index}`}
+                type="radio"
+                name="price"
+                value={packages.min_price}
+                onChange={handleChange}
+              />
+
+              <label
+                className="flex flex-col p-2 border-2  cursor-pointer"
+                htmlFor={`radio ${index}`}
+              >
+                <div className="flex gap-3">
+                  <img
+                    className="w-[150px] h-[70px] rounded-xl"
+                    src="https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  />
+                  <div>
+                    <h1 className="font-bold">{packages.pkg_desc}</h1>
+                    <p>Php {packages.min_price.toFixed(2)}</p>
+                  </div>
                 </div>
-              </div>
-            </label>
-          </div>
-        ))
+              </label>
+            </div>
+          ))
       ) : (
         <div>No package available</div>
       )}

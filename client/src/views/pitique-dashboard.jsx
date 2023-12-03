@@ -1,11 +1,46 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/common/header";
-import SideNav from "../components/common/sidenav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PitiquerSideNav from "../components/common/pitiquer-sidenav";
+import api from "../helper/api";
 const PitiqueDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
+  const [statistics, setStatistics] = useState();
+  const [ratings, setRatings] = useState();
+  const user = JSON.parse(localStorage.getItem("p-user"));
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(`/pitiquers/statistics/${user.id}`);
+
+        setStatistics(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(
+          `/pitiquers/statistics/ratings/${user.id}`
+        );
+
+        setRatings(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetch();
+  }, []);
+
+  if (statistics === undefined || ratings === undefined)
+    return <div>Loading...</div>;
 
   return (
     <div className="poppins">
@@ -18,14 +53,6 @@ const PitiqueDashboard = () => {
         >
           <FontAwesomeIcon icon={faBars} />
         </button>
-        <input
-          type="text"
-          name=""
-          id=""
-          className="w-[80%] bg-cyan-500 border-b border-white placeholder-white outline-none"
-          placeholder="Search Pitiquer's"
-        />
-        <FontAwesomeIcon icon={faSearch} />
       </Header>
 
       <h1 className="text-xl font-bold p-5">Welcome, Tyler! </h1>
@@ -34,7 +61,7 @@ const PitiqueDashboard = () => {
         <div className="bg-orange-500 col-span-2 flex p-3 justify-center items-center rounded-xl shadow-xl">
           <div className="flex justify-center flex-col items-center">
             <div className=" h-10 w-10 rounded-full flex items-center justify-center bg-orange-600 ">
-              <h1 className="text-white font-bold">40</h1>
+              <h1 className="text-white font-bold">{statistics.all_booking}</h1>
             </div>
             <p className="text-white font-bold">View All Bookings</p>
           </div>
@@ -42,7 +69,7 @@ const PitiqueDashboard = () => {
         <div className="bg-yellow-500 rounded-xl">
           <div className="flex justify-center flex-col items-center h-full">
             <div className="h-10 w-10 rounded-full flex items-center justify-center bg-yellow-600 ">
-              <h1 className="text-white font-bold">40</h1>
+              <h1 className="text-white font-bold">{statistics.pending}</h1>
             </div>
             <p className="text-white">Pending</p>
           </div>
@@ -50,15 +77,15 @@ const PitiqueDashboard = () => {
         <div className="bg-cyan-500 p-3 rounded-xl">
           <div className="flex justify-center flex-col items-center h-full">
             <div className="h-10 w-10 rounded-full flex items-center justify-center bg-cyan-600 ">
-              <h1 className="text-white font-bold">40</h1>
+              <h1 className="text-white font-bold">{statistics.accepted}</h1>
             </div>
-            <p className="text-white">Pending</p>
+            <p className="text-white">Accepted</p>
           </div>
         </div>
         <div className="bg-blue-500 p-3 rounded-xl">
           <div className="flex justify-center flex-col items-center h-full">
             <div className="h-10 w-10 rounded-full flex items-center justify-center bg-blue-600 ">
-              <h1 className="text-white font-bold">40</h1>
+              <h1 className="text-white font-bold">{statistics.paid}</h1>
             </div>
             <p className="text-white">Paid</p>
           </div>
@@ -66,9 +93,9 @@ const PitiqueDashboard = () => {
         <div className="bg-green-500 p-3 rounded-xl">
           <div className="flex justify-center flex-col items-center h-full">
             <div className="h-10 w-10 rounded-full flex items-center justify-center bg-green-600 ">
-              <h1 className="text-white font-bold">40</h1>
+              <h1 className="text-white font-bold">{statistics.completed}</h1>
             </div>
-            <p className="text-white">Paid</p>
+            <p className="text-white">Completed</p>
           </div>
         </div>
       </div>
@@ -87,11 +114,13 @@ const PitiqueDashboard = () => {
             </svg>
             <div className="flex flex-col ">
               <div className="flex gap-1 items-center">
-                <h1 className="font-bold text-xl">4.8</h1>
+                <h1 className="font-bold text-xl">
+                  {Number(ratings.rating).toFixed(1)}
+                </h1>
                 <p className="text-gray-500">average rating</p>
               </div>
               <p className="text-blue-600 text-sm font-bold">
-                58 Total Reviews
+                {ratings.total_rating} Total Reviews
               </p>
             </div>
           </div>

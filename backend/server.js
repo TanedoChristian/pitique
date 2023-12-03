@@ -20,6 +20,10 @@ const packageRouter = require("./router/packageRouter");
 const portfolioRouter = require("./router/portfolioRouter");
 const bookingRouter = require("./router/bookingRouter");
 const realtorFeedbackRouter = require("./router/realtorFeedbackRouter");
+const pitiquerFeedbackRouter = require("./router/pitiquerFeedbackRouter");
+const paymentRouter = require("./router/paymentRouter");
+const adminRouter = require("./router/adminRouter");
+const notificationRouter = require("./router/notificationRouter");
 
 app.use(bodyParser.json());
 
@@ -29,6 +33,10 @@ app.use("/packages", packageRouter);
 app.use("/portfolios", portfolioRouter);
 app.use("/bookings", bookingRouter);
 app.use("/realtor-feedbacks", realtorFeedbackRouter);
+app.use("/pitiquer-feedbacks", pitiquerFeedbackRouter);
+app.use("/payments", paymentRouter);
+app.use("/admins", adminRouter);
+app.use("/notifications", notificationRouter);
 
 const port = process.env.PORT || 8000;
 

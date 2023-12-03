@@ -1,13 +1,22 @@
 import {
   faBell,
-  faCalendar,
+  faBook,
+  faGauge,
   faRightFromBracket,
   faUser,
+  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const PitiquerSideNav = ({ setShowNav }) => {
+  const user = JSON.parse(localStorage.getItem("p-user"));
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
     <div
       className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins z-10`}
@@ -27,19 +36,35 @@ const PitiquerSideNav = ({ setShowNav }) => {
         <div className=" w-full h-screen flex flex-col gap-3 p-3 justify-between mt-10">
           <div className="flex flex-col gap-10">
             <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faGauge} />
+              <Link to={`/dashboard/pitique`}>Dashboard</Link>
+            </li>
+            <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
-              <a href={`/profile/pitique/${sampleidhere}`}>Account Settings </a>
+              <Link to={`/profile/pitique/${user.id}`}>Account Settings </Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
+<<<<<<< HEAD
 
               <a href="/booking/pitique">My Bookings </a>
+=======
+              <Link to="/booking/pitique">My Bookings </Link>
+            </li>
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faBell} />
+              <Link to={"/p/notification"}>Notification</Link>
+            </li>
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faBook} />
+              <Link to={"/report/pitique"}>Income Report</Link>
+>>>>>>> main
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
-              <a>Logout </a>
+              <button onClick={handleLogout}>Logout </button>
             </li>
           </div>
         </div>

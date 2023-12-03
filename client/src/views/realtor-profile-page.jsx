@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPen } from "@fortawesome/free-solid-svg-icons";
 import api from "../helper/api";
+import { showSuccessMessage } from "../helper/messageHelper";
 
 const RealtorProfilePage = () => {
   const [user, setUser] = useState();
@@ -51,7 +52,7 @@ const RealtorProfilePage = () => {
       const { data } = await api.put("/realtors/edit/name", _name);
 
       if (data) {
-        alert("Updated Succesfully!");
+        showSuccessMessage("Success!", "Updated Successfully");
 
         const newUser = {
           ...user,
@@ -87,7 +88,7 @@ const RealtorProfilePage = () => {
       const { data } = await api.put("/realtors/edit/picture", formData);
 
       if (data) {
-        alert("Updated Succesfully!");
+        showSuccessMessage("Success!", "Updated Successfully");
 
         const newUser = {
           ...user,

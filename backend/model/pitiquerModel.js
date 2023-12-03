@@ -19,13 +19,18 @@ class PitiquerModel {
     return rows;
   }
 
-  //   GET Pitiquer
-
+  //   GET Pitiquer for dashboard
   async getPitiquers() {
     const [rows] = await this.pool.query(
-      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price FROM pitiquer p INNER JOIN package pa" +
-        " ON p.id = pa.ptqr_id" +
-        " GROUP BY p.id"
+      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price, COALESCE(AVG(rf.rtng), 0) as avg_rating FROM pitiquer p INNER JOIN package pa ON p.id = pa.ptqr_id LEFT JOIN booking b ON b.ptqr_id = p.id LEFT JOIN realtor_feedback rf ON rf.book_id = b.id WHERE pa.isvisible = true GROUP BY p.id "
+    );
+    return rows;
+  }
+
+  //   GET All Pitiquer
+  async getAllPitiquers() {
+    const [rows] = await this.pool.query(
+      "SELECT id,fname,mname,lname,email,phone,status FROM pitiquer"
     );
     return rows;
   }
@@ -42,6 +47,14 @@ class PitiquerModel {
     const [rows] = await this.pool.query(
       "SELECT * FROM pitiquer WHERE email = ?",
       [email]
+    );
+    return rows[0];
+  }
+
+  async getPitiquerRating(id) {
+    const [rows] = await this.pool.query(
+      "SELECT AVG(rf.rtng) FROM booking b INNER JOIN realtor_feedback rf ON rf.book_id = b.id WHERE b.ptqr_id = ?",
+      [id]
     );
     return rows[0];
   }
@@ -66,22 +79,17 @@ class PitiquerModel {
     const status = "active";
 
     await this.pool.query(
-      "INSERT INTO pitiquer (fname,mname,lname,email,pass,phone,city,province,prof_img,bio,isphotog,isvideog,isamnty,status) VALUES (?, ?, ? ,? ,? ,?, ?,?, ?, ? ,? ,? ,?, ?)",
+      "INSERT INTO pitiquer (fname, mname,lname,email,pass, status,phone,city,province) VALUES (?, ?,?, ?, ? ,? ,? ,?,?)",
       [
-        pitiquer.firstName,
-        pitiquer.middleName,
-        pitiquer.lastName,
+        pitiquer.fname,
+        pitiquer.mname,
+        pitiquer.lname,
         pitiquer.email,
         hashedPassword,
+        status,
         pitiquer.phone,
         pitiquer.city,
         pitiquer.province,
-        pitiquer.prof_img,
-        pitiquer.bio,
-        pitiquer.isphotog,
-        pitiquer.isvideog,
-        pitiquer.isamnty,
-        status,
       ]
     );
   }
@@ -113,6 +121,53 @@ class PitiquerModel {
       picture,
       pitiquerId,
     ]);
+  }
+
+  async updateStatus(user) {
+    await this.pool.query("UPDATE pitiquer SET status = ?  WHERE id = ?", [
+      user.status,
+      user.ptqr_id,
+    ]);
+  }
+
+  async getStatistics(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT COUNT(*) AS all_booking, COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending, " +
+        "COUNT(CASE WHEN status = 'accepted' THEN 1 END) AS paid,  " +
+        "COUNT(CASE WHEN status = 'payment' THEN 1 END) AS accepted,  " +
+        "COUNT(CASE WHEN status = 'completed' THEN 1 END) AS completed  " +
+        "FROM booking b WHERE ptqr_id = ?;",
+      [pitiquerId]
+    );
+
+    return rows[0];
+  }
+
+  async getStatisticsRating(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT AVG(rf.rtng) AS rating, COUNT(rf.rtng) AS total_rating FROM realtor_feedback rf INNER JOIN booking b ON rf.book_id = b.id WHERE b.ptqr_id = ? AND b.status = ?",
+      [pitiquerId, "completed"]
+    );
+
+    return rows[0];
+  }
+  async getReportComplete(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT b.id,b.total, CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS name, CONCAT(b.unit_no, ' ', b.street, ' ', b.city, ' ', b.province) AS location, p.pkg_desc, b.status, b.day, b.completed " +
+        " FROM booking b INNER JOIN realtor r ON r.id = b.rltr_id INNER JOIN pitiquer pt ON pt.id = b.ptqr_id INNER JOIN package p ON p.ptqr_id = pt.id WHERE pt.id = ? AND b.status = ? GROUP BY b.id",
+      [pitiquerId, "completed"]
+    );
+
+    return rows;
+  }
+
+  async getReportSumIncome(pitiquerId) {
+    const [rows] = await this.pool.query(
+      "SELECT SUM(b.total) AS total FROM booking b INNER JOIN pitiquer p ON p.id = b.ptqr_id WHERE p.id = ? AND b.status = ?",
+      [pitiquerId, "completed"]
+    );
+
+    return rows[0];
   }
 
   //TODO: Not yet finish

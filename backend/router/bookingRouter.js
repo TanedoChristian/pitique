@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const BookingModel = require("../model/bookingModel");
+const NotificationModel = require("../model/notificationModel");
 
 const bookingModel = new BookingModel();
+const notificationModel = new NotificationModel();
 
 // GET /bookings/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
@@ -133,8 +135,13 @@ router.post("/request", async (req, res) => {
   const bookingInfo = req.body;
 
   try {
-    await bookingModel.requestBooking(bookingInfo);
-    res.status(201).json({ message: "Reqeust created successfully" });
+    const id = await bookingModel.requestBooking(bookingInfo);
+
+    await notificationModel.createNotification(
+      id,
+      "The booking is created and pending."
+    );
+    res.status(201).json({ message: "Request created successfully" });
   } catch (error) {
     console.error("Error creating request:", error);
     res.status(500).send("Internal Server Error");
@@ -153,8 +160,36 @@ router.put("/accept/:id", async (req, res) => {
       return;
     }
 
-    await bookingModel.accecptBookingRequest(bookingId);
+    await bookingModel.acceptBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is accepted by pitiquer."
+    );
     res.json({ message: "Booking accepted successfully" });
+  } catch (error) {
+    console.error(`Error accepting Booking with ID ${bookingId}:`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// PUT /bookings/pay/:id - pay a booking by ID
+router.put("/pay/:id", async (req, res) => {
+  const bookingId = req.params.id;
+
+  try {
+    const existingBooking = await bookingModel.getBookingById(bookingId);
+
+    if (!existingBooking) {
+      res.status(404).send("booking not found");
+      return;
+    }
+
+    await bookingModel.payBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is paid."
+    );
+    res.json({ message: "Booking paid successfully" });
   } catch (error) {
     console.error(`Error accepting Booking with ID ${bookingId}:`, error);
     res.status(500).send("Internal Server Error");
@@ -174,6 +209,10 @@ router.put("/complete/:id", async (req, res) => {
     }
 
     await bookingModel.completeBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is completed. You can rate and put feedback."
+    );
     res.json({ message: "Booking completed successfully" });
   } catch (error) {
     console.error(`Error completing Booking with ID ${bookingId}:`, error);
@@ -184,6 +223,7 @@ router.put("/complete/:id", async (req, res) => {
 // PUT /bookings/decline/:id - decline a booking by ID
 router.put("/decline/:id", async (req, res) => {
   const bookingId = req.params.id;
+  const { msg } = req.body;
 
   try {
     const existingBooking = await bookingModel.getBookingById(bookingId);
@@ -193,7 +233,11 @@ router.put("/decline/:id", async (req, res) => {
       return;
     }
 
-    await bookingModel.declineBookingRequest(bookingId);
+    await bookingModel.declineBookingRequest(bookingId, msg);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is declined."
+    );
     res.json({ message: "Booking declined successfully" });
   } catch (error) {
     console.error(`Error declining Booking with ID ${bookingId}:`, error);
@@ -214,6 +258,10 @@ router.put("/cancel/:id", async (req, res) => {
     }
 
     await bookingModel.cancelledBookingRequest(bookingId);
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is cancelled."
+    );
     res.json({ message: "Booking cancelled successfully" });
   } catch (error) {
     console.error(`Error cancelling Booking with ID ${bookingId}:`, error);
@@ -233,7 +281,10 @@ router.put("/reschedule/:id", async (req, res) => {
       res.status(404).send("booking not found");
       return;
     }
-
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is rescheduled."
+    );
     await bookingModel.rescheduleBooking(bookingId, date);
     res.json({ message: "Booking reschedule successfully" });
   } catch (error) {
@@ -254,7 +305,10 @@ router.put("/reschedule/:id", async (req, res) => {
       res.status(404).send("booking not found");
       return;
     }
-
+    await notificationModel.createNotification(
+      bookingId,
+      "The booking is rescheduled."
+    );
     await bookingModel.updateBooking(pitiquerId, bookingId, updatedInfo);
     res.json({ message: "Booking update successfully" });
   } catch (error) {

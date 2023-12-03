@@ -2,22 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { BookingContext } from "../../context/bookingContext";
 import api from "../../helper/api";
+import { showSuccessMessage } from "../../helper/messageHelper";
+import { useNavigate } from "react-router-dom";
 
 const BookingReviewForm = ({ setCount }) => {
   const [bookingInfo, setBookingInfo] = useContext(BookingContext);
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   const handleSubmit = async () => {
-    setBookingInfo((prev) => ({
-      ...prev,
-      total: bookingInfo.price,
-      fee: bookingInfo.price,
-      share: 0,
-    }));
-
     const { data } = await api.post("/bookings/request", bookingInfo);
 
-    // TODO
-    console.log(data);
+    if (data) {
+      showSuccessMessage("Success", "Book successfully!");
+      navigate(`/transaction`);
+    }
   };
 
   return (
@@ -26,12 +24,14 @@ const BookingReviewForm = ({ setCount }) => {
         <div className="flex  justify-between p-2">
           <div className="flex flex-col gap-2">
             <p className="text-gray-500 text-sm">Property Address</p>
-            <div>
-              <h1 className="font-bold">{bookingInfo?.unit}</h1>
-              <p className="text-gray-500 text-sm">{bookingInfo?.street}</p>
+            <div className="flex items-center gap-2">
+              <h1 className="font-bold capitalize">{bookingInfo?.unit_no}</h1>
+              <p className="font-bold capitalize">{bookingInfo?.street}</p>
+            </div>
+            <div className="text-sm text-gray-500 flex items-center">
+              <h1>{bookingInfo?.city}</h1> <p>, {bookingInfo?.province}</p>
             </div>
           </div>
-          <button className="text-cyan-500 font-bold">Edit </button>
         </div>
       </div>
 
@@ -40,11 +40,16 @@ const BookingReviewForm = ({ setCount }) => {
           <div className="flex flex-col gap-2">
             <p className="text-gray-500 text-sm">Appointment Details</p>
             <div>
-              <h1 className="font-bold">Test Date</h1>
-              <p className="text-gray-500 text-sm">Mid-day</p>
+              <h1 className="font-bold">
+                {new Date(bookingInfo.date).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </h1>
+              <p className="text-gray-500 text-sm">{bookingInfo.day}</p>
             </div>
           </div>
-          <button className="text-cyan-500 font-bold">Edit </button>
         </div>
       </div>
 
@@ -53,28 +58,27 @@ const BookingReviewForm = ({ setCount }) => {
           <div className="flex flex-col gap-2">
             <p className="text-gray-500 text-sm">Contact Info</p>
             <div>
-              <h1 className="font-bold">{`${bookingInfo?.firstName} ${bookingInfo.lastName}`}</h1>
-              <p className="text-gray-500 text-sm">{bookingInfo?.phone}</p>
-              <p className="text-gray-500 text-sm">{bookingInfo?.email}</p>
+              <h1 className="font-bold capitalize">{`${user?.fname} ${user.lname}`}</h1>
+              <p className="text-gray-500 text-sm">{user?.phone}</p>
+              <p className="text-gray-500 text-sm">{user?.email}</p>
             </div>
           </div>
-          <button className="text-cyan-500 font-bold">Edit </button>
         </div>
       </div>
 
       <div className="p-3 mt-5">
         <div className="w-full  flex justify-between">
           <h1>{bookingInfo?.pkg_name}</h1>
-          <p>Php {bookingInfo?.price}</p>
+          <p>Php {Number(bookingInfo?.price).toFixed(2)}</p>
         </div>
         <div className="w-full  flex justify-between  mt-3">
           <h1>Subtotal</h1>
-          <p>{bookingInfo?.price}</p>
+          <p>{Number(bookingInfo?.price).toFixed(2)}</p>
         </div>
 
         <div className="w-full  flex justify-between mt-2 p-3 border-t border-gray-300">
           <h1>Total </h1>
-          <p className="font-bold">{bookingInfo?.price}</p>
+          <p className="font-bold">{Number(bookingInfo?.price).toFixed(2)}</p>
         </div>
       </div>
       <button

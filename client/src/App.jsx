@@ -43,6 +43,7 @@ const App = () => {
 
         <Route path="/admin/manage-realtor" element={<ManageRealtor />}></Route>
         <Route path="/booking/:id" element={<RealtorBookingId />}></Route>
+        <Route path="/payment" element={<RealtorPayment />}></Route>
         <Route path="/transaction" element={<RealtorTransaction />}></Route>
         <Route
           path="/search/pitiquer/:name"
@@ -55,12 +56,29 @@ const App = () => {
           path="/booking/pitique/:id"
           element={<PitiqueBookingId />}
         ></Route>
-
+        <Route
+          path="/booking/pitique/all/:id"
+          element={<PitiquerAllBooking />}
+        ></Route>
+        <Route
+          path="/booking/feedback/:bid"
+          element={<FeedbackBooking />}
+        ></Route>
         <Route path="/profile/pitique/:id" element={<PitiqueProfile />}></Route>
         <Route path="/profile/realtor" element={<RealtorProfilePage />}></Route>
+        <Route path="/r/notification" element={<RealtorNotification />}></Route>
+        <Route
+          path="/p/notification"
+          element={<PitiquerNotification />}
+        ></Route>
+        <Route path="/payment/info/:bid" element={<PaymentInfo />}></Route>
         <Route
           path="/report/pitique"
           element={<PitiqueServiceReport />}
+        ></Route>
+        <Route
+          path="/report/realtor"
+          element={<RealtorServiceReport />}
         ></Route>
       </Routes>
     </Router>

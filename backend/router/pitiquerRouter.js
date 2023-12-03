@@ -10,7 +10,7 @@ const pitiquerModel = new PitiquerModel();
 const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
-// GET /pitiquers/:id - Get all realtor
+// GET /pitiquers - Get all realtor for dashboard
 router.get("/", async (req, res) => {
   try {
     const pitiquer = await pitiquerModel.getPitiquers();
@@ -19,6 +19,22 @@ router.get("/", async (req, res) => {
       res.status(404).send("pitiquer not found");
     } else {
       res.json(pitiquer);
+    }
+  } catch (error) {
+    console.error(`Error getting pitiquers`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// GET /pitiquers - Get all pitiquers
+router.get("/admin/all", async (req, res) => {
+  try {
+    const pitiquers = await pitiquerModel.getAllPitiquers();
+
+    if (!pitiquers) {
+      res.status(404).send("pitiquers not found");
+    } else {
+      res.json(pitiquers);
     }
   } catch (error) {
     console.error(`Error getting pitiquers`, error);
@@ -170,6 +186,69 @@ router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
     res.status(201).json({ message: "Updated successfully" });
   } catch (error) {
     console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// PUT /pitiquers/edit/status - edit profile status
+router.put("/edit/status", async (req, res) => {
+  try {
+    const user = req.body;
+
+    await pitiquerModel.updateStatus(user);
+    res.status(201).json({
+      message: "Updated successfully",
+    });
+  } catch (error) {
+    console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/statistics/:id", async (req, res) => {
+  try {
+    const pitiquerId = req.params.id;
+
+    const stats = await pitiquerModel.getStatistics(pitiquerId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/statistics/ratings/:id", async (req, res) => {
+  try {
+    const pitiquerId = req.params.id;
+
+    const stats = await pitiquerModel.getStatisticsRating(pitiquerId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/statistics/report/:id", async (req, res) => {
+  try {
+    const pitiquerId = req.params.id;
+
+    const stats = await pitiquerModel.getReportComplete(pitiquerId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/statistics/report/income/:id", async (req, res) => {
+  try {
+    const pitiquerId = req.params.id;
+
+    const stats = await pitiquerModel.getReportSumIncome(pitiquerId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
     res.status(500).send("Internal Server Error");
   }
 });

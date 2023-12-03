@@ -9,6 +9,22 @@ const realtorModel = new RealtorModel();
 const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
+// GET /realtors - Get all realtors
+router.get("/admin/all", async (req, res) => {
+  try {
+    const realtors = await realtorModel.getRealtors();
+
+    if (!realtors) {
+      res.status(404).send("realtors not found");
+    } else {
+      res.json(realtors);
+    }
+  } catch (error) {
+    console.error(`Error getting realtors`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // GET /realtors/:id - Get a specific realtor by ID
 router.get("/:id", async (req, res) => {
   const realtorId = req.params.id;
@@ -168,8 +184,9 @@ router.put("/edit/picture", upload.single("prof_img"), async (req, res) => {
   try {
     const newPortfolio = {
       prof_img: req.file.buffer,
+      rltr_id: req.body.rltr_id,
     };
-
+    console.log(newPortfolio);
     await realtorModel.updatePicture(newPortfolio);
     res.status(201).json({
       message: "Updated successfully",
@@ -194,6 +211,45 @@ router.put("/edit/name", async (req, res) => {
     });
   } catch (error) {
     console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// PUT /realtors/edit/status - edit profile status
+router.put("/edit/status", async (req, res) => {
+  try {
+    const user = req.body;
+
+    await realtorModel.updateStatus(user);
+    res.status(201).json({
+      message: "Updated successfully",
+    });
+  } catch (error) {
+    console.error("Error Updating:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/statistics/report/:id", async (req, res) => {
+  try {
+    const realtorId = req.params.id;
+
+    const stats = await realtorModel.getReportComplete(realtorId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/statistics/report/income/:id", async (req, res) => {
+  try {
+    const realtorId = req.params.id;
+
+    const stats = await realtorModel.getReportSumIncome(realtorId);
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
     res.status(500).send("Internal Server Error");
   }
 });
