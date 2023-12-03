@@ -40,7 +40,7 @@ const App = () => {
           path="/admin/manage-pitiquer"
           element={<ManagePitiquer />}
         ></Route>
-        <Route path="/sidenav" element={<SideNav />}></Route>
+
         <Route path="/admin/manage-realtor" element={<ManageRealtor />}></Route>
         <Route path="/booking/:id" element={<RealtorBookingId />}></Route>
         <Route path="/transaction" element={<RealtorTransaction />}></Route>
