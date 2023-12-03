@@ -11,6 +11,8 @@ import {
 const PitiquerAllBooking = () => {
   const { id } = useParams();
   const [bookings, setBookings] = useState([]);
+  const auser = JSON.parse(localStorage.getItem("admin"));
+
   const navigate = useNavigate();
   useEffect(() => {
     const fetch = async () => {
@@ -44,7 +46,11 @@ const PitiquerAllBooking = () => {
         {bookings.length > 0 ? (
           bookings.map((r, index) => (
             <Link
-              to={`/booking/feedback/${r.id}`}
+              to={
+                auser === undefined
+                  ? `/booking/feedback/${r.id}`
+                  : `/admin/booking/feedback/${r.id}`
+              }
               className="rounded-md flex flex-col  bg-gray-100 poppins shadow-md p-2 text-sm"
               key={index}
             >

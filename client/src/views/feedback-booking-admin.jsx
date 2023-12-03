@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import api from "../helper/api";
 import { showSuccessMessage } from "../helper/messageHelper";
 
-const FeedbackBooking = () => {
+const FeedbackBookingAdmin = () => {
   const { bid } = useParams();
   const navigate = useNavigate();
   const [rFeedback, setRFeedback] = useState();
   const [pFeedback, setpFeedback] = useState();
-  const ruser = JSON.parse(localStorage.getItem("user"));
-  const puser = JSON.parse(localStorage.getItem("p-user"));
+  const auser = JSON.parse(localStorage.getItem("admin"));
 
   useEffect(() => {
     const fetch = async () => {
@@ -67,6 +66,13 @@ const FeedbackBooking = () => {
     }
   };
 
+  if (auser === undefined)
+    return (
+      <div className="p-4">
+        <p>Forbidden Page!</p>
+      </div>
+    );
+
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
@@ -95,14 +101,14 @@ const FeedbackBooking = () => {
               )}
             </div>
             <div className="text-base">Description: {rFeedback.fdbk}</div>
-            {ruser.id === rFeedback.rltr_id && (
+            {
               <button
                 onClick={handleRemove}
                 className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
               >
                 REMOVE
               </button>
-            )}
+            }
           </div>
         ) : (
           <div className="bg-gray-200 text-gray-600 p-6 rounded-md shadow-md">
@@ -127,14 +133,14 @@ const FeedbackBooking = () => {
               )}
             </div>
             <div className="text-base">Description: {pFeedback.fdbk}</div>
-            {puser.id === pFeedback.ptqr_id && (
+            {
               <button
                 onClick={handlePRemove}
                 className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
               >
                 REMOVE
               </button>
-            )}
+            }
           </div>
         ) : (
           <div className="bg-gray-200 text-gray-600 p-6 rounded-md shadow-md">
@@ -147,4 +153,4 @@ const FeedbackBooking = () => {
   );
 };
 
-export default FeedbackBooking;
+export default FeedbackBookingAdmin;

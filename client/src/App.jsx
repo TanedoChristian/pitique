@@ -25,6 +25,7 @@ import PaymentInfo from "./views/payment-info";
 import RealtorServiceReport from "./views/realtor-service-report";
 import PitiquerAllBooking from "./views/pitiquer-all-booking";
 import FeedbackBooking from "./views/feedback-booking";
+import FeedbackBookingAdmin from "./views/feedback-booking-admin";
 
 const App = () => {
   return (
@@ -68,6 +69,10 @@ const App = () => {
         <Route
           path="/booking/feedback/:bid"
           element={<FeedbackBooking />}
+        ></Route>
+        <Route
+          path="/admin/booking/feedback/:bid"
+          element={<FeedbackBookingAdmin />}
         ></Route>
         <Route path="/profile/pitique/:id" element={<PitiqueProfile />}></Route>
         <Route path="/profile/realtor" element={<RealtorProfilePage />}></Route>
