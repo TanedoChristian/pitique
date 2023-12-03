@@ -33,6 +33,7 @@ const PitiquerSideNav = ({ setShowNav }) => {
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
+
               <a href="/booking/pitique">My Bookings </a>
             </li>
 

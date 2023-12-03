@@ -18,6 +18,7 @@ import ManageRealtor from "./views/manage-realtor";
 import RealtorBookingId from "./views/realtor-booking-id";
 import PitiquerSearchPage from "./views/pitiquer-search-page";
 import RealtorProfilePage from "./views/realtor-profile-page";
+import SideNav from "./components/common/sidenav";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
+
         <Route path="/dashboard" element={<RealtorDashboard />}></Route>
         <Route path="/account" element={<RealtorAccount />}></Route>
         <Route path="/booking" element={<RealtorBooking />}></Route>
@@ -38,7 +40,7 @@ const App = () => {
           path="/admin/manage-pitiquer"
           element={<ManagePitiquer />}
         ></Route>
-
+        <Route path="/sidenav" element={<SideNav />}></Route>
         <Route path="/admin/manage-realtor" element={<ManageRealtor />}></Route>
         <Route path="/booking/:id" element={<RealtorBookingId />}></Route>
         <Route path="/transaction" element={<RealtorTransaction />}></Route>
