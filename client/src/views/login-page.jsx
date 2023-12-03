@@ -28,9 +28,7 @@ const LoginPage = () => {
         const { data } = await api.post(`/${type}/login`, user);
 
         if (data.user.status !== "active") {
-          showInfoMessage(
-            "Account is suspended/terminated! Please contact an admin."
-          );
+          showInfoMessage("Account is suspended! Please contact an admin.");
         } else if (data) {
           showSuccessMessage("Logging in successfully!");
 
@@ -60,9 +58,7 @@ const LoginPage = () => {
         const { data } = await api.post(`/admins/login`, user);
 
         if (data.user.status !== "active") {
-          showInfoMessage(
-            "Account is suspended/terminated! Please contact an admin."
-          );
+          showInfoMessage("Account is suspended! Please contact an admin.");
         } else if (data) {
           localStorage.setItem("admin", JSON.stringify(data.user));
           showSuccessMessage("Logging in successfully!");

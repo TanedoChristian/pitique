@@ -122,16 +122,7 @@ const ManagePitiquer = () => {
                       >
                         Suspend
                       </button>
-                      <button
-                        onClick={() =>
-                          handleChangeStatus("terminated", pitiquer.id)
-                        }
-                        className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
-                          pitiquer.status === "terminated" && " hidden"
-                        }`}
-                      >
-                        Terminate
-                      </button>
+
                       <button
                         onClick={() =>
                           handleChangeStatus("active", pitiquer.id)

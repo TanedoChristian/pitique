@@ -122,16 +122,7 @@ const ManageRealtor = () => {
                       >
                         Suspend
                       </button>
-                      <button
-                        onClick={() =>
-                          handleChangeStatus("terminated", realtor.id)
-                        }
-                        className={`py-1 px-3 rounded-xl bg-red-500 text-white ${
-                          realtor.status === "terminated" && " hidden"
-                        }`}
-                      >
-                        Terminate
-                      </button>
+
                       <button
                         onClick={() => handleChangeStatus("active", realtor.id)}
                         className={`py-1 px-3 rounded-xl bg-green-500  text-white ${
