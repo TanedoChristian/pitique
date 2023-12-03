@@ -31,7 +31,7 @@ class PaymentModel {
 
   async getPaymentInfo(bookingId) {
     const [rows] = await this.pool.query(
-      "SELECT p.id, pc.pkg_desc, p.total, CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS realtor_name, CONCAT(pt.fname, ' ', pt.mname, ' ', pt.lname) AS pitiquer_name, p.freceipt, p.fdate" +
+      "SELECT p.status, p.rmrks, p.id, pc.pkg_desc, p.total, CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS realtor_name, CONCAT(pt.fname, ' ', pt.mname, ' ', pt.lname) AS pitiquer_name, p.freceipt, p.fdate" +
         " FROM payment p INNER JOIN booking b ON b.id = p.book_id INNER JOIN realtor r ON r.id = p.rltr_id INNER JOIN pitiquer pt ON pt.id = p.ptqr_id INNER JOIN package pc ON pc.id = b.pkg_id WHERE b.id = ?",
       [bookingId]
     );

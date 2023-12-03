@@ -3,7 +3,11 @@ import StripeCheckout from "react-stripe-checkout";
 import api from "../helper/api";
 import Header from "../components/common/header";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCashRegister,
+  faChevronLeft,
+  faMoneyBill,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import card from "../assets/card.png";
 import {
@@ -14,6 +18,7 @@ import {
 const RealtorPayment = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const tokenHandler = async (token) => {
     showLoadingMessage("Transacting...");
     try {
@@ -24,15 +29,48 @@ const RealtorPayment = () => {
         status: "",
         total: state.price,
         pamt: state.price,
-        pdate: new Date().toISOString(),
         preceipt: "",
         famt: state.price,
-        fdate: new Date().toISOString(),
         freceipt: "",
-        rmrks: "",
+        rmrks: "card",
       };
       const { data } = await api.post("/payments", {
         token,
+        userPaymentInfo: tempData,
+      });
+
+      if (data) {
+        const res = await api.put(`/bookings/pay/${state.id}`);
+
+        if (res.data) {
+          showSuccessMessage("Success", "Successfully paid the booking!");
+
+          navigate(`/booking/${state.id}`);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCashPayment = async () => {
+    showLoadingMessage("Transacting...");
+    try {
+      const tempData = {
+        ptqr_id: state.ptqr_id,
+        rltr_id: state.rltr_id,
+        book_id: state.id,
+        status: "completed",
+        total: state.price,
+        pamt: state.price,
+        preceipt: "",
+        famt: state.price,
+        freceipt: "",
+        rmrks: "cash",
+        preceipt: "none",
+        freceipt: "none",
+      };
+      const { data } = await api.post("/payments/cash", {
         userPaymentInfo: tempData,
       });
 
@@ -86,6 +124,19 @@ const RealtorPayment = () => {
           <h5 className="ml-5 font-semibold">Credit Cards</h5>
         </button>
       </StripeCheckout>
+      {/* Cash Payment */}
+      <button
+        variant="primary"
+        className={`mx-7 border-b-2 text-left py-4 flex items-center mt-5 `}
+        onClick={handleCashPayment}
+      >
+        {/* Add your cash icon or design here */}
+        <FontAwesomeIcon
+          icon={faMoneyBill}
+          className="text-2xl text-gray-600"
+        />
+        <h5 className="ml-5 font-semibold">Cash</h5>
+      </button>
     </div>
   );
 };

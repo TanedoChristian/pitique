@@ -22,7 +22,6 @@ const PaymentInfo = () => {
 
     fetch();
   }, []);
-
   if (info === undefined) return <p>Loading...</p>;
   function formatDate(dateString) {
     const options = {
@@ -54,7 +53,8 @@ const PaymentInfo = () => {
       <div className="bg-cyan-100 p-8 my-4 mx-2 rounded-lg shadow-md grid grid-cols-2 gap-4">
         <div className="text-cyan-700 text-md font-semibold">Reference No:</div>
         <div className="text-gray-800 text-md">{info.id}</div>
-
+        <div className="text-cyan-700 text-md font-semibold">Paid in:</div>
+        <div className="text-gray-800 text-md capitalize">{info.rmrks}</div>
         <div className="text-cyan-700 text-md font-semibold">
           Package Description:
         </div>
@@ -66,17 +66,28 @@ const PaymentInfo = () => {
         </div>
 
         <div className="text-cyan-700 text-md font-semibold">Realtor Name:</div>
-        <div className="text-gray-800 text-md">{info.realtor_name}</div>
+        <div className="text-gray-800 text-md capitalize">
+          {info.realtor_name}
+        </div>
 
         <div className="text-cyan-700 text-md font-semibold">
           Pitiquer Name:
         </div>
-        <div className="text-gray-800 text-md">{info.pitiquer_name}</div>
-
-        <div className="text-cyan-700 text-md font-semibold">
-          Stripe Reference No:
+        <div className="text-gray-800 text-md capitalize">
+          {info.pitiquer_name}
         </div>
-        <div className="text-gray-800 text-md">{info.freceipt}</div>
+
+        {info.status === "card" && (
+          <>
+            <div className="text-cyan-700 text-md font-semibold">
+              Stripe Reference No:
+            </div>
+
+            <div className="text-gray-800 text-md">{info.freceipt}</div>
+          </>
+        )}
+        <div className="text-cyan-700 text-md font-semibold">Paid in:</div>
+        <div className="text-gray-800 text-md capitalize">{info.rmrks}</div>
 
         <div className="text-cyan-700 text-md font-semibold">Date:</div>
         <div className="text-gray-800 text-md">{formatDate(info.fdate)}</div>

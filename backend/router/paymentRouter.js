@@ -65,6 +65,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+// POST /payments - Create a payment
+router.post("/cash", async (req, res) => {
+  const { userPaymentInfo } = req.body;
+
+  try {
+    await paymentModel.createPayment(userPaymentInfo);
+    res.status(201).json({ message: "payment created successfully" });
+  } catch (error) {
+    console.error("Error creating payment:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // GET /payments/info/:bid
 router.get("/info/:bid", async (req, res) => {
   const bookingId = req.params.bid;
