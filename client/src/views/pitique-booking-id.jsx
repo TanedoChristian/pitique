@@ -142,6 +142,12 @@ const PitiqueBookingId = () => {
       </Header>
 
       <div className="poppins p-2">
+        {booking.status === "declined" && (
+          <div className="flex gap-2 items-center my-4">
+            <h1 className="text-lg font-semibold">Reason for decline:</h1>
+            <p className="text-gray-600">{booking.reason}</p>
+          </div>
+        )}
         <div className="border border-gray-300 shadow-md ">
           <div className="flex  justify-between">
             <div className="flex flex-col gap-1 p-3">

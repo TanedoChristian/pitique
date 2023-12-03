@@ -86,9 +86,6 @@ const PaymentInfo = () => {
             <div className="text-gray-800 text-md">{info.freceipt}</div>
           </>
         )}
-        <div className="text-cyan-700 text-md font-semibold">Paid in:</div>
-        <div className="text-gray-800 text-md capitalize">{info.rmrks}</div>
-
         <div className="text-cyan-700 text-md font-semibold">Date:</div>
         <div className="text-gray-800 text-md">{formatDate(info.fdate)}</div>
       </div>

@@ -120,7 +120,7 @@ const PitiqueProfileDetails = ({
           {name}
         </p>
         <button
-          className="py-2 px-6 bg-cyan-400 text-white mb-3"
+          className="py-2 px-6 bg-cyan-400 text-white mb-0"
           onClick={() => {
             setShowPortfolio(true);
           }}
@@ -130,7 +130,7 @@ const PitiqueProfileDetails = ({
 
         {user && user.id == pitiquerId && (
           <button
-            className="py-2 px-6 bg-cyan-400 text-white"
+            className="py-2 px-6 bg-cyan-400 text-white mt-3"
             onClick={() => {
               setShowPackage(true);
             }}
@@ -139,7 +139,7 @@ const PitiqueProfileDetails = ({
           </button>
         )}
         <Link
-          className="py-2 px-6 bg-orange-400 text-white text-center"
+          className="py-2 px-6 bg-orange-400 text-white text-center mt-3"
           to={`/booking/pitique/all/${pitiquerId}`}
         >
           All Bookings
@@ -149,7 +149,7 @@ const PitiqueProfileDetails = ({
         {realtorUser !== null &&
           (id !== undefined && showFavorite ? (
             <button
-              className="py-2 px-6 bg-green-400 text-white"
+              className="py-2 px-6 bg-green-400 text-white mt-3"
               onClick={async () => {
                 try {
                   await api.post(`/realtors/${id}/favorite/${pitiquerId}`);
@@ -163,7 +163,7 @@ const PitiqueProfileDetails = ({
             </button>
           ) : (
             <button
-              className="py-2 px-6 bg-red-400 text-white"
+              className="py-2 px-6 bg-red-400 text-white mt-3"
               onClick={async () => {
                 try {
                   await api.delete(`/realtors/${id}/favorite/${pitiquerId}`);

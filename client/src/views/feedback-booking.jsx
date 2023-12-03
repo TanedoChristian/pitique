@@ -95,7 +95,7 @@ const FeedbackBooking = () => {
               )}
             </div>
             <div className="text-base">Description: {rFeedback.fdbk}</div>
-            {ruser.id === rFeedback.rltr_id && (
+            {ruser && ruser.id === rFeedback.rltr_id && (
               <button
                 onClick={handleRemove}
                 className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
@@ -127,7 +127,7 @@ const FeedbackBooking = () => {
               )}
             </div>
             <div className="text-base">Description: {pFeedback.fdbk}</div>
-            {puser.id === pFeedback.ptqr_id && (
+            {puser && puser.id === pFeedback.ptqr_id && (
               <button
                 onClick={handlePRemove}
                 className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
