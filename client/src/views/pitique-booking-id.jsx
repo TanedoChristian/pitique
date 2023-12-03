@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../helper/api";
 import PitiquerRatingLayout from "../components/pitiquer-rating-layout/layout";
 import { showSuccessMessage } from "../helper/messageHelper";
+import DeclineForm from "../components/pitiquer-rating-layout/decline-form";
 
 const PitiqueBookingId = () => {
   const { id } = useParams();
@@ -15,6 +16,11 @@ const PitiqueBookingId = () => {
 
   const [showCalendar, setShowCalendar] = useState(false);
   const [newDate, setNewDate] = useState();
+
+  const [decline, setDecline] = useState({
+    show: false,
+    description: "",
+  });
 
   const [showFeedback, setShowFeedback] = useState(false);
   const navigate = useNavigate();
@@ -55,12 +61,15 @@ const PitiqueBookingId = () => {
     fetch();
   }, [booking]);
 
-  const handleDecline = async () => {
+  const handleDecline = async (msg) => {
     try {
-      const { data } = await api.put(`/bookings/decline/${id}`);
+      const { data } = await api.put(`/bookings/decline/${id}`, {
+        msg: decline.description,
+      });
 
       if (data) {
         setFlag(!flag);
+        setDecline({ show: false, description: "" });
         showSuccessMessage("Success", "Successfully declined the booking!");
       }
     } catch (error) {
@@ -234,7 +243,7 @@ const PitiqueBookingId = () => {
         {booking.status === "pending" && (
           <div className="w-full">
             <button
-              onClick={handleDecline}
+              onClick={() => setDecline({ show: true })}
               className=" text-xl mt-5 p-3 w-full border-2  text-white bg-red-600   font-bold rounded-md shadow-md"
             >
               DECLINE BOOKING
@@ -293,6 +302,13 @@ const PitiqueBookingId = () => {
             setShow={setShow}
             booking={booking}
             refresh={{ setFlag, flag }}
+          />
+        )}
+        {decline.show && (
+          <DeclineForm
+            setDecline={setDecline}
+            handleDecline={handleDecline}
+            decline={decline}
           />
         )}
       </div>

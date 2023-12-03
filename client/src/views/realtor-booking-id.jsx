@@ -34,7 +34,6 @@ const RealtorBookingId = () => {
 
     fetch();
   }, [flag]);
-
   useEffect(() => {
     if (booking.rltr_id === undefined) return;
     const fetch = async () => {
@@ -108,6 +107,12 @@ const RealtorBookingId = () => {
       </Header>
 
       <div className="poppins p-3">
+        {booking.status === "declined" && (
+          <div className="flex gap-2 items-center my-4">
+            <h1 className="text-lg font-semibold">Reason for decline:</h1>
+            <p className="text-gray-600">{booking.reason}</p>
+          </div>
+        )}
         <div className="border border-gray-300 shadow-md p-2">
           <div className="flex  justify-between">
             <div className="flex flex-col gap-1 p-3">

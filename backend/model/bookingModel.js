@@ -11,7 +11,7 @@ class BookingModel {
   //   GET booking
   async getBookingById(bookingId) {
     const [rows] = await this.pool.query(
-      "SELECT b.city, b.date,b.day, b.fee, b.id, b.pkg_id, b.postal, b.price, b.province, b.ptqr_id, b.rltr_id, b.status, b.street, b.total, b.unit_no, r.fname AS rfname, r.lname AS rlname, r.email AS remail, r.phone AS rphone, pr.fname AS prfname, pr.lname AS prlname,pr.city AS prcity,pr.province AS prprovince, p.pkg_desc " +
+      "SELECT b.reason, b.city, b.date,b.day, b.fee, b.id, b.pkg_id, b.postal, b.price, b.province, b.ptqr_id, b.rltr_id, b.status, b.street, b.total, b.unit_no, r.fname AS rfname, r.lname AS rlname, r.email AS remail, r.phone AS rphone, pr.fname AS prfname, pr.lname AS prlname,pr.city AS prcity,pr.province AS prprovince, p.pkg_desc " +
         "FROM booking b INNER JOIN package p ON b.pkg_id = p.id INNER JOIN realtor r ON b.rltr_id = r.id INNER JOIN pitiquer pr ON b.ptqr_id = pr.id WHERE b.id = ? GROUP BY b.id",
       [bookingId]
     );
@@ -133,13 +133,13 @@ class BookingModel {
   }
 
   //   Decline status
-  async declineBookingRequest(bookingId) {
+  async declineBookingRequest(bookingId, msg) {
     // Default Value
     const status = "declined";
 
     await this.pool.query(
-      "UPDATE booking SET status = ?, declined=? WHERE id = ?",
-      [status, this.philippinesDateTime, bookingId]
+      "UPDATE booking SET status = ?, declined=?, reason = ? WHERE id = ?",
+      [status, this.philippinesDateTime, msg, bookingId]
     );
   }
 

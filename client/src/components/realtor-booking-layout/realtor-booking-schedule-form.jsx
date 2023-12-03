@@ -25,7 +25,6 @@ const BookingScheduleForm = ({ setCount }) => {
   };
 
   const handleChanges = (e) => {
-    console.log(e.target.value);
     setBookingInfo((prev) => ({
       ...prev,
       day: e.target.value,

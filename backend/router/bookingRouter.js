@@ -223,6 +223,7 @@ router.put("/complete/:id", async (req, res) => {
 // PUT /bookings/decline/:id - decline a booking by ID
 router.put("/decline/:id", async (req, res) => {
   const bookingId = req.params.id;
+  const { msg } = req.body;
 
   try {
     const existingBooking = await bookingModel.getBookingById(bookingId);
@@ -232,7 +233,7 @@ router.put("/decline/:id", async (req, res) => {
       return;
     }
 
-    await bookingModel.declineBookingRequest(bookingId);
+    await bookingModel.declineBookingRequest(bookingId, msg);
     await notificationModel.createNotification(
       bookingId,
       "The booking is declined."
