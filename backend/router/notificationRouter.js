@@ -71,11 +71,23 @@ router.get("/count/realtor/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/pitiquer/:id", async (req, res) => {
   const notification = req.params.id;
 
   try {
-    await notifModel.updateStatus(notification);
+    await notifModel.updateStatusPitiquer(notification);
+    res.status(200).json({ message: "Done" });
+  } catch (error) {
+    console.error("Error creating Package:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.put("/realtor/:id", async (req, res) => {
+  const notification = req.params.id;
+
+  try {
+    await notifModel.updateStatusRealtor(notification);
     res.status(200).json({ message: "Done" });
   } catch (error) {
     console.error("Error creating Package:", error);

@@ -27,7 +27,7 @@ const PitiquerNotification = () => {
 
   const handleOnClick = async (id, book_id) => {
     try {
-      const { data } = await api.put(`notifications/${id}`);
+      const { data } = await api.put(`notifications/pitiquer/${id}`);
 
       if (data) {
         navigate(`/booking/pitique/${book_id}`);
@@ -42,7 +42,7 @@ const PitiquerNotification = () => {
       <button
         onClick={() => handleOnClick(notif.id, notif.book_id)}
         className={`rounded w-full ${
-          notif.status === "unread" ? " bg-cyan-500  " : " bg-gray-400 "
+          notif.pstatus === "unread" ? " bg-cyan-500  " : " bg-gray-400 "
         } p-2 mb-2 flex justify-between items-center`}
       >
         <div>

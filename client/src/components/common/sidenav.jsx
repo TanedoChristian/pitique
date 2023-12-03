@@ -6,15 +6,33 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../../helper/api";
 
 const SideNav = ({ setShowNav }) => {
   const navigate = useNavigate();
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [notifCount, setNotifCount] = useState(0);
   const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(
+          `notifications/count/realtor/${user.id}`
+        );
+
+        setNotifCount(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetch();
+  }, []);
 
   return (
     <div className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins `}>
@@ -37,22 +55,22 @@ const SideNav = ({ setShowNav }) => {
               <Link to={"/profile/realtor"}>Account Settings </Link>
             </li>
 
-            <li className="flex gap-2 items-center font-semibold">
+            <li className="flex gap-2 -mb-2.5 items-center font-semibold">
               <FontAwesomeIcon icon={faCalendar} />
               <Link to={"/transaction"}>My Bookings</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
-              <span className="p-2.5 relative ">
+              <span className="py-2.5 relative ">
                 <FontAwesomeIcon icon={faBell} className="" />
 
                 <span className="w-5 h-5 rounded-full bg-red-500 text-white font-bold flex justify-center items-center text-xs absolute top-0 right-0">
-                  2
+                  {notifCount.notif}
                 </span>
               </span>
               <Link to={"/r/notification"}>Notification</Link>
             </li>
-            <li className="flex gap-2 items-center font-semibold">
+            <li className="flex gap-2 -mt-3.5 items-center font-semibold">
               <FontAwesomeIcon icon={faBook} />
               <Link to={"/report/realtor"}>Expense Report</Link>
             </li>
