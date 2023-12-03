@@ -28,6 +28,7 @@ import FeedbackBooking from "./views/feedback-booking";
 import FeedbackBookingAdmin from "./views/feedback-booking-admin";
 import RealtorProfilePageId from "./views/realtor-profile-page-id";
 import RealtorAllBooking from "./views/realtor-all-booking";
+import AdminAllBooking from "./views/admin-all-booking";
 
 const App = () => {
   return (
@@ -64,10 +65,7 @@ const App = () => {
           path="/booking/pitique/:id"
           element={<PitiqueBookingId />}
         ></Route>
-        <Route
-          path="/booking/pitique/all/:id"
-          element={<PitiquerAllBooking />}
-        ></Route>
+        <Route path="/admin/bookings/all" element={<AdminAllBooking />}></Route>
         <Route
           path="/booking/realtor/all/:id"
           element={<RealtorAllBooking />}

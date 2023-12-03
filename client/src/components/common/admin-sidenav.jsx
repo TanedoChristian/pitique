@@ -55,6 +55,11 @@ const AdminSideNav = ({ setShowNav }) => {
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faCalendar} />
+              <Link to="/admin/bookings/all">All Bookings </Link>
+            </li>
+
+            <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
               <button onClick={handleLogout}>Logout </button>
             </li>

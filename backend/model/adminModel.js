@@ -72,6 +72,15 @@ class AdminModel {
 
     return rows;
   }
+
+  async getReportComplete() {
+    const [rows] = await this.pool.query(
+      "SELECT b.id,b.total, CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS rname, CONCAT(pt.fname, ' ', pt.mname, ' ', pt.lname) AS pname, CONCAT(b.unit_no, ' ', b.street, ' ', b.city, ' ', b.province) AS location, b.date, p.pkg_desc, b.status, b.day " +
+        " FROM booking b INNER JOIN realtor r ON r.id = b.rltr_id INNER JOIN pitiquer pt ON pt.id = b.ptqr_id INNER JOIN package p ON p.ptqr_id = pt.id GROUP BY b.id"
+    );
+
+    return rows;
+  }
 }
 
 module.exports = AdminModel;
