@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../helper/api";
 
 const PitiquerNotification = () => {
   const user = JSON.parse(localStorage.getItem("p-user"));
   const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -24,20 +25,36 @@ const PitiquerNotification = () => {
     fetch();
   }, []);
 
+  const handleOnClick = async (id, book_id) => {
+    try {
+      const { data } = await api.put(`notifications/${id}`);
+
+      if (data) {
+        navigate(`/booking/pitique/${book_id}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const NotificationItem = ({ notif }) => {
     return (
-      <Link
-        to={`/booking/pitique/${notif.book_id}`}
-        className="rounded bg-cyan-500 p-2 mb-2 flex justify-between items-center"
+      <button
+        onClick={() => handleOnClick(notif.id, notif.book_id)}
+        className={`rounded w-full ${
+          notif.status === "unread" ? " bg-cyan-500  " : " bg-gray-400 "
+        } p-2 mb-2 flex justify-between items-center`}
       >
         <div>
-          <p className="text-white capitalize">Booking #{notif.book_id}</p>
+          <p className="text-white capitalize text-left">
+            Booking #{notif.book_id}
+          </p>
           <p className="text-sm text-white opacity-50">{notif.message}</p>
         </div>
         <p className="text-white opacity-50">
           {new Date(notif.date).toLocaleDateString()}
         </p>
-      </Link>
+      </button>
     );
   };
 

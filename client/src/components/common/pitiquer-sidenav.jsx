@@ -7,15 +7,33 @@ import {
   faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../../helper/api";
 
 const PitiquerSideNav = ({ setShowNav }) => {
   const user = JSON.parse(localStorage.getItem("p-user"));
+  const [notifCount, setNotifCount] = useState(0);
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get(
+          `notifications/count/pitiquer/${user.id}`
+        );
+
+        setNotifCount(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetch();
+  }, []);
 
   return (
     <div
@@ -44,22 +62,23 @@ const PitiquerSideNav = ({ setShowNav }) => {
               <Link to={`/profile/pitique/${user.id}`}>Account Settings </Link>
             </li>
 
-            <li className="flex gap-2 items-center font-semibold">
+            <li className="flex gap-2 -mb-2.5  items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
-<<<<<<< HEAD
-
-              <a href="/booking/pitique">My Bookings </a>
-=======
               <Link to="/booking/pitique">My Bookings </Link>
             </li>
             <li className="flex gap-2 items-center font-semibold">
-              <FontAwesomeIcon icon={faBell} />
+              <span className="py-2.5 relative ">
+                <FontAwesomeIcon icon={faBell} className="" />
+
+                <span className="w-5 h-5 rounded-full bg-red-500 text-white font-bold flex justify-center items-center text-xs absolute top-0 right-0">
+                  {notifCount.notif}
+                </span>
+              </span>
               <Link to={"/p/notification"}>Notification</Link>
             </li>
-            <li className="flex gap-2 items-center font-semibold">
+            <li className="flex gap-2 -mt-3.5 items-center font-semibold">
               <FontAwesomeIcon icon={faBook} />
               <Link to={"/report/pitique"}>Income Report</Link>
->>>>>>> main
             </li>
 
             <li className="flex gap-2 items-center font-semibold">

@@ -44,4 +44,43 @@ router.get("/pitiquer/:id", async (req, res) => {
   }
 });
 
+//
+// Get pitiquer notification count
+router.get("/count/pitiquer/:id", async (req, res) => {
+  const pitiquerId = req.params.id;
+
+  try {
+    const notif = await notifModel.getPitiquerNotificationCount(pitiquerId);
+    res.status(200).json(notif);
+  } catch (error) {
+    console.error("Error creating Package:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Get realtor notification count
+router.get("/count/realtor/:id", async (req, res) => {
+  const realtorId = req.params.id;
+
+  try {
+    const notif = await notifModel.getRealtorNotificationCount(realtorId);
+    res.status(200).json(notif);
+  } catch (error) {
+    console.error("Error creating Package:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const notification = req.params.id;
+
+  try {
+    await notifModel.updateStatus(notification);
+    res.status(200).json({ message: "Done" });
+  } catch (error) {
+    console.error("Error creating Package:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;

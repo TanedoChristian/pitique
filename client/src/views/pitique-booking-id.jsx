@@ -125,12 +125,12 @@ const PitiqueBookingId = () => {
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
-        <Link to={"/booking/pitique"} className="absolute flex p-5">
+        <button onClick={() => navigate(-1)} className="absolute flex p-5">
           <FontAwesomeIcon
             icon={faChevronLeft}
             className="text-white text-xl font-bold"
           />
-        </Link>
+        </button>
         <div className=" w-full">
           <h1 className="flex-grow text-xl text-white font-bold ">{`Booking ${id}`}</h1>
           <div className="flex justify-center items-center mt-1">
