@@ -74,7 +74,7 @@ class PitiquerModel {
 
   // CDU
   async createPitiquer(pitiquer) {
-    const hashedPassword = await bcrypt.hash(pitiquer.password, 10);
+    const hashedPassword = await bcrypt.hash(pitiquer.pass, 10);
     // Default Value
     const status = "active";
 

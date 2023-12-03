@@ -18,6 +18,7 @@ const RegisterPage = () => {
         ) : (
           <PersonalDetailsForm
             setUser={setUser}
+            user={user}
             setShowAccountForm={setShowAccountForm}
           />
         )}

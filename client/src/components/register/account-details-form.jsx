@@ -19,7 +19,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
 
   const handleConfirmPassword = (e) => {
     const { value } = e.target;
-    if (value != user.password) {
+    if (value != user.pass) {
       setPasswordMatch(false);
     } else {
       setPasswordMatch(true);
@@ -31,13 +31,39 @@ const AccountDetailsForm = ({ setUser, user }) => {
   };
 
   const handleRegister = async () => {
-    const { data } = await api.post("/realtors", user);
+    if (user.type === "pitiquer") {
+      try {
+        const { data } = await api.post("/pitiquers", user);
 
-    if (data) {
-      showSuccessMessage("Success!", "Succesfully created realtor account.");
-      window.location.href = "/login";
+        if (data) {
+          showSuccessMessage(
+            "Success",
+            user.type + " has been created successfully!"
+          );
+
+          setUser({});
+          window.location.href = "/login";
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (user.type === "realtor") {
+      try {
+        const { data } = await api.post("/realtors", user);
+
+        if (data) {
+          showSuccessMessage(
+            "Success",
+            user.type + " has been created successfully!"
+          );
+          setUser({});
+          window.location.href = "/login";
+        }
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      showErrorMessage("Something went wrong!");
+      showErrorMessage("Choose account type!");
     }
   };
 
@@ -47,6 +73,26 @@ const AccountDetailsForm = ({ setUser, user }) => {
       onSubmit={(e) => e.preventDefault()}
     >
       <div className="flex flex-col gap-3">
+        {user.type === "pitiquer" && (
+          <>
+            <input
+              type="text"
+              placeholder="Province"
+              name="province"
+              className="p-3 bg-gray-200 w-full rounded-sm"
+              onChange={handleChange}
+              value={user.province ?? ""}
+            />
+            <input
+              type="text"
+              placeholder="City"
+              name="city"
+              className="p-3 bg-gray-200 w-full rounded-sm"
+              onChange={handleChange}
+              value={user.city ?? ""}
+            />
+          </>
+        )}
         <input
           type="text"
           placeholder="Email"
@@ -58,7 +104,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
         <input
           type="password"
           placeholder="Password"
-          name="password"
+          name="pass"
           className="p-3 bg-gray-200 w-full rounded-sm "
           onChange={handleChange}
         />
