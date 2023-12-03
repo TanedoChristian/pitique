@@ -4,6 +4,7 @@ import Header from "../components/common/header";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import api from "../helper/api";
+import { Link } from "react-router-dom";
 
 const ManageRealtor = () => {
   const [showSideNav, setShowNav] = useState(false);
@@ -91,8 +92,10 @@ const ManageRealtor = () => {
                   >
                     {realtor.id}
                   </th>
-                  <td className="px-6 py-4 capitalize">
-                    {realtor.fname} {realtor.mname} {realtor.lname}
+                  <td className="px-6 py-4 capitalize text-cyan-600 font-semibold">
+                    <Link to={`/profile/realtor/${realtor.id}`}>
+                      {realtor.fname} {realtor.mname} {realtor.lname}
+                    </Link>
                   </td>
                   <td className="px-6 py-4">{realtor.email}</td>
                   <td className="px-6 py-4">

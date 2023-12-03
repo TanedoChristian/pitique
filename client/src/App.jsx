@@ -26,6 +26,8 @@ import RealtorServiceReport from "./views/realtor-service-report";
 import PitiquerAllBooking from "./views/pitiquer-all-booking";
 import FeedbackBooking from "./views/feedback-booking";
 import FeedbackBookingAdmin from "./views/feedback-booking-admin";
+import RealtorProfilePageId from "./views/realtor-profile-page-id";
+import RealtorAllBooking from "./views/realtor-all-booking";
 
 const App = () => {
   return (
@@ -67,6 +69,10 @@ const App = () => {
           element={<PitiquerAllBooking />}
         ></Route>
         <Route
+          path="/booking/realtor/all/:id"
+          element={<RealtorAllBooking />}
+        ></Route>
+        <Route
           path="/booking/feedback/:bid"
           element={<FeedbackBooking />}
         ></Route>
@@ -76,6 +82,10 @@ const App = () => {
         ></Route>
         <Route path="/profile/pitique/:id" element={<PitiqueProfile />}></Route>
         <Route path="/profile/realtor" element={<RealtorProfilePage />}></Route>
+        <Route
+          path="/profile/realtor/:id"
+          element={<RealtorProfilePageId />}
+        ></Route>
         <Route path="/r/notification" element={<RealtorNotification />}></Route>
         <Route
           path="/p/notification"

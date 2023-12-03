@@ -35,7 +35,11 @@ router.get("/:id", async (req, res) => {
     if (!realtor) {
       res.status(404).send("realtor not found");
     } else {
-      res.json(realtor);
+      const newRealtor = {
+        ...realtor,
+        prof_img: base64EncodeImage(realtor.prof_img),
+      };
+      res.json(newRealtor);
     }
   } catch (error) {
     console.error(`Error getting realtor with ID ${realtorId}:`, error);

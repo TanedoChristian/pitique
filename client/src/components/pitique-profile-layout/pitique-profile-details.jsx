@@ -15,6 +15,7 @@ const PitiqueProfileDetails = ({
   const id = realtorUser ? realtorUser.id : undefined;
   const [showFavorite, setShowFavorite] = useState(true);
   const [profileImg, setProfileImg] = useState();
+  const [name, setName] = useState();
   const [flag, setFlag] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -45,6 +46,7 @@ const PitiqueProfileDetails = ({
 
         if (data) {
           setProfileImg(data.prof_img);
+          setName(`${data.fname} ${data.mname} ${data.lname}`);
         }
       } catch (error) {
         console.error(error);
@@ -111,9 +113,14 @@ const PitiqueProfileDetails = ({
           )}
         </div>
       </div>
-      <div className="p-5 w-full flex flex-col gap-3 ">
+
+      <div className="p-5 w-full flex flex-col gap-2x ">
+        <p className="text-gray-400 text-center">Pitiquer</p>
+        <p className="capitalize font-semibold text-center text-2xl  mb-6 under">
+          {name}
+        </p>
         <button
-          className="py-2 px-6 bg-cyan-400 text-white "
+          className="py-2 px-6 bg-cyan-400 text-white mb-3"
           onClick={() => {
             setShowPortfolio(true);
           }}
