@@ -43,6 +43,13 @@ class PitiquerFeedbackModel {
       ]
     );
   }
+
+  //   DELETE
+  async removeFeedback(book_id) {
+    await this.pool.query("DELETE FROM pitiquer_feedback WHERE book_id = ?", [
+      book_id,
+    ]);
+  }
 }
 
 module.exports = PitiquerFeedbackModel;

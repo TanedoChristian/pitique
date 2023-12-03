@@ -43,6 +43,13 @@ class RealtorFeedbackModel {
       ]
     );
   }
+
+  //   DELETE
+  async removeFeedback(book_id) {
+    await this.pool.query("DELETE FROM realtor_feedback WHERE book_id = ?", [
+      book_id,
+    ]);
+  }
 }
 
 module.exports = RealtorFeedbackModel;

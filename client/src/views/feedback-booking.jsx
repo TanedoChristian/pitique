@@ -4,11 +4,15 @@ import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import api from "../helper/api";
+import { showSuccessMessage } from "../helper/messageHelper";
+
 const FeedbackBooking = () => {
   const { bid } = useParams();
   const navigate = useNavigate();
   const [rFeedback, setRFeedback] = useState();
   const [pFeedback, setpFeedback] = useState();
+  const ruser = JSON.parse(localStorage.getItem("user"));
+  const puser = JSON.parse(localStorage.getItem("p-user"));
 
   useEffect(() => {
     const fetch = async () => {
@@ -41,6 +45,28 @@ const FeedbackBooking = () => {
     day: "numeric",
   };
 
+  const handleRemove = async () => {
+    try {
+      await api.delete(`/realtor-feedbacks/booking/${bid}`);
+
+      showSuccessMessage("Success", "Successfully deleted the feedback");
+      navigate(-1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePRemove = async () => {
+    try {
+      await api.delete(`/pitiquer-feedbacks/booking/${bid}`);
+
+      showSuccessMessage("Success", "Successfully deleted the feedback");
+      navigate(-1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <Header className={`flex items-center w-full text-center relative`}>
@@ -69,6 +95,14 @@ const FeedbackBooking = () => {
               )}
             </div>
             <div className="text-base">Description: {rFeedback.fdbk}</div>
+            {ruser.id === rFeedback.rltr_id && (
+              <button
+                onClick={handleRemove}
+                className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+              >
+                REMOVE
+              </button>
+            )}
           </div>
         ) : (
           <div className="bg-gray-200 text-gray-600 p-6 rounded-md shadow-md">
@@ -93,6 +127,14 @@ const FeedbackBooking = () => {
               )}
             </div>
             <div className="text-base">Description: {pFeedback.fdbk}</div>
+            {puser.id === pFeedback.ptqr_id && (
+              <button
+                onClick={handlePRemove}
+                className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+              >
+                REMOVE
+              </button>
+            )}
           </div>
         ) : (
           <div className="bg-gray-200 text-gray-600 p-6 rounded-md shadow-md">

@@ -30,6 +30,23 @@ router.get("/:pid/booking/:bid", async (req, res) => {
   }
 });
 
+// DELTE /pitiquer-feedbacks/booking/:bid
+router.delete("/booking/:bid", async (req, res) => {
+  const bookingId = req.params.bid;
+
+  try {
+    await pitiquerFeedbackModel.removeFeedback(bookingId);
+
+    res.status(200).send("pitiquer feedback is successfully deleted.");
+  } catch (error) {
+    console.error(
+      `Error deletting pitiquer feedback with ID ${bookingId}:`,
+      error
+    );
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // GET /pitiquer-feedbacks/booking/:bid - Get a specific pitiquer by ID
 router.get("/booking/:bid", async (req, res) => {
   const bookingId = req.params.bid;

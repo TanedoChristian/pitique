@@ -44,7 +44,24 @@ router.get("/booking/:bid", async (req, res) => {
     }
   } catch (error) {
     console.error(
-      `Error getting realtor feedback with ID ${realtorId}:`,
+      `Error getting realtor feedback with ID ${bookingId}:`,
+      error
+    );
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// DELTE /realtor-feedbacks/booking/:bid
+router.delete("/booking/:bid", async (req, res) => {
+  const bookingId = req.params.bid;
+
+  try {
+    await realtorFeedback.removeFeedback(bookingId);
+
+    res.status(200).send("realtor feedback is successfully deleted.");
+  } catch (error) {
+    console.error(
+      `Error deletting realtor feedback with ID ${bookingId}:`,
       error
     );
     res.status(500).send("Internal Server Error");
