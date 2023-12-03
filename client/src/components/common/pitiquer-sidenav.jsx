@@ -46,6 +46,10 @@ const PitiquerSideNav = ({ setShowNav }) => {
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
+<<<<<<< HEAD
+
+              <a href="/booking/pitique">My Bookings </a>
+=======
               <Link to="/booking/pitique">My Bookings </Link>
             </li>
             <li className="flex gap-2 items-center font-semibold">
@@ -55,6 +59,7 @@ const PitiquerSideNav = ({ setShowNav }) => {
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faBook} />
               <Link to={"/report/pitique"}>Income Report</Link>
+>>>>>>> main
             </li>
 
             <li className="flex gap-2 items-center font-semibold">

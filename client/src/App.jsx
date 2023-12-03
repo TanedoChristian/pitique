@@ -23,7 +23,6 @@ import RealtorNotification from "./views/realtor-notification";
 import PitiquerNotification from "./views/pitiquer-notification";
 import PaymentInfo from "./views/payment-info";
 import RealtorServiceReport from "./views/realtor-service-report";
-import PitiquerAllBooking from "./views/pitiquer-all-booking";
 import FeedbackBooking from "./views/feedback-booking";
 import FeedbackBookingAdmin from "./views/feedback-booking-admin";
 import RealtorProfilePageId from "./views/realtor-profile-page-id";
@@ -37,6 +36,7 @@ const App = () => {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
+
         <Route path="/dashboard" element={<RealtorDashboard />}></Route>
         <Route path="/account" element={<RealtorAccount />}></Route>
         <Route path="/booking" element={<RealtorBooking />}></Route>
