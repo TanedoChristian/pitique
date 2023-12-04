@@ -51,17 +51,17 @@ router.get("/booking/:bid", async (req, res) => {
   }
 });
 
-// DELTE /realtor-feedbacks/booking/:bid
-router.delete("/booking/:bid", async (req, res) => {
+// PUT /realtor-feedbacks/booking/:bid
+router.put("/booking/:bid", async (req, res) => {
   const bookingId = req.params.bid;
-
+  const { fdbk } = req.body;
   try {
-    await realtorFeedback.removeFeedback(bookingId);
+    await realtorFeedback.updateFeedback(bookingId, fdbk);
 
-    res.status(200).send("realtor feedback is successfully deleted.");
+    res.status(200).send("realtor feedback is successfully UPDATED.");
   } catch (error) {
     console.error(
-      `Error deletting realtor feedback with ID ${bookingId}:`,
+      `Error updating realtor feedback with ID ${bookingId}:`,
       error
     );
     res.status(500).send("Internal Server Error");

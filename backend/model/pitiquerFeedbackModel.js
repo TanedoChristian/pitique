@@ -44,11 +44,12 @@ class PitiquerFeedbackModel {
     );
   }
 
-  //   DELETE
-  async removeFeedback(book_id) {
-    await this.pool.query("DELETE FROM pitiquer_feedback WHERE book_id = ?", [
-      book_id,
-    ]);
+  //   update
+  async updateFeedback(book_id, fdbk) {
+    await this.pool.query(
+      "UPDATE pitiquer_feedback SET fdbk = ? WHERE book_id = ?",
+      [fdbk, book_id]
+    );
   }
 }
 

@@ -30,17 +30,18 @@ router.get("/:pid/booking/:bid", async (req, res) => {
   }
 });
 
-// DELTE /pitiquer-feedbacks/booking/:bid
-router.delete("/booking/:bid", async (req, res) => {
+// PUT /pitiquer-feedbacks/booking/:bid
+router.put("/booking/:bid", async (req, res) => {
   const bookingId = req.params.bid;
+  const { fdbk } = req.body;
 
   try {
-    await pitiquerFeedbackModel.removeFeedback(bookingId);
+    await pitiquerFeedbackModel.updateFeedback(bookingId, fdbk);
 
-    res.status(200).send("pitiquer feedback is successfully deleted.");
+    res.status(200).send("pitiquer feedback is successfully updating.");
   } catch (error) {
     console.error(
-      `Error deletting pitiquer feedback with ID ${bookingId}:`,
+      `Error updating pitiquer feedback with ID ${bookingId}:`,
       error
     );
     res.status(500).send("Internal Server Error");
