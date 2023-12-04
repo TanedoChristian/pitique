@@ -102,14 +102,13 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
+        {console.log(revenue)}
         <div className="grid grid-cols-2 w-full gap-2 ">
           {revenue.length !== 0 &&
             revenue.map((rev, index) => {
               return (
                 <div
-                  className={`mx-6 text-white mt-3 bg-${color[index]}-${
-                    index % 2 !== 0 ? "300" : "500"
-                  } rounded-md p-2 `}
+                  className={`mx-6 text-white mt-3 bg-${color[index]}-400 rounded-md p-2 `}
                   key={index}
                 >
                   <h1 className="font-semibold text-xs">Revenue</h1>

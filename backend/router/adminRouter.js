@@ -92,6 +92,22 @@ router.get("/revenue", async (req, res) => {
   }
 });
 
+// GET /admins/top-pitiquers
+router.get("/revenue/all", async (req, res) => {
+  try {
+    const revenue = await adminModel.getRevenueTotal();
+
+    if (!revenue) {
+      res.status(404).send("revenue not found");
+    } else {
+      res.json(revenue);
+    }
+  } catch (error) {
+    console.error(`Error getting revenue`, error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 router.get("/bookings/all", async (req, res) => {
   try {
     const stats = await adminModel.getReportComplete();

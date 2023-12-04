@@ -62,49 +62,71 @@ const labels = [
 
 export const DashboardChart = () => {
   const [chartData, setChartData] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/admins/revenue");
+        const response = await api.get("/admins/revenue/all");
         const data = response.data;
 
         if (data && Array.isArray(data)) {
-          // Map the data to month names
-          const salesData = data.map((item) => ({
-            monthName: new Date(item.month + "-01").toLocaleString("en-US", {
-              month: "long",
-            }),
-            totalRevenue: item.total_revenue,
-          }));
+          const pkgDescList = ["photography", "amenities", "videography"];
 
-          // Create an array with zeros for each month
-          const initialSalesData = Array(labels.length).fill(0);
+          const datasets = pkgDescList.map((pkgDesc) => {
+            const pkgData = data.map((item) => ({
+              monthName: new Date(item.month + "-01").toLocaleString("en-US", {
+                month: "long",
+              }),
+              totalRevenue: item[`${pkgDesc}_revenue`],
+            }));
 
-          // Fill in actual values for existing months
-          const filledSalesData = salesData.reduce(
-            (acc, item) => {
-              const monthIndex = labels.indexOf(item.monthName);
+            const initialPkgData = Array(labels.length).fill(0);
 
-              if (monthIndex !== -1) {
-                acc[monthIndex] = item.totalRevenue;
-              }
+            const filledPkgData = pkgData.reduce(
+              (acc, item) => {
+                const monthIndex = labels.indexOf(item.monthName);
 
-              return acc;
-            },
-            [...initialSalesData]
-          );
+                if (monthIndex !== -1) {
+                  acc[monthIndex] = item.totalRevenue;
+                }
+
+                return acc;
+              },
+              [...initialPkgData]
+            );
+
+            let borderColor, backgroundColor;
+
+            switch (pkgDesc) {
+              case "photography":
+                borderColor = "rgb(0, 255, 255)";
+                backgroundColor = "rgba(0, 255, 255, 0.5)";
+                break;
+              case "amenities":
+                borderColor = "rgb(0, 128, 0)";
+                backgroundColor = "rgba(0, 128, 0, 0.5)";
+                break;
+              case "videography":
+                borderColor = "rgb(255, 0, 0)";
+                backgroundColor = "rgba(255, 0, 0, 0.5)";
+                break;
+              default:
+                borderColor = "rgb(53, 162, 235)";
+                backgroundColor = "rgba(53, 162, 235, 0.5)";
+            }
+
+            return {
+              fill: true,
+              label: pkgDesc.charAt(0).toUpperCase() + pkgDesc.slice(1),
+              data: filledPkgData,
+              borderColor,
+              backgroundColor,
+            };
+          });
 
           setChartData({
             labels,
-            datasets: [
-              {
-                fill: true,
-                label: "Sales",
-                data: filledSalesData,
-                borderColor: "rgb(53, 162, 235)",
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
-              },
-            ],
+            datasets,
           });
         }
       } catch (error) {

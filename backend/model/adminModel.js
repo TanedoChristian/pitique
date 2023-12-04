@@ -67,7 +67,15 @@ class AdminModel {
 
   async getRevenue() {
     const [rows] = await this.pool.query(
-      "SELECT DATE_FORMAT(b.date, '%Y-%m') AS month, COALESCE(SUM(b.total), 0) AS total_revenue FROM booking b WHERE b.status = 'completed' GROUP BY month ORDER BY month;"
+      "SELECT DATE_FORMAT(b.completed, '%Y-%m') AS month, COALESCE(SUM(b.total), 0) AS total_revenue FROM booking b WHERE b.status = 'completed' GROUP BY month ORDER BY month;"
+    );
+
+    return rows;
+  }
+
+  async getRevenueTotal() {
+    const [rows] = await this.pool.query(
+      "SELECT DATE_FORMAT(b.completed, '%Y-%m') AS month, COALESCE(SUM(CASE WHEN LOWER(p.pkg_desc) LIKE '%photography%' THEN b.total ELSE 0 END), 0) AS photography_revenue, COALESCE(SUM(CASE WHEN LOWER(p.pkg_desc) LIKE '%amenities%' THEN b.total ELSE 0 END), 0) AS amenities_revenue, COALESCE(SUM(CASE WHEN LOWER(p.pkg_desc) LIKE '%videography%' THEN b.total ELSE 0 END), 0) AS videography_revenue FROM booking b JOIN package p ON b.pkg_id = p.id WHERE b.status = 'completed' GROUP BY month ORDER BY month;"
     );
 
     return rows;
