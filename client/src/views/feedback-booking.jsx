@@ -11,6 +11,10 @@ const FeedbackBooking = () => {
   const navigate = useNavigate();
   const [rFeedback, setRFeedback] = useState();
   const [pFeedback, setpFeedback] = useState();
+  const [rEditFeedback, setREditFeedback] = useState("");
+  const [pEditFeedback, setPEditFeedback] = useState("");
+  const [isREditMode, setREditMode] = useState(false);
+  const [isPEditMode, setPEditMode] = useState(false);
   const ruser = JSON.parse(localStorage.getItem("user"));
   const puser = JSON.parse(localStorage.getItem("p-user"));
 
@@ -20,24 +24,27 @@ const FeedbackBooking = () => {
         const { data } = await api.get(`/realtor-feedbacks/booking/${bid}`);
 
         setRFeedback(data);
+        setREditFeedback(data?.fdbk || "");
       } catch (error) {
         console.error(error);
       }
     };
     fetch();
-  }, []);
+  }, [bid]);
+
   useEffect(() => {
     const fetch = async () => {
       try {
         const { data } = await api.get(`/pitiquer-feedbacks/booking/${bid}`);
 
         setpFeedback(data);
+        setPEditFeedback(data?.fdbk || "");
       } catch (error) {
         console.error(error);
       }
     };
     fetch();
-  }, []);
+  }, [bid]);
 
   const dateOptions = {
     year: "numeric",
@@ -45,26 +52,40 @@ const FeedbackBooking = () => {
     day: "numeric",
   };
 
-  const handleRemove = async () => {
+  const handleEdit = async () => {
     try {
-      await api.delete(`/realtor-feedbacks/booking/${bid}`);
+      await api.put(`/realtor-feedbacks/booking/${bid}`, {
+        fdbk: rEditFeedback,
+      });
 
-      showSuccessMessage("Success", "Successfully deleted the feedback");
+      showSuccessMessage("Success", "Successfully updated the feedback");
+      setREditMode(false);
       navigate(-1);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handlePRemove = async () => {
+  const handlePEdit = async () => {
     try {
-      await api.delete(`/pitiquer-feedbacks/booking/${bid}`);
+      await api.put(`/pitiquer-feedbacks/booking/${bid}`, {
+        fdbk: pEditFeedback,
+      });
 
-      showSuccessMessage("Success", "Successfully deleted the feedback");
+      showSuccessMessage("Success", "Successfully updated the feedback");
+      setPEditMode(false);
       navigate(-1);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const toggleREditMode = () => {
+    setREditMode(!isREditMode);
+  };
+
+  const togglePEditMode = () => {
+    setPEditMode(!isPEditMode);
   };
 
   return (
@@ -94,14 +115,38 @@ const FeedbackBooking = () => {
                 dateOptions
               )}
             </div>
-            <div className="text-base">Description: {rFeedback.fdbk}</div>
-            {ruser && ruser.id === rFeedback.rltr_id && (
-              <button
-                onClick={handleRemove}
-                className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-              >
-                REMOVE
-              </button>
+            {!isREditMode ? (
+              <>
+                <div className="text-base">Description: {rFeedback.fdbk}</div>
+                {ruser && ruser.id === rFeedback.rltr_id && (
+                  <button
+                    onClick={toggleREditMode}
+                    className="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Edit
+                  </button>
+                )}
+              </>
+            ) : (
+              <>
+                <textarea
+                  value={rEditFeedback}
+                  onChange={(e) => setREditFeedback(e.target.value)}
+                  className="w-full h-24 p-2 border text-black"
+                ></textarea>
+                <button
+                  onClick={handleEdit}
+                  className="mt-4 mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={toggleREditMode}
+                  className="mt-2 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </>
             )}
           </div>
         ) : (
@@ -126,14 +171,38 @@ const FeedbackBooking = () => {
                 dateOptions
               )}
             </div>
-            <div className="text-base">Description: {pFeedback.fdbk}</div>
-            {puser && puser.id === pFeedback.ptqr_id && (
-              <button
-                onClick={handlePRemove}
-                className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-              >
-                REMOVE
-              </button>
+            {!isPEditMode ? (
+              <>
+                <div className="text-base">Description: {pFeedback.fdbk}</div>
+                {puser && puser.id === pFeedback.ptqr_id && (
+                  <button
+                    onClick={togglePEditMode}
+                    className="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Edit
+                  </button>
+                )}
+              </>
+            ) : (
+              <>
+                <textarea
+                  value={pEditFeedback}
+                  onChange={(e) => setPEditFeedback(e.target.value)}
+                  className="w-full h-24 p-2 border text-black"
+                ></textarea>
+                <button
+                  onClick={handlePEdit}
+                  className="mt-4 mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={togglePEditMode}
+                  className="mt-2 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </>
             )}
           </div>
         ) : (

@@ -24,10 +24,15 @@ const BookingScheduleForm = ({ setCount }) => {
     setCount((prev) => prev + 1);
   };
 
-  const handleChanges = (e) => {
+  const handleTimeChange = (e) => {
+    const selectedTime = e.target.value;
+
+    // Convert time to 12-hour format with AM/PM
+    const formattedTime = dayjs(selectedTime, "HH:mm").format("h:mm A");
+
     setBookingInfo((prev) => ({
       ...prev,
-      day: e.target.value,
+      day: formattedTime,
     }));
   };
 
@@ -58,53 +63,20 @@ const BookingScheduleForm = ({ setCount }) => {
           onSubmit={handleSubmit}
         >
           <div className="bg-gray-200 shadow-md">
-            <input
-              className="hidden"
-              id="radio_1"
-              type="radio"
-              name="day"
-              value={"Morning"}
-              onChange={handleChanges}
-            />
-            <label
-              className="flex flex-col p-2 border-2  cursor-pointer"
-              htmlFor="radio_1"
-            >
-              <h1 className="text-md ">Morning</h1>
-            </label>
-          </div>
-          <div className="bg-gray-200 shadow-md">
-            <input
-              className="hidden"
-              id="radio_2"
-              type="radio"
-              name="day"
-              value={"Mid Day"}
-              onChange={handleChanges}
-            />
-            <label
-              className="flex flex-col p-2 border-2  cursor-pointer"
-              htmlFor="radio_2"
-            >
-              <h1 className="text-md ">Mid Day</h1>
-            </label>
-          </div>
-
-          <div className="bg-gray-200 shadow-md">
-            <input
-              className="hidden"
-              id="radio_3"
-              type="radio"
-              name="day"
-              value={"Afternoon"}
-              onChange={handleChanges}
-            />
-            <label
-              className="flex flex-col p-2 border-2  cursor-pointer"
-              htmlFor="radio_3"
-            >
-              <h1 className="text-md ">Afternoon</h1>
-            </label>
+            <div className="bg-gray-200 shadow-md">
+              <label
+                htmlFor="timeInput"
+                className="flex flex-col p-2 border-2 cursor-pointer"
+              >
+                <h1 className="text-md">Select Time:</h1>
+                <input
+                  id="timeInput"
+                  type="time"
+                  onChange={handleTimeChange}
+                  required
+                />
+              </label>
+            </div>
           </div>
           <div>
             <button

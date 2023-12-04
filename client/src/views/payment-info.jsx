@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../helper/api";
 import Header from "../components/common/header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import html2canvas from "html2canvas";
 
 const PaymentInfo = () => {
   const { bid } = useParams();
   const [info, setInfo] = useState();
+  const contentRef = useRef(null);
   const navigate = useNavigate();
   useEffect(() => {
     const fetch = async () => {
@@ -35,6 +37,21 @@ const PaymentInfo = () => {
     const formattedDate = new Date(dateString).toLocaleString("en-US", options);
     return formattedDate;
   }
+
+  const handleDownload = () => {
+    if (contentRef.current) {
+      html2canvas(contentRef.current).then((canvas) => {
+        const image = canvas.toDataURL("image/png");
+
+        // Create a virtual anchor element to trigger the download
+        const a = document.createElement("a");
+        a.href = image;
+        a.download = "receipt.png";
+        a.click();
+      });
+    }
+  };
+
   return (
     <div className="poppins">
       <Header className={`flex items-center w-full text-center relative`}>
@@ -50,7 +67,10 @@ const PaymentInfo = () => {
           </h1>
         </div>
       </Header>
-      <div className="bg-cyan-100 p-8 my-4 mx-2 rounded-lg shadow-md grid grid-cols-2 gap-4">
+      <div
+        className="bg-cyan-100 p-8 my-4 mx-2 rounded-lg shadow-md grid grid-cols-2 gap-4"
+        ref={contentRef}
+      >
         <div className="text-cyan-700 text-md font-semibold">Reference No:</div>
         <div className="text-gray-800 text-md">{info.id}</div>
         <div className="text-cyan-700 text-md font-semibold">Paid in:</div>
@@ -88,6 +108,14 @@ const PaymentInfo = () => {
         )}
         <div className="text-cyan-700 text-md font-semibold">Date:</div>
         <div className="text-gray-800 text-md">{formatDate(info.fdate)}</div>
+      </div>
+      <div className="px-10">
+        <button
+          className="bg-cyan-500 text-white px-4 py-2 rounded w-full"
+          onClick={handleDownload}
+        >
+          Download Receipt
+        </button>
       </div>
     </div>
   );

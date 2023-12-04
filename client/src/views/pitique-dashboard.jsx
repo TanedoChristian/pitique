@@ -55,7 +55,7 @@ const PitiqueDashboard = () => {
         </button>
       </Header>
 
-      <h1 className="text-xl font-bold p-5">Welcome, Tyler! </h1>
+      <h1 className="text-xl font-bold p-5">Welcome! </h1>
 
       <div className="grid grid-cols-3 gap-4 p-3">
         <div className="bg-orange-500 col-span-2 flex p-3 justify-center items-center rounded-xl shadow-xl">
