@@ -29,6 +29,7 @@ import RealtorProfilePageId from "./views/realtor-profile-page-id";
 import RealtorAllBooking from "./views/realtor-all-booking";
 import AdminAllBooking from "./views/admin-all-booking";
 import PitiquerAllBooking from "./views/pitiquer-all-booking";
+import PitiquerPaymentRegister from "./views/pitiquer-payment-register";
 
 const App = () => {
   return (
@@ -54,6 +55,10 @@ const App = () => {
         <Route path="/admin/manage-realtor" element={<ManageRealtor />}></Route>
         <Route path="/booking/:id" element={<RealtorBookingId />}></Route>
         <Route path="/payment" element={<RealtorPayment />}></Route>
+        <Route
+          path="/register/payment"
+          element={<PitiquerPaymentRegister />}
+        ></Route>
         <Route path="/transaction" element={<RealtorTransaction />}></Route>
         <Route
           path="/search/pitiquer/:name"

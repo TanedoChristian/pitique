@@ -19,6 +19,7 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.4",
     "nodemon": "^3.0.1",
+    "pitique": "file:..",
     "stripe": "^14.5.0",
     "uuid": "^9.0.1"
   }

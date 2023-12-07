@@ -1,14 +1,9 @@
-import { useContext, useState } from "react";
-import { UserContext } from "../../context/userContext";
-import api from "../../helper/api";
-import {
-  showErrorMessage,
-  showSuccessMessage,
-} from "../../helper/messageHelper";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const AccountDetailsForm = ({ setUser, user }) => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isChecked, setChecked] = useState(false);
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({
@@ -31,40 +26,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
   };
 
   const handleRegister = async () => {
-    if (user.type === "pitiquer") {
-      try {
-        const { data } = await api.post("/pitiquers", user);
-
-        if (data) {
-          showSuccessMessage(
-            "Success",
-            user.type + " has been created successfully!"
-          );
-
-          setUser({});
-          window.location.href = "/login";
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else if (user.type === "realtor") {
-      try {
-        const { data } = await api.post("/realtors", user);
-
-        if (data) {
-          showSuccessMessage(
-            "Success",
-            user.type + " has been created successfully!"
-          );
-          setUser({});
-          window.location.href = "/login";
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      showErrorMessage("Choose account type!");
-    }
+    navigate("/register/payment", { state: user });
   };
 
   return (
@@ -137,7 +99,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
           onClick={handleRegister}
           disabled={!isChecked || areAllFieldsEmpty() || !passwordMatch}
         >
-          Login
+          Pay
         </button>
       </div>
     </form>
