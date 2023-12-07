@@ -17,7 +17,7 @@ class AdminModel {
 
   // CDU
   async createAdmin(admin) {
-    const hashedPassword = await bcrypt.hash(admin.password, 10);
+    const hashedPassword = await bcrypt.hash(admin.pass, 10);
     // Default Value
     const status = "active";
 

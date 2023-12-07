@@ -13,7 +13,7 @@ const AdminCreateAccount = () => {
 
   const handleConfirmPassword = (e) => {
     const { value } = e.target;
-    if (value !== user.password) {
+    if (value !== user.pass) {
       setPasswordMatch(false);
     } else {
       setPasswordMatch(true);
@@ -186,11 +186,11 @@ const AdminCreateAccount = () => {
             <input
               type="password"
               placeholder="Password"
-              name="password"
+              name="pass"
               className="p-3 bg-gray-200 w-full rounded-sm "
               onChange={handleChange}
               onBlur={handleConfirmPassword}
-              value={user.password ?? ""}
+              value={user.pass ?? ""}
             />
             <input
               type="password"
