@@ -37,6 +37,10 @@ const SideNav = ({ setShowNav }) => {
   return (
     <div className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins `}>
       <div className="w-[200px] h-full  bg-cyan-500 text-white border-r border-gray-200">
+        <div className="flex gap-3 items-center p-3">
+          <img src={logo} className="w-[10%]" />
+          <h1 className="text-xl">Pitique</h1>
+        </div>
         <div className="flex justify-end w-full">
           <button
             className="text-white font-black text-2xl right-2 top-2 p-2 "
