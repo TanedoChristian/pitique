@@ -27,11 +27,13 @@ const MapWithMyLocation = ({ setBooking }) => {
         )}&limit=5`
       );
 
-      setSuggestions(response.data);
+      const address = response.data;
+
+      setSuggestions(address);
     } catch (error) {
       console.error("Error searching for street name suggestions:", error);
     }
-  }, 300);
+  });
 
   const handleSearch = async () => {
     const query = inputStreet.trim();
@@ -132,7 +134,7 @@ const MapWithMyLocation = ({ setBooking }) => {
       </div>
       {suggestions.length > 0 && (
         <ul>
-          {suggestions.map((suggestion) => (
+          {suggestions.map((suggestion, index) => (
             <li
               key={suggestion.place_id}
               onClick={() => handleSelectSuggestion(suggestion)}
@@ -143,7 +145,7 @@ const MapWithMyLocation = ({ setBooking }) => {
         </ul>
       )}
       {isSuccess ? (
-        <div>
+        <div className="mt-5">
           <MapContainer
             center={mapCenter}
             zoom={15}
