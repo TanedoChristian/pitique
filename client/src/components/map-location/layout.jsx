@@ -79,7 +79,7 @@ const MapWithMyLocation = ({ setBooking }) => {
       );
 
       const address_name = response.data[0].display_name;
-
+      console.log(response.data);
       const address_array = address_name.split(",");
 
       console.log(address_array);

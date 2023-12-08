@@ -35,7 +35,7 @@ const PitiqueProfileLayout = ({ user }) => {
         </button>
         <div className="w-full flex justify-center   ">
           <h1 className=" text-xl text-white font-bold ">
-            {showPortfolio ? "Portfolio" : "Personal Details "}
+            {showPortfolio ? "Portfolio" : "Pitiquer Details "}
           </h1>
         </div>
       </Header>

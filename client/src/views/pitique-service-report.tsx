@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import api from "../helper/api";
 import { Link } from "react-router-dom";
+import { formattedAmount } from "../helper/currencyHelper";
 
 const PitiqueServiceReport = () => {
   const user = JSON.parse(localStorage.getItem("p-user"));
@@ -64,7 +65,7 @@ const PitiqueServiceReport = () => {
           <div className="flex gap-6 items-center p-3 justify-center">
             <p className="font-bold">Profit </p>
             <h1 className="text-3xl font-bold text-cyan-500">
-              Php {Number(income.total).toFixed(2)}
+              {formattedAmount(Number(income.total).toFixed(2))}
             </h1>
           </div>
         </div>

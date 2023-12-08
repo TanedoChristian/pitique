@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { formattedAmount } from "../../helper/currencyHelper";
 
 const PitiqueProfilePackageItem = ({
   setShowModal,
@@ -33,7 +34,7 @@ const PitiqueProfilePackageItem = ({
                 </button>
               </div>
 
-              <p>Php {info.min_price ?? 0}</p>
+              <p>{formattedAmount(info.min_price ?? 0)}</p>
             </div>
           </div>
         </div>
