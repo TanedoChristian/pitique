@@ -30,6 +30,7 @@ import RealtorAllBooking from "./views/realtor-all-booking";
 import AdminAllBooking from "./views/admin-all-booking";
 import PitiquerAllBooking from "./views/pitiquer-all-booking";
 import PitiquerPaymentRegister from "./views/pitiquer-payment-register";
+import MapWithMyLocation from "./components/map-location/layout";
 
 const App = () => {
   return (
@@ -38,7 +39,7 @@ const App = () => {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
-
+        <Route path="/maps" element={<MapWithMyLocation />}></Route>
         <Route path="/dashboard" element={<RealtorDashboard />}></Route>
         <Route path="/account" element={<RealtorAccount />}></Route>
         <Route path="/booking" element={<RealtorBooking />}></Route>
