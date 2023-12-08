@@ -3,25 +3,33 @@ import {
   faCalendar,
   faRightFromBracket,
   faUser,
+  faCog,
+  faGauge,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 const AdminSideNav = ({ setShowNav }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   return (
     <div
       className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins z-10`}
     >
       <div className="w-[200px] h-full  bg-cyan-500 text-white border-r border-gray-200">
-        <div className="flex gap-3 items-center p-3">
-          <img src={logo} className="w-[10%]" />
-          <h1 className="text-xl">Pitique</h1>
-        </div>
-
-        <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full py-4 ">
+          <div className="flex gap-3 items-center p-3">
+            <img src={logo} className="w-[20%]" />
+            <h1 className="text-xl">Pitique</h1>
+          </div>
           <button
-            className="text-white font-black text-2xl right-2 top-2 p-2 "
+            className="text-white font-black text-2xl right-2 top-2 px-4 "
             onClick={() => {
               setShowNav(false);
             }}
@@ -33,23 +41,32 @@ const AdminSideNav = ({ setShowNav }) => {
         <div className=" w-full h-screen flex flex-col gap-3 p-3 justify-between mt-10">
           <div className="flex flex-col gap-10">
             <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faGauge} />
+              <Link to="/admin">Dashboard </Link>
+            </li>
+            <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
-              <a href="/admin/create-account">Create Account </a>
+              <Link to="/admin/create-account">Create Account </Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
-              <a href="/admin/manage-pitiquer">Manage Pitiquer </a>
+              <Link to="/admin/manage-pitiquer">Manage Pitiquer </Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
-              <a href="/admin/create-account">Manage Realtor </a>
+              <Link to="/admin/manage-realtor">Manage Realtor </Link>
+            </li>
+
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faCalendar} />
+              <Link to="/admin/bookings/all">All Bookings </Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
-              <a>Logout </a>
+              <button onClick={handleLogout}>Logout </button>
             </li>
           </div>
         </div>
