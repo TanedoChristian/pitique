@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { debounce } from "lodash";
+import { BookingContext } from "../../context/bookingContext";
 
-const MapWithMyLocation = ({ setBooking }) => {
+const MapWithMyLocation = () => {
   const [mapCenter, setMapCenter] = useState([]);
   const [isSuccess, setSuccess] = useState(false);
   const [streetName, setStreetName] = useState("");
   const [inputStreet, setInputStreet] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
+
+  const [bookingInfo, setBookingInfo] = useContext(BookingContext);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -83,6 +86,36 @@ const MapWithMyLocation = ({ setBooking }) => {
       const address_name = response.data[0].display_name;
       console.log(response.data);
       const address_array = address_name.split(",");
+
+      setBookingInfo((prev) => ({
+        ...prev,
+        street: address_array[0],
+      }));
+
+      setBookingInfo((prev) => ({
+        ...prev,
+        unit_no: address_array[1],
+      }));
+
+      setBookingInfo((prev) => ({
+        ...prev,
+        city: address_array[2],
+      }));
+
+      setBookingInfo((prev) => ({
+        ...prev,
+        province: address_array[3],
+      }));
+
+      setBookingInfo((prev) => ({
+        ...prev,
+        postal: 6000,
+      }));
+
+      setBookingInfo((prev) => ({
+        ...prev,
+        rmrks: "none",
+      }));
 
       console.log(address_array);
 
