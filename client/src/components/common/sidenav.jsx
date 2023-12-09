@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../helper/api";
-
+import logo from "../../assets/logo.png";
 const SideNav = ({ setShowNav }) => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
