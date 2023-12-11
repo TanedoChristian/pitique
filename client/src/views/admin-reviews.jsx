@@ -27,16 +27,15 @@ const AdminReviews = () => {
   }, []);
 
   const filteredComments = reviews.filter((review) => {
-    return (
-      review.rtng < 3 ||
-      swearWords.some((word) =>
-        review.fdbk.toLowerCase().includes(word.toLowerCase())
-      )
+    const hasSwearWord = swearWords.some((word) =>
+      review.fdbk.toLowerCase().includes(word.toLowerCase())
     );
+
+    return !hasSwearWord && review.rtng >= 3;
   });
 
   const filteredGoodComments = reviews.filter((review) => {
-    return swearWords.some((_) => review.rtng >= 3);
+    return swearWords.some((word) => review.rtng >= 3);
   });
 
   const handleReviewType = (type) => {
