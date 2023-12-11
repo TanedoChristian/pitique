@@ -33,6 +33,7 @@ import PitiquerPaymentRegister from "./views/pitiquer-payment-register";
 import MapWithMyLocation from "./components/map-location/layout";
 import AdminReviews from "./views/admin-reviews";
 import PitiquerSubscription from "./views/pitiquer-subscription";
+import AdminTransactionReports from "./views/admin-transaction-reports";
 import AdminCommissions from "./views/admin-comissions";
 
 const App = () => {
@@ -55,6 +56,11 @@ const App = () => {
         <Route
           path="/admin/manage-pitiquer"
           element={<ManagePitiquer />}
+        ></Route>
+
+        <Route
+          path="/admin/manage-transaction-reports"
+          element={<AdminTransactionReports />}
         ></Route>
 
         <Route path="/admin/manage-realtor" element={<ManageRealtor />}></Route>

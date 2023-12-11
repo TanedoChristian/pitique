@@ -12,6 +12,8 @@ const AdminDashboard = () => {
   const [user, setUser] = useState();
   const [topPitiquers, setTopPitiquers] = useState([]);
   const [revenue, setRevenue] = useState([]);
+  const [subscription, setSubscription] = useState([]);
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -72,7 +74,7 @@ const AdminDashboard = () => {
         </div>
 
         {user !== undefined && (
-          <div className="flex justify-center gap-3 mt-5">
+          <div className="flex justify-center gap-3 mt-5  flex-wrap w-full ">
             <div className="w-[30%] bg-cyan-500 rounded-md p-2 text-white flex justify-center items-center">
               <div className="flex flex-col">
                 <h1 className="font-semibold text-xs">Total Users</h1>
@@ -91,6 +93,22 @@ const AdminDashboard = () => {
               <div className="flex flex-col">
                 <h1 className="font-semibold text-xs">Active Users</h1>
                 <h1 className="mt-1 text-xs">{user.total_active}</h1>
+              </div>
+            </div>
+
+            <div className="w-[30%] bg-cyan-500 text-white rounded-md p-2 text-center">
+              <div className="flex-col flex">
+                <h1 className="font-semibold text-xs">
+                  Total Subscription Revenue
+                </h1>
+                <h1 className="mt-1 text-xs">{user.total_suspended}</h1>
+              </div>
+            </div>
+
+            <div className="w-[30%] bg-cyan-500 text-white rounded-md p-2 text-center">
+              <div className="flex-col flex">
+                <h1 className="font-semibold text-xs">Total Subscription</h1>
+                <h1 className="mt-1 text-xs">{user.total_suspended}</h1>
               </div>
             </div>
           </div>
