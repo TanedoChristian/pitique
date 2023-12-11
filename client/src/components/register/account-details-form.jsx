@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../helper/api";
 const AccountDetailsForm = ({ setUser, user }) => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isChecked, setChecked] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({
@@ -19,6 +21,17 @@ const AccountDetailsForm = ({ setUser, user }) => {
     } else {
       setPasswordMatch(true);
     }
+  };
+
+  const handleRegisterPitiquer = () => {
+    api
+      .post("/realtors", user)
+      .then((data) => {
+        window.location.href = "/login";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const areAllFieldsEmpty = () => {
@@ -94,13 +107,24 @@ const AccountDetailsForm = ({ setUser, user }) => {
             <span className="font-bold"> Terms and Conditions </span>
           </p>
         </div>
-        <button
-          className="mt-5 p-3 w-full bg-cyan-400 text-white font-bold rounded-sm shadow-md"
-          onClick={handleRegister}
-          disabled={!isChecked || areAllFieldsEmpty() || !passwordMatch}
-        >
-          Pay
-        </button>
+
+        {user.type == "realtor" ? (
+          <button
+            className="mt-5 p-3 w-full bg-cyan-400 text-white font-bold rounded-sm shadow-md"
+            onClick={handleRegisterPitiquer}
+            disabled={!isChecked || areAllFieldsEmpty() || !passwordMatch}
+          >
+            Register
+          </button>
+        ) : (
+          <button
+            className="mt-5 p-3 w-full bg-cyan-400 text-white font-bold rounded-sm shadow-md"
+            onClick={handleRegister}
+            disabled={!isChecked || areAllFieldsEmpty() || !passwordMatch}
+          >
+            Pay
+          </button>
+        )}
       </div>
     </form>
   );

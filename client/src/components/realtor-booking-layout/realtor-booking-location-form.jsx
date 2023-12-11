@@ -25,7 +25,7 @@ const BookingLocationForm = ({ setCount }) => {
         className="flex flex-col gap-3 p-5 justify-between h-full"
         onSubmit={handleSubmit}
       >
-        <MapWithMyLocation setBookingInfo={setBookingInfo} />
+        <MapWithMyLocation />
 
         <div className="flex flex-col gap-3">
           {/* <input

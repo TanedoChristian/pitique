@@ -10,6 +10,8 @@ const BookingReviewForm = ({ setCount }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
   const handleSubmit = async () => {
+    // console.log(bookingInfo);
+
     const { data } = await api.post("/bookings/request", bookingInfo);
 
     if (data) {

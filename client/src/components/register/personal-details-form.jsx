@@ -10,7 +10,6 @@ const PersonalDetailsForm = ({ setShowAccountForm, setUser, user }) => {
       [name]: value,
     }));
   };
-  ``;
   return (
     <>
       <div className="p-5">
