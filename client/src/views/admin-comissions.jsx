@@ -72,7 +72,7 @@ const AdminCommissions = () => {
                   Total
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Commission Fee
+                  Commission Fee (10%)
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Date
