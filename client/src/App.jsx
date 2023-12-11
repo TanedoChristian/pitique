@@ -31,6 +31,7 @@ import AdminAllBooking from "./views/admin-all-booking";
 import PitiquerAllBooking from "./views/pitiquer-all-booking";
 import PitiquerPaymentRegister from "./views/pitiquer-payment-register";
 import MapWithMyLocation from "./components/map-location/layout";
+import AdminReviews from "./views/admin-reviews";
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
           path="/admin/create-account"
           element={<AdminCreateAccount />}
         ></Route>
+        <Route path="/admin/manage-reviews" element={<AdminReviews />}></Route>
         <Route
           path="/admin/manage-pitiquer"
           element={<ManagePitiquer />}
