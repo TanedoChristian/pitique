@@ -98,6 +98,14 @@ class AdminModel {
 
     return rows;
   }
+
+  async getCommissionReport() {
+    const [rows] = await this.pool.query(
+      "SELECT b.id,  CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS rname, b.total, b.date FROM booking b INNER JOIN realtor r ON r.id = b.rltr_id"
+    );
+
+    return rows;
+  }
 }
 
 module.exports = AdminModel;

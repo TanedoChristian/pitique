@@ -33,11 +33,8 @@ import PitiquerPaymentRegister from "./views/pitiquer-payment-register";
 import MapWithMyLocation from "./components/map-location/layout";
 import AdminReviews from "./views/admin-reviews";
 import PitiquerSubscription from "./views/pitiquer-subscription";
-<<<<<<< HEAD
 import AdminTransactionReports from "./views/admin-transaction-reports";
-=======
 import AdminCommissions from "./views/admin-comissions";
->>>>>>> 6adafffd87c8e8fa85cb3d3de3ed1afb204cbc46
 
 const App = () => {
   return (
