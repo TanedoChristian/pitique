@@ -21,8 +21,11 @@ class PitiquerModel {
 
   //   GET Pitiquer for dashboard
   async getPitiquers() {
+    const status = "active";
+
     const [rows] = await this.pool.query(
-      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price, COALESCE(AVG(rf.rtng), 0) as avg_rating FROM pitiquer p INNER JOIN package pa ON p.id = pa.ptqr_id LEFT JOIN booking b ON b.ptqr_id = p.id LEFT JOIN realtor_feedback rf ON rf.book_id = b.id WHERE pa.isvisible = true GROUP BY p.id "
+      "SELECT p.id, p.lname, p.fname, p.city, p.province, MIN(pa.min_price) as min_price, COALESCE(AVG(rf.rtng), 0) as avg_rating FROM pitiquer p INNER JOIN package pa ON p.id = pa.ptqr_id LEFT JOIN booking b ON b.ptqr_id = p.id LEFT JOIN realtor_feedback rf ON rf.book_id = b.id WHERE pa.isvisible = true AND p.status = ? GROUP BY p.id ",
+      [status]
     );
     return rows;
   }
@@ -78,7 +81,7 @@ class PitiquerModel {
     // Default Value
     const status = "active";
 
-    await this.pool.query(
+    const result = await this.pool.query(
       "INSERT INTO pitiquer (fname, mname,lname,email,pass, status,phone,city,province) VALUES (?, ?,?, ?, ? ,? ,? ,?,?)",
       [
         pitiquer.fname,
@@ -92,6 +95,8 @@ class PitiquerModel {
         pitiquer.province,
       ]
     );
+
+    return result[0].insertId;
   }
 
   async updatePitiquer(pitiquerId, updatedInfo) {

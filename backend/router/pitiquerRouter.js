@@ -3,8 +3,10 @@ const router = express.Router();
 const multer = require("multer");
 
 const PitiquerModel = require("../model/pitiquerModel");
+const SubscriptionModel = require("../model/subscriptionModel");
 
 const pitiquerModel = new PitiquerModel();
+const subscriptionModel = new SubscriptionModel();
 
 // Set up Multer to handle file uploads
 const storage = multer.memoryStorage(); // Store files in memory
@@ -103,7 +105,12 @@ router.post("/", async (req, res) => {
   const newPitiquer = req.body;
 
   try {
-    await pitiquerModel.createPitiquer(newPitiquer);
+    const ptqr_id = await pitiquerModel.createPitiquer(newPitiquer);
+
+    // amount
+    const amount = 200;
+    await subscriptionModel.createSubscription({ ptqr_id, amount });
+
     res.status(201).json({ message: "Pitiquer created successfully" });
   } catch (error) {
     console.error("Error creating Pitiquer:", error);

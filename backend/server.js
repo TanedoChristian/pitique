@@ -24,6 +24,7 @@ const pitiquerFeedbackRouter = require("./router/pitiquerFeedbackRouter");
 const paymentRouter = require("./router/paymentRouter");
 const adminRouter = require("./router/adminRouter");
 const notificationRouter = require("./router/notificationRouter");
+const subscriptionRouter = require("./router/subscriptionRouter");
 
 app.use(bodyParser.json());
 
@@ -37,6 +38,7 @@ app.use("/pitiquer-feedbacks", pitiquerFeedbackRouter);
 app.use("/payments", paymentRouter);
 app.use("/admins", adminRouter);
 app.use("/notifications", notificationRouter);
+app.use("/subscriptions", subscriptionRouter);
 
 const port = process.env.PORT || 8000;
 

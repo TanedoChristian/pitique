@@ -75,7 +75,6 @@ const PitiquerPaymentRegister = () => {
           <h1 className="flex-grow text-xl text-white font-bold ">
             CHOOSE PAYMENT METHOD
           </h1>
-          <h4>PLATFORM FEE</h4>
         </div>
       </Header>
       <div className="p-5">
