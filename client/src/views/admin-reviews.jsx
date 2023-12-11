@@ -42,8 +42,6 @@ const AdminReviews = () => {
 
   const handleReviewType = (type) => {
     setReviewType(type);
-
-    console.log(type);
   };
 
   const handleChangeStatus = async (status, id) => {
@@ -98,7 +96,7 @@ const AdminReviews = () => {
       <div className="w-full p-3 h-screen overflow-auto">
         {reviewType == "bad" ? (
           <div>
-            {filteredComments.map((comment) => (
+            {filteredBadComments.map((comment) => (
               <div class="flex flex-col gap-4 bg-white border border-gray-300 p-4 mt-5 shadow-md rounded-xl">
                 <div className="flex items-center gap-1  w-full justify-end">
                   <p className="font-bold">{comment.rtng}</p>

@@ -19,14 +19,25 @@ router.post("/", async (req, res) => {
 });
 
 // Get pitiquer subscription info
-router.get("/pitiquers/:id", async (req, res) => {
-  const pitiquerId = req.params.id;
-
+router.get("/", async (req, res) => {
   try {
-    const notif = await reportModel.getSubscriptionDetails(pitiquerId);
-    res.status(200).json(notif[0]);
+    const report = await reportModel.getReports();
+    res.status(200).json(report);
   } catch (error) {
-    console.error("Error creating getting subscription info:", error);
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Get pitiquer subscription info
+router.put("/done", async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    const report = await reportModel.updateStatus(id);
+    res.status(200).json(report);
+  } catch (error) {
+    console.error("Error ", error);
     res.status(500).send("Internal Server Error");
   }
 });

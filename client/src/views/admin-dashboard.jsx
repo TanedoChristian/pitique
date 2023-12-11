@@ -6,7 +6,7 @@ import AdminSideNav from "../components/common/admin-sidenav";
 import { DashboardChart } from "../components/common/DashboardChart";
 import api from "../helper/api";
 import { color } from "../helper/revenueColor";
-
+import { formattedAmount } from "../helper/currencyHelper";
 const AdminDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [user, setUser] = useState();
@@ -46,7 +46,8 @@ const AdminDashboard = () => {
     const fetch = async () => {
       try {
         const { data } = await api.get("/admins/revenue");
-
+        const result = await api.get("/admins/subscription");
+        setSubscription(result.data);
         setRevenue(data);
       } catch (error) {
         console.error(error);
@@ -101,14 +102,18 @@ const AdminDashboard = () => {
                 <h1 className="font-semibold text-xs">
                   Total Subscription Revenue
                 </h1>
-                <h1 className="mt-1 text-xs">{user.total_suspended}</h1>
+                <h1 className="mt-1 text-xs">
+                  {formattedAmount(subscription.revenue)}
+                </h1>
               </div>
             </div>
 
             <div className="w-[30%] bg-cyan-500 text-white rounded-md p-2 text-center">
               <div className="flex-col flex">
-                <h1 className="font-semibold text-xs">Total Subscription</h1>
-                <h1 className="mt-1 text-xs">{user.total_suspended}</h1>
+                <h1 className="font-semibold text-xs">
+                  Total Active Subscription
+                </h1>
+                <h1 className="mt-1 text-xs">{subscription.total_active}</h1>
               </div>
             </div>
           </div>
@@ -158,7 +163,7 @@ const AdminDashboard = () => {
                       {pitiquer.completed_bookings}
                     </div>
                     <div className="p-3 text-sm text-center">
-                      {pitiquer.total_fee}
+                      {formattedAmount(pitiquer.total_fee)}
                     </div>
                   </React.Fragment>
                 ))}

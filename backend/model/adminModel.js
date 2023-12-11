@@ -106,6 +106,14 @@ class AdminModel {
 
     return rows;
   }
+
+  async getSubscription() {
+    const [rows] = await this.pool.query(
+      "SELECT COUNT(*) AS total_active, SUM(amount) as revenue FROM subscription"
+    );
+
+    return rows[0];
+  }
 }
 
 module.exports = AdminModel;

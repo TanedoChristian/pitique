@@ -12,23 +12,33 @@ class ReportModel {
   // CDU
   async createReport(reportInfo) {
     await this.pool.query(
-      "INSERT INTO report (msg,user_id,user_type,date) VALUES (?, ?, ?, ?)",
+      "INSERT INTO report (msg,user_id,user_type,date,status) VALUES (?, ?, ?,?, ?)",
       [
         reportInfo.msg,
         reportInfo.id,
         reportInfo.user_type,
         this.philippinesDateTime,
+        "pending",
       ]
     );
   }
 
-  async getSubscriptionDetails(pitiquerId) {
-    const result = await this.pool.query(
-      "SELECT * FROM subscription WHERE ptqr_id = ?",
-      [pitiquerId]
+  async getReports() {
+    const [result] = await this.pool.query(
+      "SELECT * FROM report WHERE status = ?",
+      ["pending"]
     );
 
-    return result[0];
+    return result;
+  }
+
+  async updateStatus(id) {
+    const [result] = await this.pool.query(
+      "UPDATE report SET status = ? WHERE id = ?",
+      ["done", id]
+    );
+
+    return result;
   }
 }
 
