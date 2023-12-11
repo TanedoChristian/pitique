@@ -78,7 +78,7 @@ const AdminReviews = () => {
       </div>
 
       <div className="w-full p-3 h-screen overflow-auto">
-        {reviewType == "good" ? (
+        {reviewType == "bad" ? (
           <div>
             {filteredComments.map((comment) => (
               <div class="flex flex-col gap-4 bg-white border border-gray-300 p-4 mt-5 shadow-md rounded-xl">
