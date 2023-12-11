@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2023 at 04:01 PM
+-- Generation Time: Dec 11, 2023 at 04:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -80,13 +80,6 @@ CREATE TABLE `booking` (
   `reason` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `booking`
---
-
-INSERT INTO `booking` (`id`, `pkg_id`, `rltr_id`, `ptqr_id`, `status`, `price`, `share`, `fee`, `total`, `date`, `rmrks`, `approved`, `declined`, `completed`, `cancelled`, `unit_no`, `street`, `city`, `province`, `postal`, `property_size`, `day`, `reason`) VALUES
-(7, 3, 5, 6, 'completed', 12222, 0, 12222, 12222, '2023-12-27 20:27:12', 'none', '2023-12-11 20:10:21', '0000-00-00 00:00:00', '2023-12-11 20:10:21', '0000-00-00 00:00:00', ' Cebu City', 'Escario Central', ' Central Visayas', ' Philippines', '6000', '250', '8:29 PM', '');
-
 -- --------------------------------------------------------
 
 --
@@ -113,16 +106,6 @@ CREATE TABLE `notification` (
   `rstatus` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `notification`
---
-
-INSERT INTO `notification` (`id`, `book_id`, `message`, `date`, `pstatus`, `rstatus`) VALUES
-(19, 7, 'The booking is created and pending.', '2023-12-11 20:10:21', 'read', 'unread'),
-(20, 7, 'The booking is accepted by pitiquer.', '2023-12-11 20:10:21', 'unread', 'unread'),
-(21, 7, 'The booking is paid.', '2023-12-11 20:10:21', 'unread', 'unread'),
-(22, 7, 'The booking is completed. You can rate and put feedback.', '2023-12-11 20:10:21', 'unread', 'unread');
-
 -- --------------------------------------------------------
 
 --
@@ -140,13 +123,6 @@ CREATE TABLE `package` (
   `isavailable` tinyint(1) NOT NULL,
   `isvisible` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `package`
---
-
-INSERT INTO `package` (`id`, `ptqr_id`, `hasphoto`, `hasvid`, `hasamnty`, `min_price`, `pkg_desc`, `isavailable`, `isvisible`) VALUES
-(3, 6, 1, 0, 0, 12222, 'Aerial Photography', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -169,13 +145,6 @@ CREATE TABLE `payment` (
   `freceipt` varchar(255) NOT NULL,
   `rmrks` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`id`, `ptqr_id`, `rltr_id`, `book_id`, `status`, `total`, `pamt`, `pdate`, `preceipt`, `famt`, `fdate`, `freceipt`, `rmrks`) VALUES
-(5, 6, 5, 7, 'completed', 12222, 12222, '2023-12-11 20:10:21', 'none', 12222, '2023-12-11 20:10:21', 'none', 'cash');
 
 -- --------------------------------------------------------
 
@@ -200,13 +169,6 @@ CREATE TABLE `pitiquer` (
   `isamnty` tinyint(1) NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pitiquer`
---
-
-INSERT INTO `pitiquer` (`id`, `fname`, `mname`, `lname`, `email`, `pass`, `phone`, `city`, `province`, `prof_img`, `bio`, `isphotog`, `isvideog`, `isamnty`, `status`) VALUES
-(6, 'james', 'dylan', 'caramonte', 'jdcaramonte159@gmail.com', '$2b$10$DVuJr4a/9a83MpBdncvPtejorBJFZAB3gQzyq0TgbIlJM/IUf2Yfu', '(+63) 995 577 4183', 'Cebu City', 'Cebu', '', '', 0, 0, 0, 'active');
 
 -- --------------------------------------------------------
 
@@ -257,13 +219,6 @@ CREATE TABLE `realtor` (
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `realtor`
---
-
-INSERT INTO `realtor` (`id`, `fname`, `mname`, `lname`, `email`, `pass`, `phone`, `birthdate`, `prof_img`, `id_type`, `id_img`, `status`) VALUES
-(5, 'james', 'dylan', 'caramonte', 'caramonte159@gmail.com', '$2b$10$eaS7zC0/TBucbZ2yMYGwReekThcMnHxEzTp4mYlfM.hIAMCLw/efO', '(+63) 995 577 4183', '2000-09-15', '', '', '', 'active');
-
 -- --------------------------------------------------------
 
 --
@@ -294,15 +249,6 @@ CREATE TABLE `report` (
   `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `report`
---
-
-INSERT INTO `report` (`id`, `msg`, `user_id`, `user_type`, `date`, `status`) VALUES
-(1, 'asd', 6, 'pitiquer', '2023-12-11 20:44:53', 'done'),
-(2, 'asd', 6, 'pitiquer', '2023-12-11 20:44:53', 'done'),
-(3, 'asd', 5, 'realtor', '2023-12-11 20:44:53', 'pending');
-
 -- --------------------------------------------------------
 
 --
@@ -313,15 +259,9 @@ CREATE TABLE `subscription` (
   `ptqr_id` int(11) NOT NULL,
   `started_date` datetime NOT NULL,
   `last_paid_date` datetime NOT NULL,
-  `amount` double NOT NULL
+  `amount` double NOT NULL,
+  `prev_amount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `subscription`
---
-
-INSERT INTO `subscription` (`ptqr_id`, `started_date`, `last_paid_date`, `amount`) VALUES
-(6, '2023-12-11 19:22:11', '2023-12-11 20:10:21', 200);
 
 --
 -- Indexes for dumped tables
@@ -455,7 +395,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `pitiquer`
 --
 ALTER TABLE `pitiquer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `portfolio`
@@ -473,7 +413,7 @@ ALTER TABLE `realtor`
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
