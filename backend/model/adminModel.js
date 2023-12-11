@@ -101,7 +101,7 @@ class AdminModel {
 
   async getCommissionReport() {
     const [rows] = await this.pool.query(
-      "SELECT b.id,  CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS rname, b.total, b.date FROM booking b INNER JOIN realtor r ON r.id = b.rltr_id"
+      "SELECT b.id,  CONCAT(p.fname, ' ', p.mname, ' ', p.lname) AS pname, b.total, b.date FROM booking b INNER JOIN pitiquer p ON p.id = b.ptqr_id"
     );
 
     return rows;
@@ -109,7 +109,7 @@ class AdminModel {
 
   async getSubscription() {
     const [rows] = await this.pool.query(
-      "SELECT COUNT(*) AS total_active, SUM(amount) as revenue FROM subscription"
+      "SELECT COUNT(*) AS total_active, SUM(prev_amount) as revenue FROM subscription"
     );
 
     return rows[0];

@@ -77,6 +77,7 @@ const PitiquerSubscription = () => {
         const { data } = await api.put("/subscriptions", {
           ptqr_id: user.id,
           amount,
+          prev_amount: details.prev_amount,
         });
 
         if (data) {

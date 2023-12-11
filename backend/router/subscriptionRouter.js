@@ -12,7 +12,8 @@ router.put("/", async (req, res) => {
   try {
     await subModel.paySubscription(
       subscriptionInfo.ptqr_id,
-      subscriptionInfo.amount
+      subscriptionInfo.amount,
+      subscriptionInfo.prev_amount
     );
     res.status(200).json({ message: "payment created successfully" });
   } catch (error) {

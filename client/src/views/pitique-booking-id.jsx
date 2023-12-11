@@ -87,8 +87,8 @@ const PitiqueBookingId = () => {
     try {
       const info = {
         msg: report.description,
-        id: booking.ptqr_id,
-        user_type: "pitiquer",
+        id: booking.rltr_id,
+        user_type: "realtor",
       };
 
       const { data } = await api.post(`/reports`, { info });

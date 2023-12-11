@@ -97,8 +97,8 @@ const RealtorBookingId = () => {
     try {
       const info = {
         msg: report.description,
-        id: booking.rltr_id,
-        user_type: "realtor",
+        id: booking.ptqr_id,
+        user_type: "pitiquer",
       };
 
       const { data } = await api.post(`/reports`, { info });

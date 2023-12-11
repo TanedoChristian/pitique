@@ -37,7 +37,11 @@ const AdminReviews = () => {
   });
 
   const filteredGoodComments = reviews.filter((review) => {
-    return review.rtng >= 3;
+    const hasSwearWord = swearWords.some((word) =>
+      review.fdbk.toLowerCase().includes(word.toLowerCase())
+    );
+
+    return !hasSwearWord && review.rtng >= 3;
   });
 
   const handleReviewType = (type) => {

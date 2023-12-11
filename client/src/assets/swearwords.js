@@ -94,4 +94,5 @@ export const swearWords = [
   "giatay",
   "piste",
   "way klaro",
+  "noob",
 ];

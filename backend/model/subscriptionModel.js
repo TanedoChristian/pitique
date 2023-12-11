@@ -12,11 +12,12 @@ class SubscriptionModel {
   // CDU
   async createSubscription(subscriptionInfo) {
     await this.pool.query(
-      "INSERT INTO subscription (ptqr_id,started_date,last_paid_date,amount) VALUES (?, ?, ?, ?)",
+      "INSERT INTO subscription (ptqr_id,started_date,last_paid_date,amount,prev_amount) VALUES (?,?, ?, ?, ?)",
       [
         subscriptionInfo.ptqr_id,
         this.philippinesDateTime,
         this.philippinesDateTime,
+        subscriptionInfo.amount,
         subscriptionInfo.amount,
       ]
     );
@@ -31,10 +32,12 @@ class SubscriptionModel {
     return result[0];
   }
 
-  async paySubscription(ptqr_id, amount) {
+  async paySubscription(ptqr_id, amount, prev_amount) {
+    const prev = parseFloat(prev_amount + amount);
+
     await this.pool.query(
-      "UPDATE subscription SET last_paid_date = ?, amount = ? WHERE ptqr_id = ?",
-      [this.philippinesDateTime, amount, ptqr_id]
+      "UPDATE subscription SET last_paid_date = ?, amount = ?, prev_amount = ? WHERE ptqr_id = ?",
+      [this.philippinesDateTime, amount, prev, ptqr_id]
     );
   }
 }

@@ -66,7 +66,7 @@ const AdminCommissions = () => {
                   Booking ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Realtor Name
+                  Pitiquer Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Total
@@ -85,7 +85,7 @@ const AdminCommissions = () => {
                 commission.map((comm, index) => (
                   <tr className="bg-white border-b" key={index}>
                     <td className="px-6 py-4">{comm.id}</td>
-                    <td className="px-6 py-4 capitalize">{comm.rname}</td>
+                    <td className="px-6 py-4 capitalize">{comm.pname}</td>
                     <td className="px-6 py-4">
                       <div
                         className={`py-1 px-3 rounded-xl text-center capitalize 
