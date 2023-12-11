@@ -129,14 +129,22 @@ const PitiqueProfileDetails = ({
         </button>
 
         {user && user.id == pitiquerId && (
-          <button
-            className="py-2 px-6 bg-cyan-400 text-white mt-3"
-            onClick={() => {
-              setShowPackage(true);
-            }}
-          >
-            View Package
-          </button>
+          <>
+            <button
+              className="py-2 px-6 bg-cyan-400 text-white mt-3"
+              onClick={() => {
+                setShowPackage(true);
+              }}
+            >
+              View Package
+            </button>
+            <Link
+              className="py-2 px-6 bg-cyan-400 text-white mt-3 text-center"
+              to={"/profile/pitique/subscription"}
+            >
+              View Subscription
+            </Link>
+          </>
         )}
         <Link
           className="py-2 px-6 bg-orange-400 text-white text-center mt-3"

@@ -32,6 +32,7 @@ import PitiquerAllBooking from "./views/pitiquer-all-booking";
 import PitiquerPaymentRegister from "./views/pitiquer-payment-register";
 import MapWithMyLocation from "./components/map-location/layout";
 import AdminReviews from "./views/admin-reviews";
+import PitiquerSubscription from "./views/pitiquer-subscription";
 
 const App = () => {
   return (
@@ -92,6 +93,10 @@ const App = () => {
           element={<FeedbackBookingAdmin />}
         ></Route>
         <Route path="/profile/pitique/:id" element={<PitiqueProfile />}></Route>
+        <Route
+          path="/profile/pitique/subscription"
+          element={<PitiquerSubscription />}
+        ></Route>
         <Route path="/profile/realtor" element={<RealtorProfilePage />}></Route>
         <Route
           path="/profile/realtor/:id"

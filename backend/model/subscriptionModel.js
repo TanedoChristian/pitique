@@ -21,6 +21,15 @@ class SubscriptionModel {
       ]
     );
   }
+
+  async getSubscriptionDetails(pitiquerId) {
+    const result = await this.pool.query(
+      "SELECT * FROM subscription WHERE ptqr_id = ?",
+      [pitiquerId]
+    );
+
+    return result[0];
+  }
 }
 
 module.exports = SubscriptionModel;
