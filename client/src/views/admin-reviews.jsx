@@ -33,7 +33,9 @@ const AdminReviews = () => {
       review.fdbk.toLowerCase().includes(word.toLowerCase())
     );
 
-    return !hasSwearWord || review.rtng >= 3;
+    return (
+      (hasSwearWord && review.rtng >= 3) || hasSwearWord || review.rtng <= 2
+    );
   });
 
   const filteredGoodComments = reviews.filter((review) => {
@@ -41,7 +43,7 @@ const AdminReviews = () => {
       review.fdbk.toLowerCase().includes(word.toLowerCase())
     );
 
-    return !hasSwearWord && review.rtng >= 3;
+    return (!hasSwearWord && review.rtng >= 3) || review.rtng >= 3;
   });
 
   const handleReviewType = (type) => {
