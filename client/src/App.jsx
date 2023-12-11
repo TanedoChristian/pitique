@@ -33,6 +33,7 @@ import PitiquerPaymentRegister from "./views/pitiquer-payment-register";
 import MapWithMyLocation from "./components/map-location/layout";
 import AdminReviews from "./views/admin-reviews";
 import PitiquerSubscription from "./views/pitiquer-subscription";
+import AdminCommissions from "./views/admin-comissions";
 
 const App = () => {
   return (
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/admin/manage-realtor" element={<ManageRealtor />}></Route>
         <Route path="/booking/:id" element={<RealtorBookingId />}></Route>
         <Route path="/payment" element={<RealtorPayment />}></Route>
+        <Route path="/admin/commissions" element={<AdminCommissions />}></Route>
         <Route
           path="/register/payment"
           element={<PitiquerPaymentRegister />}

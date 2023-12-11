@@ -6,6 +6,7 @@ import {
   faCog,
   faGauge,
   faBook,
+  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -68,6 +69,11 @@ const AdminSideNav = ({ setShowNav }) => {
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faCalendar} />
               <Link to="/admin/bookings/all">All Bookings </Link>
+            </li>
+
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faMoneyBill} />
+              <Link to={`/admin/commissions`}>View Commissions</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">

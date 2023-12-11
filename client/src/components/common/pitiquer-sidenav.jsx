@@ -89,11 +89,6 @@ const PitiquerSideNav = ({ setShowNav }) => {
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
-              <FontAwesomeIcon icon={faMoneyBill} />
-              <Link to={`/pitique/comissions`}>View Comissions</Link>
-            </li>
-
-            <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
               <button onClick={handleLogout}>Logout </button>
             </li>
