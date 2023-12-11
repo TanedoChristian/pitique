@@ -70,6 +70,13 @@ const AdminSideNav = ({ setShowNav }) => {
               <Link to="/admin/bookings/all">All Bookings </Link>
             </li>
 
+            <li className="flex gap-2 items-center font-semibold text-sm">
+              <FontAwesomeIcon icon={faUser} />
+              <Link to="/admin/manage-transaction-reports">
+                Transaction Reports{" "}
+              </Link>
+            </li>
+
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faRightFromBracket} />
               <button onClick={handleLogout}>Logout </button>
