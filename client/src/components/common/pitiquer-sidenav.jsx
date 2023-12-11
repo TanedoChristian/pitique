@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../helper/api";
+import logo from "../../assets/logo.png";
 
 const PitiquerSideNav = ({ setShowNav }) => {
   const user = JSON.parse(localStorage.getItem("p-user"));
@@ -40,9 +41,13 @@ const PitiquerSideNav = ({ setShowNav }) => {
       className={`w-full h-screen fixed flex  backdrop-blur-[1px] poppins z-10`}
     >
       <div className="w-[200px] h-full  bg-cyan-500 text-white border-r border-gray-200">
-        <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full py-4 ">
+          <div className="flex gap-3 items-center p-3">
+            <img src={logo} className="w-[20%]" />
+            <h1 className="text-xl">Pitique</h1>
+          </div>
           <button
-            className="text-white font-black text-2xl right-2 top-2 p-2 "
+            className="text-white font-black text-2xl right-2 top-2 px-4 "
             onClick={() => {
               setShowNav(false);
             }}

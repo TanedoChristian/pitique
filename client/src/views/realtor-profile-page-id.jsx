@@ -37,7 +37,7 @@ const RealtorProfilePageId = () => {
         </button>
         <div className="w-full flex justify-center   ">
           <h1 className=" text-xl text-white font-bold ">
-            {"PERSONAL DETAILS"}
+            {"Realtor Details"}
           </h1>
         </div>
       </Header>
