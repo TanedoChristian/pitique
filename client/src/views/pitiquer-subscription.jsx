@@ -5,7 +5,10 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import api from "../helper/api";
 import StripeCheckout from "react-stripe-checkout";
-import { showLoadingMessage } from "../helper/messageHelper";
+import {
+  showLoadingMessage,
+  showSuccessMessage,
+} from "../helper/messageHelper";
 
 const formatDate = (dateString) => {
   const options = {
@@ -45,6 +48,7 @@ const isPayButtonEnabled = (lastPaidDate) => {
 const PitiquerSubscription = () => {
   const [details, setDetails] = useState();
   const navigate = useNavigate();
+  const [flag, setFlag] = useState(false);
   const user = JSON.parse(localStorage.getItem("p-user"));
 
   useEffect(() => {
@@ -59,13 +63,27 @@ const PitiquerSubscription = () => {
 
     if (user === undefined) return; // Check user before fetching details
     fetchDetails();
-  }, []);
+  }, [flag]);
 
   const tokenHandler = async (token) => {
     showLoadingMessage("Transacting...");
     try {
-      // Handle payment logic here
-      console.log("Payment logic goes here");
+      const { data } = await api.post("/payments/register", {
+        token,
+      });
+
+      if (data) {
+        const amount = 200;
+        const { data } = await api.put("/subscriptions", {
+          ptqr_id: user.id,
+          amount,
+        });
+
+        if (data) {
+          showSuccessMessage("Success", "Succesfully paid!");
+          setFlag(!flag);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
