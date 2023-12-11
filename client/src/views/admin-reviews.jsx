@@ -5,19 +5,32 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import AdminSideNav from "../components/common/admin-sidenav";
 
 import { swearWords } from "../assets/swearwords";
+import api from "../helper/api";
 
 const AdminReviews = () => {
   const [showSideNav, setShowNav] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
-  const COMMENT = ["Bati kaayo ilang service", "Good Quality", "Bad Service"];
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await api.get("/admins/realtor/reviews");
 
-  const filteredComments = COMMENT.filter((comment) => {
-    return swearWords.some((word) =>
-      comment.toLowerCase().includes(word.toLowerCase())
+        setReviews(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetch();
+  }, []);
+
+  const filteredComments = reviews.filter((review) => {
+    return (
+      swearWords.some((word) =>
+        review.fdbk.toLowerCase().includes(word.toLowerCase())
+      ) || review.rtng < 3
     );
   });
-
-  console.log(filteredComments);
 
   return (
     <div className="w-full h-screen poppins">
@@ -37,10 +50,10 @@ const AdminReviews = () => {
       </div>
 
       <div className="w-full p-3 h-screen overflow-auto">
-        {filteredComments.map((word) => (
+        {filteredComments.map((comment) => (
           <div class="flex flex-col gap-4 bg-white border border-gray-300 p-4 mt-5 shadow-md rounded-xl">
             <div className="flex items-center gap-1  w-full justify-end">
-              <p className="font-bold">5</p>
+              <p className="font-bold">{comment.rtng}</p>
               <svg
                 class="w-4 h-4 text-yellow-300 ms-1"
                 aria-hidden="true"
@@ -54,16 +67,16 @@ const AdminReviews = () => {
 
             <div class="flex justify justify-between">
               <div class="flex justify-between gap-3 text-xs w-full">
-                <span className="bg-cyan-500 text-white p-2">
-                  Pitiquer: John Doe
+                <span className="bg-cyan-500 text-white p-2 capitalize">
+                  Pitiquer: {comment.pname}
                 </span>
-                <span className="bg-cyan-500 text-white p-2">
-                  Realtor: Jess Hopkins
+                <span className="bg-cyan-500 text-white p-2 capitalize">
+                  Realtor: {comment.rname}
                 </span>
               </div>
             </div>
 
-            <div>{word}</div>
+            <div>{comment.fdbk}</div>
 
             <div class="flex justify-between">
               <button className="p-3 w-full bg-red-500 text-white">

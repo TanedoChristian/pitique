@@ -1,9 +1,12 @@
 const createPromisePool = require("../helper/mysqlPromise");
-const bcrypt = require("bcrypt");
+const moment = require("moment-timezone");
 
 class RealtorFeedbackModel {
   constructor() {
     this.pool = createPromisePool();
+    this.philippinesDateTime = moment(new Date())
+      .tz("Asia/Manila")
+      .format("YYYY-MM-DD HH:mm:ss");
   }
 
   //   GET REALTOR
@@ -28,9 +31,6 @@ class RealtorFeedbackModel {
   async createRealtorFeedback(feedback) {
     const isvisible = true;
 
-    // Convert to MySql DateTime
-    const date = new Date().toLocaleString();
-
     await this.pool.query(
       "INSERT INTO realtor_feedback (rltr_id,book_id,rtng, fdbk,date,isvisible) VALUES (?, ?, ? ,? ,? ,?)",
       [
@@ -38,7 +38,7 @@ class RealtorFeedbackModel {
         feedback.book_id,
         feedback.rtng,
         feedback.fdbk,
-        date,
+        this.philippinesDateTime,
         isvisible,
       ]
     );
