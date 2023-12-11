@@ -6,12 +6,14 @@ import AdminSideNav from "../components/common/admin-sidenav";
 
 import { swearWords } from "../assets/swearwords";
 import api from "../helper/api";
+import { showSuccessMessage } from "../helper/messageHelper";
 
 const AdminReviews = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [reviews, setReviews] = useState([]);
 
   const [reviewType, setReviewType] = useState("good");
+  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -24,22 +26,18 @@ const AdminReviews = () => {
       }
     };
     fetch();
-  }, []);
+  }, [flag]);
 
-  const filteredComments = reviews.filter((review) => {
-    const hasSwearWord = swearWords.some((word) => {
-      return review.fdbk.toLowerCase().includes(word.toLowerCase());
-    });
+  const filteredBadComments = reviews.filter((review) => {
+    const hasSwearWord = swearWords.some((word) =>
+      review.fdbk.toLowerCase().includes(word.toLowerCase())
+    );
 
-    return hasSwearWord || review.rtng < 3;
+    return !hasSwearWord || review.rtng >= 3;
   });
 
   const filteredGoodComments = reviews.filter((review) => {
-    const hasSwearWord = swearWords.some((word) => {
-      return review.fdbk.toLowerCase().includes(word.toLowerCase());
-    });
-
-    return !hasSwearWord && review.rtng >= 3;
+    return review.rtng >= 3;
   });
 
   const handleReviewType = (type) => {
@@ -48,7 +46,21 @@ const AdminReviews = () => {
     console.log(type);
   };
 
-  console.log(reviews);
+  const handleChangeStatus = async (status, id) => {
+    try {
+      const { data } = await api.put("/pitiquers/edit/status", {
+        status,
+        ptqr_id: id,
+      });
+
+      if (data) {
+        setFlag(!flag);
+        showSuccessMessage("Suspend", "Successfully Suspended");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full h-screen poppins">
@@ -84,7 +96,7 @@ const AdminReviews = () => {
       </div>
 
       <div className="w-full p-3 h-screen overflow-auto">
-        {reviewType === "bad" ? (
+        {reviewType == "bad" ? (
           <div>
             {filteredComments.map((comment) => (
               <div class="flex flex-col gap-4 bg-white border border-gray-300 p-4 mt-5 shadow-md rounded-xl">
@@ -115,7 +127,12 @@ const AdminReviews = () => {
                 <div>{comment.fdbk}</div>
 
                 <div class="flex justify-between">
-                  <button className="p-3 w-full bg-red-500 text-white">
+                  <button
+                    className="p-3 w-full bg-red-500 text-white"
+                    onClick={() => {
+                      handleChangeStatus("suspended", comment.ptqr_id);
+                    }}
+                  >
                     Suspend Pitiquer
                   </button>
                 </div>
