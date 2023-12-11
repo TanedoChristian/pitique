@@ -25,6 +25,7 @@ const paymentRouter = require("./router/paymentRouter");
 const adminRouter = require("./router/adminRouter");
 const notificationRouter = require("./router/notificationRouter");
 const subscriptionRouter = require("./router/subscriptionRouter");
+const reportRouter = require("./router/reportRouter");
 
 app.use(bodyParser.json());
 
@@ -39,6 +40,7 @@ app.use("/payments", paymentRouter);
 app.use("/admins", adminRouter);
 app.use("/notifications", notificationRouter);
 app.use("/subscriptions", subscriptionRouter);
+app.use("/reports", reportRouter);
 
 const port = process.env.PORT || 8000;
 

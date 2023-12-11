@@ -7,6 +7,7 @@ import api from "../helper/api";
 import PitiquerRatingLayout from "../components/pitiquer-rating-layout/layout";
 import { showSuccessMessage } from "../helper/messageHelper";
 import DeclineForm from "../components/pitiquer-rating-layout/decline-form";
+import ReportForm from "../components/pitiquer-rating-layout/report-form";
 
 const PitiqueBookingId = () => {
   const { id } = useParams();
@@ -18,6 +19,11 @@ const PitiqueBookingId = () => {
   const [newDate, setNewDate] = useState();
 
   const [decline, setDecline] = useState({
+    show: false,
+    description: "",
+  });
+
+  const [report, setReport] = useState({
     show: false,
     description: "",
   });
@@ -61,7 +67,7 @@ const PitiqueBookingId = () => {
     fetch();
   }, [booking]);
 
-  const handleDecline = async (msg) => {
+  const handleDecline = async () => {
     try {
       const { data } = await api.put(`/bookings/decline/${id}`, {
         msg: decline.description,
@@ -74,6 +80,26 @@ const PitiqueBookingId = () => {
       }
     } catch (error) {
       console.error("Error declining booking" + error);
+    }
+  };
+
+  const handleReport = async () => {
+    try {
+      const info = {
+        msg: report.description,
+        id: booking.ptqr_id,
+        user_type: "pitiquer",
+      };
+
+      const { data } = await api.post(`/reports`, { info });
+
+      if (data) {
+        setFlag(!flag);
+        setReport({ show: false, description: "" });
+        showSuccessMessage("Success", "Successfully report the transacting!");
+      }
+    } catch (error) {
+      console.error("Error report transaction" + error);
     }
   };
 
@@ -263,6 +289,17 @@ const PitiqueBookingId = () => {
           </div>
         )}
 
+        {booking.status === "completed" && (
+          <div className="w-full">
+            <button
+              className=" text-xl mt-2 p-3 w-full border-2  text-white bg-red-500  font-bold rounded-md shadow-md"
+              onClick={() => setReport({ show: true })}
+            >
+              REPORT ISSUES
+            </button>
+          </div>
+        )}
+
         {booking.status === "accepted" && (
           <div className="w-full">
             <button
@@ -315,6 +352,14 @@ const PitiqueBookingId = () => {
             setDecline={setDecline}
             handleDecline={handleDecline}
             decline={decline}
+          />
+        )}
+
+        {report.show && (
+          <ReportForm
+            setReport={setReport}
+            handleReport={handleReport}
+            report={report}
           />
         )}
       </div>
