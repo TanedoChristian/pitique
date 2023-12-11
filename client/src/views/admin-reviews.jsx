@@ -27,15 +27,19 @@ const AdminReviews = () => {
   }, []);
 
   const filteredComments = reviews.filter((review) => {
-    const hasSwearWord = swearWords.some((word) =>
-      review.fdbk.toLowerCase().includes(word.toLowerCase())
-    );
+    const hasSwearWord = swearWords.some((word) => {
+      return review.fdbk.toLowerCase().includes(word.toLowerCase());
+    });
 
-    return !hasSwearWord && review.rtng >= 3;
+    return hasSwearWord || review.rtng < 3;
   });
 
   const filteredGoodComments = reviews.filter((review) => {
-    return swearWords.some((word) => review.rtng >= 3);
+    const hasSwearWord = swearWords.some((word) => {
+      return review.fdbk.toLowerCase().includes(word.toLowerCase());
+    });
+
+    return !hasSwearWord && review.rtng >= 3;
   });
 
   const handleReviewType = (type) => {
@@ -43,6 +47,8 @@ const AdminReviews = () => {
 
     console.log(type);
   };
+
+  console.log(reviews);
 
   return (
     <div className="w-full h-screen poppins">
@@ -78,7 +84,7 @@ const AdminReviews = () => {
       </div>
 
       <div className="w-full p-3 h-screen overflow-auto">
-        {reviewType == "bad" ? (
+        {reviewType === "bad" ? (
           <div>
             {filteredComments.map((comment) => (
               <div class="flex flex-col gap-4 bg-white border border-gray-300 p-4 mt-5 shadow-md rounded-xl">
