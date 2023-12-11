@@ -92,7 +92,7 @@ class AdminModel {
 
   async getRealtorReviews() {
     const [rows] = await this.pool.query(
-      "SELECT rf.fdbk, rf.rtng, CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS rname, CONCAT(p.fname, ' ', p.mname, ' ', p.lname) AS pname" +
+      "SELECT rf.fdbk, rf.rtng, CONCAT(r.fname, ' ', r.mname, ' ', r.lname) AS rname, CONCAT(p.fname, ' ', p.mname, ' ', p.lname) AS pname, b.ptqr_id" +
         " FROM realtor_feedback rf INNER JOIN booking b ON b.id = rf.book_id INNER JOIN pitiquer p ON p.id = b.ptqr_id INNER JOIN realtor r ON r.id = b.rltr_id"
     );
 

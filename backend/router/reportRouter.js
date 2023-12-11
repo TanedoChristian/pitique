@@ -1,20 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
-const SubscriptionModel = require("../model/subscriptionModel");
+const ReportModel = require("../model/reportModel");
 
-const subModel = new SubscriptionModel();
+const reportModel = new ReportModel();
 
 // POST /subscriptions - Create a new subscription
-router.put("/", async (req, res) => {
-  const subscriptionInfo = req.body;
+router.post("/", async (req, res) => {
+  const { info } = req.body;
 
   try {
-    await subModel.paySubscription(
-      subscriptionInfo.ptqr_id,
-      subscriptionInfo.amount
-    );
-    res.status(200).json({ message: "payment created successfully" });
+    await reportModel.createReport(info);
+    res.status(200).json({ message: "reported successfully" });
   } catch (error) {
     console.error("Error creating Package:", error);
     res.status(500).send("Internal Server Error");
@@ -26,7 +23,7 @@ router.get("/pitiquers/:id", async (req, res) => {
   const pitiquerId = req.params.id;
 
   try {
-    const notif = await subModel.getSubscriptionDetails(pitiquerId);
+    const notif = await reportModel.getSubscriptionDetails(pitiquerId);
     res.status(200).json(notif[0]);
   } catch (error) {
     console.error("Error creating getting subscription info:", error);

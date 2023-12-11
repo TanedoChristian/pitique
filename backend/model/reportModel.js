@@ -1,7 +1,7 @@
 const createPromisePool = require("../helper/mysqlPromise");
 const moment = require("moment-timezone");
 
-class SubscriptionModel {
+class ReportModel {
   constructor() {
     this.pool = createPromisePool();
     this.philippinesDateTime = moment(new Date())
@@ -10,14 +10,14 @@ class SubscriptionModel {
   }
 
   // CDU
-  async createSubscription(subscriptionInfo) {
+  async createReport(reportInfo) {
     await this.pool.query(
-      "INSERT INTO subscription (ptqr_id,started_date,last_paid_date,amount) VALUES (?, ?, ?, ?)",
+      "INSERT INTO report (msg,user_id,user_type,date) VALUES (?, ?, ?, ?)",
       [
-        subscriptionInfo.ptqr_id,
+        reportInfo.msg,
+        reportInfo.id,
+        reportInfo.user_type,
         this.philippinesDateTime,
-        this.philippinesDateTime,
-        subscriptionInfo.amount,
       ]
     );
   }
@@ -30,13 +30,6 @@ class SubscriptionModel {
 
     return result[0];
   }
-
-  async paySubscription(ptqr_id, amount) {
-    await this.pool.query(
-      "UPDATE subscription SET last_paid_date = ?, amount = ? WHERE ptqr_id = ?",
-      [this.philippinesDateTime, amount, ptqr_id]
-    );
-  }
 }
 
-module.exports = SubscriptionModel;
+module.exports = ReportModel;

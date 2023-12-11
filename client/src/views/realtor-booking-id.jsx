@@ -7,6 +7,7 @@ import api from "../helper/api";
 import RealtorRatingLayout from "../components/realtor-rating-layout/layout";
 import RealtorFeedback from "../components/realtor-rating-layout/feedback-show";
 import { showSuccessMessage } from "../helper/messageHelper";
+import ReportForm from "../components/pitiquer-rating-layout/report-form";
 
 const RealtorBookingId = () => {
   const { id } = useParams();
@@ -18,6 +19,11 @@ const RealtorBookingId = () => {
   const [flag, setFlag] = useState(false);
   const navigate = useNavigate();
   const [showFeedback, setShowFeedback] = useState(false);
+
+  const [report, setReport] = useState({
+    show: false,
+    description: "",
+  });
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -84,6 +90,26 @@ const RealtorBookingId = () => {
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleReport = async () => {
+    try {
+      const info = {
+        msg: report.description,
+        id: booking.rltr_id,
+        user_type: "realtor",
+      };
+
+      const { data } = await api.post(`/reports`, { info });
+
+      if (data) {
+        setFlag(!flag);
+        setReport({ show: false, description: "" });
+        showSuccessMessage("Success", "Successfully report the transacting!");
+      }
+    } catch (error) {
+      console.error("Error report transaction" + error);
     }
   };
 
@@ -248,6 +274,18 @@ const RealtorBookingId = () => {
             </button>
           </div>
         )}
+
+        {booking.status === "completed" && (
+          <div className="w-full">
+            <button
+              className=" text-xl mt-2 p-3 w-full border-2  text-white bg-red-500  font-bold rounded-md shadow-md"
+              onClick={() => setReport({ show: true })}
+            >
+              REPORT ISSUES
+            </button>
+          </div>
+        )}
+
         {booking.status === "completed" &&
           (showFeedback ? (
             <div className="w-full">
@@ -283,6 +321,14 @@ const RealtorBookingId = () => {
             setShow={setShow}
             booking={booking}
             refresh={{ setFlag, flag }}
+          />
+        )}
+
+        {report.show && (
+          <ReportForm
+            setReport={setReport}
+            handleReport={handleReport}
+            report={report}
           />
         )}
       </div>

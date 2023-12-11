@@ -69,6 +69,7 @@ router.post("/", async (req, res) => {
 router.post("/register", async (req, res) => {
   const { token } = req.body;
 
+  // Subscription
   const amount = 200;
 
   try {
