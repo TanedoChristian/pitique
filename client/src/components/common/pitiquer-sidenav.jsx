@@ -2,6 +2,7 @@ import {
   faBell,
   faBook,
   faGauge,
+  faMoneyBill,
   faRightFromBracket,
   faUser,
   faWarning,
@@ -62,6 +63,7 @@ const PitiquerSideNav = ({ setShowNav }) => {
               <FontAwesomeIcon icon={faGauge} />
               <Link to={`/dashboard/pitique`}>Dashboard</Link>
             </li>
+
             <li className="flex gap-2 items-center font-semibold">
               <FontAwesomeIcon icon={faUser} />
               <Link to={`/profile/pitique/${user.id}`}>Account Settings </Link>
@@ -84,6 +86,11 @@ const PitiquerSideNav = ({ setShowNav }) => {
             <li className="flex gap-2 -mt-3.5 items-center font-semibold">
               <FontAwesomeIcon icon={faBook} />
               <Link to={"/report/pitique"}>Income Report</Link>
+            </li>
+
+            <li className="flex gap-2 items-center font-semibold">
+              <FontAwesomeIcon icon={faMoneyBill} />
+              <Link to={`/pitique/comissions`}>View Comissions</Link>
             </li>
 
             <li className="flex gap-2 items-center font-semibold">
