@@ -30,6 +30,13 @@ class SubscriptionModel {
 
     return result[0];
   }
+
+  async paySubscription(ptqr_id, amount) {
+    await this.pool.query(
+      "UPDATE subscription SET last_paid_date = ?, amount = ? WHERE ptqr_id = ?",
+      [this.philippinesDateTime, amount, ptqr_id]
+    );
+  }
 }
 
 module.exports = SubscriptionModel;
