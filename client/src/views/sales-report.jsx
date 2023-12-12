@@ -29,7 +29,7 @@ const SalesReport = () => {
 
     if (type === 1) {
       // Update column headers in the worksheet
-      ws["A1"] = { t: "s", v: "Pitcher ID" };
+      ws["A1"] = { t: "s", v: "Pitiquer ID" };
       ws["B1"] = { t: "s", v: "Name" };
       ws["C1"] = { t: "s", v: "Revenue" };
       ws["D1"] = { t: "s", v: "Commission Fee" };
@@ -37,7 +37,7 @@ const SalesReport = () => {
 
       // Map the data to the desired headers
       const mappedData = data.map((item) => ({
-        "Pitcher ID": item.id,
+        "Pitiquer ID": item.id,
         Name: item.pname,
         Revenue: item.total,
         "Commission Fee": item.commission_fee,
@@ -48,8 +48,23 @@ const SalesReport = () => {
         }),
       }));
 
-      // Add the mapped data to the worksheet
       XLSX.utils.sheet_add_json(ws, mappedData, { origin: "A1" });
+
+      // Add total row for commission
+      const totalCommissionRow = {
+        "Total Users Revenue": formattedAmount(
+          data.reduce((acc, currentValue) => acc + currentValue.total, 0)
+        ),
+        "Commission Fee": formattedAmount(
+          data.reduce(
+            (acc, currentValue) => acc + currentValue.commission_fee,
+            0
+          )
+        ),
+      };
+      XLSX.utils.sheet_add_json(ws, [totalCommissionRow], {
+        origin: `A${mappedData.length + 3}`,
+      });
     } else {
       // Update column headers in the worksheet
       ws["A1"] = { t: "s", v: "Pitiquer ID" };
@@ -60,7 +75,7 @@ const SalesReport = () => {
 
       // Map the data to the desired headers
       const mappedData = data.map((item) => ({
-        "Pitcher ID": item.id,
+        "Pitiquer ID": item.id,
         Name: item.pname,
         Amount: item.amount,
         Total: item.prev_amount,
@@ -73,6 +88,16 @@ const SalesReport = () => {
 
       // Add the mapped data to the worksheet
       XLSX.utils.sheet_add_json(ws, mappedData, { origin: "A1" });
+
+      // Add total row for subscription
+      const totalSubscriptionRow = {
+        "Total Income Subscription": formattedAmount(
+          data.reduce((acc, currentValue) => acc + currentValue.prev_amount, 0)
+        ),
+      };
+      XLSX.utils.sheet_add_json(ws, [totalSubscriptionRow], {
+        origin: `A${mappedData.length + 3}`,
+      });
     }
 
     XLSX.writeFile(wb, filename);

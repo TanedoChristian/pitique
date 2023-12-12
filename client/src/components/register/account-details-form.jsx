@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../helper/api";
+import TermsAndCondition from "../common/terms-and-condition";
 const AccountDetailsForm = ({ setUser, user }) => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isChecked, setChecked] = useState(false);
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -102,10 +104,14 @@ const AccountDetailsForm = ({ setUser, user }) => {
             id=""
             onChange={(e) => setChecked(e.target.checked)}
           />
-          <p>
-            I agree to the
-            <span className="font-bold"> Terms and Conditions </span>
-          </p>
+          <p>I agree to the</p>
+          <button
+            className="font-bold hover:text-cyan-500"
+            onClick={() => setShow(!show)}
+          >
+            {" "}
+            Terms and Conditions{" "}
+          </button>
         </div>
 
         {user.type == "realtor" ? (
@@ -126,6 +132,7 @@ const AccountDetailsForm = ({ setUser, user }) => {
           </button>
         )}
       </div>
+      {show && <TermsAndCondition setShow={setShow} show={show} />}
     </form>
   );
 };
