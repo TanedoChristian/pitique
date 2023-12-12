@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import Header from "../components/common/header";
 import AdminSideNav from "../components/common/admin-sidenav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faFileExcel } from "@fortawesome/free-solid-svg-icons";
 import api from "../helper/api";
 import { formattedAmount } from "../helper/currencyHelper";
+import * as XLSX from "xlsx";
+
 const AdminCommissions = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [commission, setCommission] = useState();
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -22,8 +25,53 @@ const AdminCommissions = () => {
     fetch();
   }, []);
 
+  const exportToExcel = () => {
+    if (commission && commission.length > 0) {
+      const mappedData = commission.map((comm) => ({
+        "Booking ID": comm.id,
+        "Pitiquer Name": comm.pname,
+        Total: formattedAmount(comm.total),
+        "Commission Fee (10%)": formattedAmount(comm.total * 0.1),
+        Date: new Date(comm.date).toLocaleString("en-us", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      }));
+
+      const totalCommission = formattedAmount(
+        commission.reduce((acc, currentValue) => {
+          return acc + currentValue.total;
+        }, 0) * 0.1
+      );
+
+      const total = formattedAmount(
+        commission.reduce((acc, currentValue) => {
+          return acc + currentValue.total;
+        }, 0)
+      );
+
+      const ws = XLSX.utils.json_to_sheet(mappedData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Commission Report");
+
+      // Add total commission row to the end of the data
+      const totalRow = {
+        "Total All pitiquer Revenue": total,
+        "Total Commission": totalCommission,
+      };
+      XLSX.utils.sheet_add_json(ws, [totalRow], {
+        origin: `A${mappedData.length + 3}`,
+      });
+
+      XLSX.writeFile(wb, "Commission_Report.xlsx");
+    } else {
+      console.log("No data to export.");
+    }
+  };
+
   return (
-    <div className="w-full h-screen poppins ">
+    <div className="w-full h-screen poppins">
       {showSideNav ? <AdminSideNav setShowNav={setShowNav} /> : ""}
       <Header className="flex items-center p-5 gap-5">
         <button
@@ -33,7 +81,11 @@ const AdminCommissions = () => {
         >
           <FontAwesomeIcon icon={faBars} />
         </button>
+        <button onClick={exportToExcel}>
+          <FontAwesomeIcon icon={faFileExcel} /> Export to Excel
+        </button>
       </Header>
+
       <main className="w-full">
         <div className="w-full ">
           <div className="flex flex-col gap-1 w-full justify-center  bg-gray-100 rounded-xl mt-2">
