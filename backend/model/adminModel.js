@@ -107,6 +107,22 @@ class AdminModel {
     return rows;
   }
 
+  async getTotalCommissionReport() {
+    const [rows] = await this.pool.query(
+      "SELECT b.id,  CONCAT(p.fname, ' ', p.mname, ' ', p.lname) AS pname, SUM(b.total) as total, SUM(total) * 0.1 AS commission_fee, b.date FROM booking b INNER JOIN pitiquer p ON p.id = b.ptqr_id GROUP BY p.id"
+    );
+
+    return rows;
+  }
+
+  async getSubscriptionReport() {
+    const [rows] = await this.pool.query(
+      "SELECT p.id, CONCAT(p.fname, ' ', p.mname, ' ', p.lname) AS pname, s.prev_amount, s.amount, s.last_paid_date FROM subscription s INNER JOIN pitiquer p ON p.id = s.ptqr_id"
+    );
+
+    return rows;
+  }
+
   async getSubscription() {
     const [rows] = await this.pool.query(
       "SELECT COUNT(*) AS total_active, SUM(prev_amount) as revenue FROM subscription"

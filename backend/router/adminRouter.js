@@ -139,6 +139,28 @@ router.get("/commission", async (req, res) => {
   }
 });
 
+router.get("/commission/total", async (req, res) => {
+  try {
+    const stats = await adminModel.getTotalCommissionReport();
+
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/subscription/report", async (req, res) => {
+  try {
+    const stats = await adminModel.getSubscriptionReport();
+
+    res.status(200).json(stats);
+  } catch (error) {
+    console.error("Error ", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 router.get("/subscription", async (req, res) => {
   try {
     const stats = await adminModel.getSubscription();

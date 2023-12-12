@@ -7,6 +7,7 @@ import { DashboardChart } from "../components/common/DashboardChart";
 import api from "../helper/api";
 import { color } from "../helper/revenueColor";
 import { formattedAmount } from "../helper/currencyHelper";
+import { Link } from "react-router-dom";
 const AdminDashboard = () => {
   const [showSideNav, setShowNav] = useState(false);
   const [user, setUser] = useState();
@@ -70,7 +71,15 @@ const AdminDashboard = () => {
         </button>
       </Header>
       <main>
-        <div className="flex justify-center w-full items-center">
+        <div className="text-right flex justify-end">
+          <Link
+            to={"/admin/sales-report"}
+            className="mt-3 px-5 text-sm text-gray-600 hover:underline cursor-pointer hover:text-cyan-500"
+          >
+            See more
+          </Link>
+        </div>
+        <div className="w-full flex justify-center items-center">
           <DashboardChart />
         </div>
 

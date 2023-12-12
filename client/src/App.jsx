@@ -35,6 +35,7 @@ import AdminReviews from "./views/admin-reviews";
 import PitiquerSubscription from "./views/pitiquer-subscription";
 import AdminTransactionReports from "./views/admin-transaction-reports";
 import AdminCommissions from "./views/admin-comissions";
+import SalesReport from "./views/sales-report";
 
 const App = () => {
   return (
@@ -124,6 +125,7 @@ const App = () => {
           path="/report/realtor"
           element={<RealtorServiceReport />}
         ></Route>
+        <Route path="/admin/sales-report" element={<SalesReport />}></Route>
       </Routes>
     </Router>
   );
